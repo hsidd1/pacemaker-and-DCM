@@ -44,15 +44,16 @@ class Database:
 Database = Database()
 
 root = tk.Tk()
-root.title("DCM Group")
+root.title("DCM Application")
 root.geometry("600x500")
+# root.configure(bg="#8a8d91") 3 a nice grey colour
 # root.attributes('-fullscreen', True)
 
-tk.Label(root, text="Register Username and Password", bg="blue").pack()
+tk.Label(root, text="Pacemaker Device Controller-Monitor", font=("Helvetica", 25, "bold")).pack()
 tk.Label(root, text="").pack()
 
 # username labels
-username_label = tk.Label(root, text="Username * ")
+username_label = tk.Label(root, text="Username:")
 username_label.pack()
 
 # username entry
@@ -60,13 +61,12 @@ username_entry = tk.Entry(root, text="username")
 username_entry.pack()
 
 # password labels
-password_label = tk.Label(root, text="Password * ")
+password_label = tk.Label(root, text="Password:")
 password_label.pack()
 
 # password entry
 password_entry = tk.Entry(root, text="password", show='*')
 password_entry.pack()
-tk.Label(root, text="").pack()
 
 # function for register button
 def register_user():
@@ -103,6 +103,36 @@ def register_user():
     message.pack()
     root.after(2000, lambda: message.destroy())
 
-tk.Button(root, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
+def login_user():
+    username_info = username_entry.get()
+    password_info = password_entry.get()
+
+    if not username_info or not password_info:
+        # Empty string
+        message = tk.Label(root, text="Please enter valid username and password", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
+        return
+    if username_info not in Database.users_map.keys():
+        # Username does not exist
+        message = tk.Label(root, text="Username does not exist", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
+        return
+    if Database.users_map[username_info] != password_info:
+        # Incorrect password
+        message = tk.Label(root, text="Incorrect password", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
+        return
+    
+    # Login success
+    message = tk.Label(root, text="Login Success", fg="green", font=("calibri", 11))
+    message.pack()
+    # open home page 
+
+
+login_btn    = tk.Button(root, text="Login", width=10, height=1, bg="#eda758", command = login_user).pack(pady=10)
+register_btn = tk.Button(root, text="Register", width=10, height=1, bg="#eda758", command = register_user).pack()
 
 root.mainloop()
