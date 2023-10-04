@@ -24,7 +24,7 @@ class Database:
         with open(self.database, "r") as f:
             self.users_map = {line.split()[0]: line.split()[1] for line in f.readlines() if line}
 
-    def get_user_count(self):
+    def get_user_count(self) -> int:
         return len(self.users_map)
 
     def add_user(self, user: User):
@@ -83,6 +83,12 @@ def register_user():
     if username_info in Database.users_map.keys():
         # Username already exists
         message = tk.Label(root, text="Username already exists", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
+        return
+    if Database.get_user_count() >= 10:
+        # Too many users
+        message = tk.Label(root, text="Too many users", fg="red", font=("calibri", 11))
         message.pack()
         root.after(2000, lambda: message.destroy())
         return
