@@ -1,5 +1,5 @@
 import tkinter as tk 
-import os 
+# import os 
 
 DATABASE = "DCM_group/database.txt"
 
@@ -14,12 +14,15 @@ class User:
     
     def __str__(self) -> str:
         """for printing"""
-        return self.user_string()
+        return f"User with username: {self.username} and password: {self.password}"
 
 class Database:
     def __init__(self, database: str = DATABASE):
         self.database = database
-        self.users_map = {}
+        # map of users' usernames and passwords
+        # read from file to see who exists and add them to map each run
+        with open(self.database, "r") as f:
+            self.users_map = {line.split()[0]: line.split()[1] for line in f.readlines() if line}
 
     def get_user_count(self):
         return len(self.users_map)
@@ -33,7 +36,7 @@ class Database:
     def write_to_file(self, user: User):
         self.add_user(user)
         if user in self.users_map:
-            user.exists = True
+            user.exists = True # unused for now
         else:
             with open(self.database, "a") as f:
                 f.write(f"{user.user_string()}\n")
@@ -65,18 +68,23 @@ password_entry = tk.Entry(root, text="password", show='*')
 password_entry.pack()
 tk.Label(root, text="").pack()
 
+# function for register button
 def register_user():
     username_info = username_entry.get()
     password_info = password_entry.get()
 
     # Error handling
-    if username_info == "" or password_info == "":
+    if not username_info or not password_info:
         # Empty string
-        tk.Label(root, text="Please enter valid username and password", fg="red", font=("calibri", 11)).pack()
+        message = tk.Label(root, text="Please enter valid username and password", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
         return
     if username_info in Database.users_map.keys():
         # Username already exists
-        tk.Label(root, text="Username already exists", fg="red", font=("calibri", 11)).pack()
+        message = tk.Label(root, text="Username already exists", fg="red", font=("calibri", 11))
+        message.pack()
+        root.after(2000, lambda: message.destroy())
         return
     
     registered_user = User(username_info, password_info)
@@ -85,7 +93,10 @@ def register_user():
     username_entry.delete(0, tk.END)
     password_entry.delete(0, tk.END)
 
-    tk.Label(root, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+    message = tk.Label(root, text="Registration Success", fg="green", font=("calibri", 11))
+    message.pack()
+    root.after(2000, lambda: message.destroy())
+
 tk.Button(root, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
 
 root.mainloop()
