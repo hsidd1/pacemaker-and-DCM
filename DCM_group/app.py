@@ -1,4 +1,5 @@
 import tkinter as tk 
+from PIL import ImageTk, Image
 # import os 
 
 DATABASE = "DCM_group/database.txt"
@@ -47,22 +48,21 @@ def welcome_screen():
     welcome_page = tk.Tk()
     welcome_page.title("DCM Application - Welcome Page")
     welcome_page.geometry("600x500")
-    # welcome_page.configure(bg="#8a8d91") 3 a nice grey colour
+    welcome_page.configure(bg="#8a8d91")# 3 a nice grey colour
     # welcome_page.attributes('-fullscreen', True)
 
-    tk.Label(welcome_page, text="Pacemaker Device Controller-Monitor", font=("Helvetica", 25, "bold")).pack()
-    tk.Label(welcome_page, text="").pack()
+    tk.Label(welcome_page, text="Pacemaker Device Controller-Monitor", font=("Helvetica", 25, "bold"), background="#8a8d91").pack(pady=10)
 
     # username labels
-    username_label = tk.Label(welcome_page, text="Username:")
-    username_label.pack()
+    username_label = tk.Label(welcome_page, text="Username:", background="#8a8d91", font=("Helvetica", 12))
+    username_label.pack(pady=4)
 
     # username entry
     username_entry = tk.Entry(welcome_page, text="username")
-    username_entry.pack()
+    username_entry.pack(pady=1)
 
     # password labels
-    password_label = tk.Label(welcome_page, text="Password:")
+    password_label = tk.Label(welcome_page, text="Password:", background="#8a8d91", font=("Helvetica", 12))
     password_label.pack()
 
     # password entry
@@ -133,9 +133,15 @@ def welcome_screen():
         # open home page 
         homepage_screen()
         welcome_page.destroy()
-
+    # Buttons
     login_btn    = tk.Button(welcome_page, text="Login", width=10, height=1, bg="#eda758", command = login_user).pack(pady=10)
     register_btn = tk.Button(welcome_page, text="Register", width=10, height=1, bg="#eda758", command = register_user).pack()
+    # Image logo
+    logo = Image.open("DCM_group/imgs/heartLogo.png")
+    logo_resized = logo.resize((200, 200))
+    logo_resized = ImageTk.PhotoImage(logo_resized)
+    logo_label = tk.Label(welcome_page, image = logo_resized, background="#8a8d91")
+    logo_label.pack(side="bottom", pady=50)
 
     welcome_page.mainloop()
 
