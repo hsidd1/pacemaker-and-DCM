@@ -1,4 +1,5 @@
 import tkinter as tk 
+from PIL import ImageTk, Image
 # import os 
 
 DATABASE = "DCM_group/database.txt"
@@ -132,10 +133,15 @@ def welcome_screen():
         # open home page 
         homepage_screen()
         welcome_page.destroy()
-
+    # Buttons
     login_btn    = tk.Button(welcome_page, text="Login", width=10, height=1, bg="#eda758", command = login_user).pack(pady=10)
     register_btn = tk.Button(welcome_page, text="Register", width=10, height=1, bg="#eda758", command = register_user).pack()
-
+    # Image logo
+    logo = Image.open("DCM_group/imgs/heartLogo.png")
+    logo_resized = logo.resize((200, 200))
+    logo_resized = ImageTk.PhotoImage(logo_resized)
+    logo_label = tk.Label(welcome_page, image = logo_resized, background="#8a8d91")
+    logo_label.pack(side="bottom", pady=50)
 
     welcome_page.mainloop()
 
