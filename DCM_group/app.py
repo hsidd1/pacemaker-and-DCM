@@ -146,11 +146,24 @@ def welcome_screen():
     welcome_page.mainloop()
 
 def homepage_screen():
+    # configuring the page attributes
     homepage_screen = tk.Tk()
     homepage_screen.title("DCM Application - Home Page")
     homepage_screen.geometry("600x500")
-    # homepage_screen.configure(bg="#8a8d91") 3 a nice grey colour
+    homepage_screen.configure(bg="#8a8d91")
+    hompage_title_label = tk.Label(homepage_screen, text="Pacemaker Device Controller-Monitor", font=("Helvetica", 25, "bold"), background="#8a8d91")
+    hompage_title_label.pack(pady=10)
 
+    # --------------- page features ------------------ #
+    # dropdown menu to choose pacing mode
+    pacing_mode_label = tk.Label(homepage_screen, text="Choose pacing mode:", background="#8a8d91", font=("Helvetica", 12))
+    pacing_mode_label.pack(pady=4)
+    pacing_mode = tk.StringVar(homepage_screen)
+    pacing_mode.set("") # default value
+    pacing_mode_dropdown = tk.OptionMenu(homepage_screen, pacing_mode, "AOO", "AAI", "VOO", "VVI")
+    pacing_mode_dropdown.pack(pady=1)
+
+    
 if __name__ == "__main__":
     # start the application
     welcome_screen()
