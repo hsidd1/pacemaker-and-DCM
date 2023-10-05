@@ -162,8 +162,16 @@ def homepage_screen():
     pacing_mode.set("") # default value
     pacing_mode_dropdown = tk.OptionMenu(homepage_screen, pacing_mode, "AOO", "AAI", "VOO", "VVI")
     pacing_mode_dropdown.pack(pady=1)
-
+    # get input into a variable (test this)
+    pacing_mode_input = pacing_mode.get()
     
+    # ----------------- after choosing programmable parameters --------------------- #
+    pacing_display_screen()
+    homepage_screen.destroy()
+    
+def pacing_display_screen():
+    pass
+
 if __name__ == "__main__":
     # start the application
     welcome_screen()
