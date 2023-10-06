@@ -1,50 +1,7 @@
 import tkinter as tk 
 from PIL import ImageTk, Image
-
-DATABASE = "DCM_group/database.txt"
-
-class User:
-    """User class to store username and password
-       possibly extend to store pacemaker data"""
-    def __init__(self, username: str, password: str):
-        self.username = username
-        self.password = password
-
-    def user_string(self) -> str:
-        """for file writing"""
-        return f"{self.username}\t{self.password}"
-    
-    def __str__(self) -> str:
-        """for printing"""
-        return f"User with username: {self.username} and password: {self.password}"
-
-class Database:
-    """Database class to store Users"""
-    def __init__(self, database: str = DATABASE):
-        self.database = database
-        # map of users' usernames and passwords
-        # read from file to see who exists and add them to map each run
-        with open(self.database, "r") as f:
-            self.users_map = {line.split()[0]: line.split()[1] for line in f.readlines() if line}
-
-    def get_user_count(self) -> int:
-        """returns number of users in database"""
-        return len(self.users_map)
-
-    def __add_user(self, user: User):
-        """Private method - adds user to database"""
-        self.users_map[user.username] = user.password
-
-    def __remove_user(self, username: str):
-        """Private method - removes user from database"""
-        del self.users_map[username]
-
-    def write_to_file(self, user: User):
-        """writes user to database when registered"""
-        self.__add_user(user)
-        if not user in self.users_map:
-            with open(self.database, "a") as f:
-                f.write(f"{user.user_string()}\n")
+from user import User
+from database import Database
 
 Database = Database()
 
@@ -79,16 +36,15 @@ def welcome_screen():
 
         username_info = username_entry.get()
         password_info = password_entry.get()
-
-        if Database.get_user_count() >= 10:
-            # Too many users
-            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
         if not username_info or not password_info:
             # Empty entry
             message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if Database.get_user_count() >= 10:
+            # Too many users
+            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
@@ -106,7 +62,7 @@ def welcome_screen():
         username_entry.delete(0, tk.END)
         password_entry.delete(0, tk.END)
 
-        message = tk.Label(welcome_page, text="Registration Success", fg="green", font=("calibri", 11))
+        message = tk.Label(welcome_page, text="Registration Success", fg="green", background="#8a8d91", font=("calibri", 11))
         message.pack()
         welcome_page.after(2000, lambda: message.destroy())
 
@@ -117,25 +73,25 @@ def welcome_screen():
 
         if not username_info or not password_info:
             # Empty string
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info not in Database.users_map.keys():
             # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="red", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if Database.users_map[username_info] != password_info:
             # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="red", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         
         # Login success
-        message = tk.Label(welcome_page, text="Login Success", fg="green", font=("calibri", 11))
+        message = tk.Label(welcome_page, text="Login Success", fg="green", background="#8a8d91", font=("calibri", 11))
         message.pack()
         # open home page 
         homepage_screen()
