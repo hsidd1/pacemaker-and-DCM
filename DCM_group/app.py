@@ -166,12 +166,17 @@ def homepage_screen():
     pacing_mode_input = pacing_mode.get()
     
     # ----------------- after choosing programmable parameters --------------------- #
-    pacing_display_screen()
-    homepage_screen.destroy()
+    # if everything is filled in and the user wants to see the data filled in:
+    #     pacing_display_screen()
+    #     homepage_screen.destroy()
     
 def pacing_display_screen():
     pass
 
-if __name__ == "__main__":
-    # start the application
+def main():
     welcome_screen()
+    # homepage_screen() # for testing, skip login
+
+if __name__ == "__main__":
+    main()
+    tk._exit()
