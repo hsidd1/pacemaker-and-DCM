@@ -6,9 +6,13 @@ class User:
         self.password = password
 
     def user_string(self) -> str:
-        """for file writing"""
+        """for *text* file writing"""
         return f"{self.username}\t{self.password}"
     
     def __str__(self) -> str:
         """for printing"""
         return f"User with username: {self.username} and password: {self.password}"
+    
+    def to_dict(self) -> dict:
+        """for *json* file writing"""
+        return {"username": self.username, "password": self.password}

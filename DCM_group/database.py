@@ -1,5 +1,7 @@
 from user import User
-DATABASE = "DCM_group/database.txt"
+import json
+
+DATABASE = "DCM_group/database.json"
 
 class Database:
     """Database class to store Users"""
@@ -7,8 +9,30 @@ class Database:
         self.database = database
         # map of users' usernames and passwords
         # read from file to see who exists and add them to map each run
-        with open(self.database, "r") as f:
-            self.users_map = {line.split()[0]: line.split()[1] for line in f.readlines() if line}
+        self.users_map = self.load_users_from_json()
+
+    def load_users_from_json(self) -> dict:
+        users_map = {}
+        try:
+            with open(self.database, "r") as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    data = []
+                for user_dict in data:
+                    try:
+                        username = user_dict.get("username")
+                        password = user_dict.get("password")
+                        if username and password:
+                            users_map[username] = password
+                    except json.JSONDecodeError as e:
+                        print(f"Error decoding JSON: {e}")
+                    except KeyError as e:
+                        print(f"KeyError: {e} - Invalid JSON structure")
+        except FileNotFoundError:
+            print(f"File not found: {self.database}")
+
+        return users_map
 
     def get_user_count(self) -> int:
         """returns number of users in database"""
@@ -25,6 +49,12 @@ class Database:
     def write_to_file(self, user: User):
         """writes user to database when registered"""
         self.__add_user(user)
-        if not user in self.users_map:
-            with open(self.database, "a") as f:
-                f.write(f"{user.user_string()}\n")
+        with open(self.database, "r") as f:
+            try:
+                users = json.load(f)
+            except json.JSONDecodeError:
+                users = []
+        users.append(user.to_dict())
+        with open(self.database, "w") as f:
+            # write the entire list of users to the file
+            json.dump(users, f)
