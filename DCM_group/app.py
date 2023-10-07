@@ -38,19 +38,19 @@ def welcome_screen():
         password_info = password_entry.get()
         if not username_info or not password_info:
             # Empty entry
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if Database.get_user_count() >= 10:
             # Too many users
-            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info in Database.users_map.keys():
             # Username already exists
-            message = tk.Label(welcome_page, text="Username already exists", fg="red", background="#8a8d91", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Username already exists", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
@@ -79,13 +79,13 @@ def welcome_screen():
             return
         if username_info not in Database.users_map.keys():
             # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if Database.users_map[username_info] != password_info:
             # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11))
+            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
