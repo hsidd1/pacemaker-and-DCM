@@ -54,7 +54,52 @@ def welcome_screen():
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
+        if username_info == password_info:
+            # Username and password cannot be the same
+            message = tk.Label(welcome_page, text="Username and password cannot be the same", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if password_info and len(username_info) < 3:
+            # Username must be at least 3 characters
+            message = tk.Label(welcome_page, text="Username must be at least 3 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if username_info and len(password_info) < 8:
+            # Password must be at least 8 characters
+            message = tk.Label(welcome_page, text="Password must be at least 8 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if password_info and len(username_info) > 20:
+            # Username must be at most 20 characters
+            message = tk.Label(welcome_page, text="Username must be at most 20 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if username_info and len(password_info) > 64:
+            # Password must be at most 64 characters
+            message = tk.Label(welcome_page, text="Password must be at most 64 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if password_info and username_info.isdigit():
+            # Username cannot be all numbers
+            message = tk.Label(welcome_page, text="Username cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+        if username_info and password_info.isdigit():
+            # Password cannot be all numbers
+            message = tk.Label(welcome_page, text="Password cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
         
+        # remove spaces and make it case insensitive
+        username_info = username_info.strip().lower()
+
         # create registered user object
         registered_user = User(username_info, password_info)
         Database.write_to_file(registered_user)
