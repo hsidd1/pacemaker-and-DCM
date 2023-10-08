@@ -1,6 +1,5 @@
 import tkinter as tk 
 from PIL import ImageTk, Image
-from user import User
 from database import Database
 
 Database = Database()
@@ -31,117 +30,15 @@ def welcome_screen():
     password_entry = tk.Entry(welcome_page, text="password", show='*')
     password_entry.pack()
 
-    def register_user():
-        """Registers user and writes to file if valid"""
-
-        username_info = username_entry.get()
-        password_info = password_entry.get()
-        if not username_info or not password_info:
-            # Empty entry
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if Database.get_user_count() >= 10:
-            # Too many users
-            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info in Database.users_map.keys():
-            # Username already exists
-            message = tk.Label(welcome_page, text="Username already exists", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info == password_info:
-            # Username and password cannot be the same
-            message = tk.Label(welcome_page, text="Username and password cannot be the same", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if password_info and len(username_info) < 3:
-            # Username must be at least 3 characters
-            message = tk.Label(welcome_page, text="Username must be at least 3 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info and len(password_info) < 8:
-            # Password must be at least 8 characters
-            message = tk.Label(welcome_page, text="Password must be at least 8 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if password_info and len(username_info) > 20:
-            # Username must be at most 20 characters
-            message = tk.Label(welcome_page, text="Username must be at most 20 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info and len(password_info) > 64:
-            # Password must be at most 64 characters
-            message = tk.Label(welcome_page, text="Password must be at most 64 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if password_info and username_info.isdigit():
-            # Username cannot be all numbers
-            message = tk.Label(welcome_page, text="Username cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info and password_info.isdigit():
-            # Password cannot be all numbers
-            message = tk.Label(welcome_page, text="Password cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        
-        # remove spaces and make it case insensitive
-        username_info = username_info.strip().lower()
-
-        # create registered user object
-        registered_user = User(username_info, password_info)
-        Database.write_to_file(registered_user)
-
-        username_entry.delete(0, tk.END)
-        password_entry.delete(0, tk.END)
-
-        message = tk.Label(welcome_page, text="Registration Success", fg="green", background="#8a8d91", font=("calibri", 11))
-        message.pack()
-        welcome_page.after(2000, lambda: message.destroy())
-
+    def register_user(): 
+        """wrapper for Database.register_user()"""
+        Database.register_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry)
+    
     def login_user():
-        """Logs user into homepage if user exists and if password is correct"""
-        username_info = username_entry.get()
-        password_info = password_entry.get()
-
-        if not username_info or not password_info:
-            # Empty string
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info not in Database.users_map.keys():
-            # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if Database.users_map[username_info] != password_info:
-            # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        
-        # Login success
-        message = tk.Label(welcome_page, text="Login Success", fg="green", background="#8a8d91", font=("calibri", 11))
-        message.pack()
-        # open home page 
-        homepage_screen()
-        welcome_page.destroy()
-
+        """wrapper for Database.login_user()
+           takes user to homepage_screen() if successful"""
+        Database.login_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry, homepage_screen=homepage_screen)
+    
     # Log in and register buttons
     login_btn    = tk.Button(welcome_page, text="Login", width=10, height=1, bg="#eda758", command = login_user)
     login_btn.pack(pady=10)
@@ -219,6 +116,15 @@ def homepage_screen():
     Arp_label.grid(row=9, column=0, columnspan=2, pady=2)
     Arp_entry = tk.Entry(homepage_screen)
     Arp_entry.grid(row=9, column=2, pady=2)
+
+    # Button to go back to welcome page at bottom left
+    def logout():
+        """Logs user out and takes them back to welcome page
+           destroys homepage_screen"""
+        homepage_screen.destroy()
+        welcome_screen()
+    back_btn = tk.Button(homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout)
+    back_btn.grid(row=10, column=0, pady=10)
 
     
     # ----------------- after choosing programmable parameters --------------------- #
