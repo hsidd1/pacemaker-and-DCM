@@ -4,11 +4,11 @@
 # !!!!!!!! WARNING !!!!!!!!
 
 # Check if the file exists, and if not, create it
-if [ ! -f "database.txt" ]; then
-  touch "database.txt"
+if [ ! -f "database.json" ]; then
+  touch "database.json"
 fi
 
 # Clear the contents of the file
-> "database.txt"
+> "database.json"
 
-echo "Contents of 'database.txt' have been cleared."
+echo "Contents of 'database.json' have been cleared."
