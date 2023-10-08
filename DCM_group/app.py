@@ -74,53 +74,14 @@ def homepage_screen():
     pacing_mode_dropdown = tk.OptionMenu(homepage_screen, pacing_mode, "AOO", "AAI", "VOO", "VVI")
     pacing_mode_dropdown.grid(row=1, column=2, pady=2)
     # get input into a variable (test this)
-    pacing_mode_input = pacing_mode.get()
-    
-     # Other Variables
-    LowerRate_label = tk.Label(homepage_screen, text="Lower Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
-    LowerRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-    LowerRate_entry = tk.Entry(homepage_screen)
-    LowerRate_entry.grid(row=2, column=2, pady=2)
+    #pacing_mode_input = pacing_mode.get()
 
-    UpperRate_label = tk.Label(homepage_screen, text="Upper Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
-    UpperRate_label.grid(row=3, column=0, columnspan=2, pady=2)
-    UpperRate_entry = tk.Entry(homepage_screen)
-    UpperRate_entry.grid(row=3, column=2, pady=2)
+    settings_btn = tk.Button(homepage_screen, text="Settings", width=10, height=1, bg="#eda758", command= lambda: get_pacing_mode())
+    settings_btn.grid(row=1, column=3, pady=2)
 
-    AtrialAmp_label = tk.Label(homepage_screen, text="Atrial Amplitude:", background="#8a8d91", font=("Helvetica", 10))
-    AtrialAmp_label.grid(row=4, column=0, columnspan=2, pady=2)
-    AtrialAmp_entry = tk.Entry(homepage_screen)
-    AtrialAmp_entry.grid(row=4, column=2, pady=2)
-
-    AtrialPulseWidth_label = tk.Label(homepage_screen, text="Atrial Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
-    AtrialPulseWidth_label.grid(row=5, column=0, columnspan=2, pady=2)
-    AtrialPulseWidth_entry = tk.Entry(homepage_screen)
-    AtrialPulseWidth_entry.grid(row=5, column=2, pady=2)
-
-    VentricularAmp_label = tk.Label(homepage_screen, text="Ventricular Amplitude:", background="#8a8d91", font=("Helvetica", 10))
-    VentricularAmp_label.grid(row=2, column=4, columnspan=12, pady=2)
-    VentricularAmp_entry = tk.Entry(homepage_screen)
-    VentricularAmp_entry.grid(row=2, column=16, pady=2, columnspan=1)
-
-    VentricularPulseWidth_label = tk.Label(homepage_screen, text="Ventricular Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
-    VentricularPulseWidth_label.grid(row=3, column=4, columnspan=12, pady=2)
-    VentricularPulseWidth_entry = tk.Entry(homepage_screen)
-    VentricularPulseWidth_entry.grid(row=3, column=16, pady=2, columnspan=1)
-
-    Vrp_label = tk.Label(homepage_screen, text="VRP:", background="#8a8d91", font=("Helvetica", 10))
-    Vrp_label.grid(row=4, column=4, columnspan=12, pady=2)
-    Vrp_entry = tk.Entry(homepage_screen)
-    Vrp_entry.grid(row=4, column=16, pady=2, columnspan=1)
-
-    Arp_label = tk.Label(homepage_screen, text="ARP:", background="#8a8d91", font=("Helvetica", 10))
-    Arp_label.grid(row=5, column=4, columnspan=12, pady=2)
-    Arp_entry = tk.Entry(homepage_screen)
-    Arp_entry.grid(row=5, column=16, pady=2, columnspan=1)
-
-    if pacing_mode_input == "AOO":
-        test_label = tk.Label(homepage_screen, text="TEST", background="#8a8d91", font=("Helvetica", 10))
-        test_label.grid(row=6, column=4, columnspan=12, pady=2)
-
+    def get_pacing_mode():
+        pacing_mode_input = pacing_mode.get()
+        settings_screen(pacing_mode_input)
 
     # Button to go back to welcome page at bottom left
     def logout():
@@ -136,6 +97,98 @@ def homepage_screen():
     #     pacing_display_screen()
     #     homepage_screen.destroy()
     
+def settings_screen(pacing_mode: str):
+    settings_screen = tk.Tk()
+    settings_screen.title("DCM Application - Pacing Mode Settings")
+    #settings_screen.geometry("600x500")
+    settings_screen.configure(bg="#8a8d91")
+    settings_title_label = tk.Label(settings_screen, text="Pacing Mode Settings", font=("Helvetica", 25, "bold"), background="#8a8d91")
+    settings_title_label.grid(row=0, column=0, columnspan=20, pady=10)
+
+    LowerRate_label = tk.Label(settings_screen, text="Lower Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
+    LowerRate_entry = tk.Entry(settings_screen)
+
+    UpperRate_label = tk.Label(settings_screen, text="Upper Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
+    UpperRate_entry = tk.Entry(settings_screen)
+
+    AtrialAmp_label = tk.Label(settings_screen, text="Atrial Amplitude:", background="#8a8d91", font=("Helvetica", 10))
+    AtrialAmp_entry = tk.Entry(settings_screen)
+    
+    AtrialPulseWidth_label = tk.Label(settings_screen, text="Atrial Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
+    AtrialPulseWidth_entry = tk.Entry(settings_screen)
+    
+    VentricularAmp_label = tk.Label(settings_screen, text="Ventricular Amplitude:", background="#8a8d91", font=("Helvetica", 10))
+    VentricularAmp_entry = tk.Entry(settings_screen)
+    
+    VentricularPulseWidth_label = tk.Label(settings_screen, text="Ventricular Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
+    VentricularPulseWidth_entry = tk.Entry(settings_screen)
+    
+    Vrp_label = tk.Label(settings_screen, text="VRP:", background="#8a8d91", font=("Helvetica", 10))
+    Vrp_entry = tk.Entry(settings_screen)
+    
+    Arp_label = tk.Label(settings_screen, text="ARP:", background="#8a8d91", font=("Helvetica", 10))
+    Arp_entry = tk.Entry(settings_screen)
+    
+
+    if (pacing_mode == "AOO"):
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
+        LowerRate_entry.grid(row=1, column=2, pady=2)
+        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
+        UpperRate_entry.grid(row=2, column=2, pady=2)
+        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        AtrialAmp_entry.grid(row=1, column=10, pady=2)
+        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
+    elif (pacing_mode == "VOO"):
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
+        LowerRate_entry.grid(row=1, column=2, pady=2)
+        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
+        UpperRate_entry.grid(row=2, column=2, pady=2)
+        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        VentricularAmp_entry.grid(row=1, column=10, pady=2)
+        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
+    elif (pacing_mode == "VVI"):
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
+        LowerRate_entry.grid(row=1, column=2, pady=2)
+        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
+        UpperRate_entry.grid(row=2, column=2, pady=2)
+        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        VentricularAmp_entry.grid(row=1, column=10, pady=2)
+        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
+        Vrp_label.grid(row=3, column=0, columnspan=2, pady=2)
+        Vrp_entry.grid(row=3, column=2, pady=2, columnspan=1)
+        Arp_label.grid(row=3, column=4, columnspan=2, pady=2)
+        Arp_entry.grid(row=3, column=10, pady=2, columnspan=1)
+    elif (pacing_mode == "AAI"):
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
+        LowerRate_entry.grid(row=1, column=2, pady=2)
+        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
+        UpperRate_entry.grid(row=2, column=2, pady=2)
+        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        AtrialAmp_entry.grid(row=1, column=10, pady=2)
+        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
+
+    def apply():
+        pass
+
+    def ok():
+        pass
+
+    def close():
+        settings_screen.destroy()
+
+    apply_btn = tk.Button(settings_screen, text="Apply", width=10, height=1, bg="#eda758", command=apply)
+    apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
+
+    ok_btn = tk.Button(settings_screen, text="OK", width=10, height=1, bg="#eda758", command=ok)
+    ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
+
+    close_btn = tk.Button(settings_screen, text="Close", width=10, height=1, bg="#eda758", command=close)
+    close_btn.grid(row=3, column=4, columnspan=2, pady=10)    
+
 def pacing_display_screen():
     pass
 
