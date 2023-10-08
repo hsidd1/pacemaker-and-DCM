@@ -1,6 +1,5 @@
 import tkinter as tk 
 from PIL import ImageTk, Image
-from user import User
 from database import Database
 
 Database = Database()
@@ -31,71 +30,14 @@ def welcome_screen():
     password_entry = tk.Entry(welcome_page, text="password", show='*')
     password_entry.pack()
 
-    def register_user():
-        """Registers user and writes to file if valid"""
-
-        username_info = username_entry.get()
-        password_info = password_entry.get()
-        if not username_info or not password_info:
-            # Empty entry
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if Database.get_user_count() >= 10:
-            # Too many users
-            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info in Database.users_map.keys():
-            # Username already exists
-            message = tk.Label(welcome_page, text="Username already exists", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        
-        # create registered user object
-        registered_user = User(username_info, password_info)
-        Database.write_to_file(registered_user)
-
-        username_entry.delete(0, tk.END)
-        password_entry.delete(0, tk.END)
-
-        message = tk.Label(welcome_page, text="Registration Success", fg="green", background="#8a8d91", font=("calibri", 11))
-        message.pack()
-        welcome_page.after(2000, lambda: message.destroy())
-
+    def register_user(): 
+        """wrapper for Database.register_user()"""
+        Database.register_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry)
+    
     def login_user():
-        """Logs user into homepage if user exists and if password is correct"""
-        username_info = username_entry.get()
-        password_info = password_entry.get()
-
-        if not username_info or not password_info:
-            # Empty string
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if username_info not in Database.users_map.keys():
-            # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        if Database.users_map[username_info] != password_info:
-            # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
-            message.pack()
-            welcome_page.after(2000, lambda: message.destroy())
-            return
-        
-        # Login success
-        message = tk.Label(welcome_page, text="Login Success", fg="green", background="#8a8d91", font=("calibri", 11))
-        message.pack()
-        # open home page 
-        homepage_screen()
-        welcome_page.destroy()
+        """wrapper for Database.login_user()
+           takes user to homepage_screen() if successful"""
+        Database.login_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry, homepage_screen=homepage_screen)
 
     # Log in and register buttons
     login_btn    = tk.Button(welcome_page, text="Login", width=10, height=1, bg="#eda758", command = login_user)
@@ -178,6 +120,16 @@ def homepage_screen():
     if pacing_mode_input == "AOO":
         test_label = tk.Label(homepage_screen, text="TEST", background="#8a8d91", font=("Helvetica", 10))
         test_label.grid(row=6, column=4, columnspan=12, pady=2)
+
+
+    # Button to go back to welcome page at bottom left
+    def logout():
+        """Logs user out and takes them back to welcome page
+           destroys homepage_screen"""
+        homepage_screen.destroy()
+        welcome_screen()
+    back_btn = tk.Button(homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout)
+    back_btn.grid(row=10, column=0, pady=10)
 
     # ----------------- after choosing programmable parameters --------------------- #
     # if everything is filled in and the user wants to see the data filled in:
