@@ -73,19 +73,19 @@ def welcome_screen():
 
         if not username_info or not password_info:
             # Empty string
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info not in Database.users_map.keys():
             # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(welcome_page, text="User does not exist", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if Database.users_map[username_info] != password_info:
             # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(welcome_page, text="Incorrect password", fg="#d43333", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
@@ -121,11 +121,11 @@ def homepage_screen():
     homepage_screen.geometry("600x500")
     homepage_screen.configure(bg="#8a8d91")
     hompage_title_label = tk.Label(homepage_screen, text="Pacemaker Device Controller-Monitor", font=("Helvetica", 25, "bold"), background="#8a8d91")
-    hompage_title_label.grid(row=0, column=0, columnspan=10, pady=10)
+    hompage_title_label.grid(row=0, column=0, columnspan=20, pady=10)
 
     # --------------- page features ------------------ #
     # dropdown menu to choose pacing mode
-    pacing_mode_label = tk.Label(homepage_screen, text="Choose pacing mode:", background="#8a8d91", font=("Helvetica", 11))
+    pacing_mode_label = tk.Label(homepage_screen, text="Choose pacing mode:", background="#8a8d91", font=("Helvetica", 10))
     pacing_mode_label.grid(row=1, column=0, columnspan=2, pady=2)
     pacing_mode = tk.StringVar(homepage_screen)
     pacing_mode.set("") # default value
@@ -135,47 +135,50 @@ def homepage_screen():
     pacing_mode_input = pacing_mode.get()
     
      # Other Variables
-    LowerRate_label = tk.Label(homepage_screen, text="Lower Rate Limit:", background="#8a8d91", font=("Helvetica", 11))
+    LowerRate_label = tk.Label(homepage_screen, text="Lower Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
     LowerRate_label.grid(row=2, column=0, columnspan=2, pady=2)
     LowerRate_entry = tk.Entry(homepage_screen)
     LowerRate_entry.grid(row=2, column=2, pady=2)
 
-    UpperRate_label = tk.Label(homepage_screen, text="Upper Rate Limit:", background="#8a8d91", font=("Helvetica", 11))
+    UpperRate_label = tk.Label(homepage_screen, text="Upper Rate Limit:", background="#8a8d91", font=("Helvetica", 10))
     UpperRate_label.grid(row=3, column=0, columnspan=2, pady=2)
     UpperRate_entry = tk.Entry(homepage_screen)
     UpperRate_entry.grid(row=3, column=2, pady=2)
 
-    AtrialAmp_label = tk.Label(homepage_screen, text="Atrial Amplitude:", background="#8a8d91", font=("Helvetica", 11))
+    AtrialAmp_label = tk.Label(homepage_screen, text="Atrial Amplitude:", background="#8a8d91", font=("Helvetica", 10))
     AtrialAmp_label.grid(row=4, column=0, columnspan=2, pady=2)
     AtrialAmp_entry = tk.Entry(homepage_screen)
     AtrialAmp_entry.grid(row=4, column=2, pady=2)
 
-    AtrialPulseWidth_label = tk.Label(homepage_screen, text="Atrial Pulse Width:", background="#8a8d91", font=("Helvetica", 11))
+    AtrialPulseWidth_label = tk.Label(homepage_screen, text="Atrial Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
     AtrialPulseWidth_label.grid(row=5, column=0, columnspan=2, pady=2)
     AtrialPulseWidth_entry = tk.Entry(homepage_screen)
     AtrialPulseWidth_entry.grid(row=5, column=2, pady=2)
 
-    VentricularAmp_label = tk.Label(homepage_screen, text="Ventricular Amplitude:", background="#8a8d91", font=("Helvetica", 11))
-    VentricularAmp_label.grid(row=6, column=0, columnspan=2, pady=2)
+    VentricularAmp_label = tk.Label(homepage_screen, text="Ventricular Amplitude:", background="#8a8d91", font=("Helvetica", 10))
+    VentricularAmp_label.grid(row=2, column=4, columnspan=12, pady=2)
     VentricularAmp_entry = tk.Entry(homepage_screen)
-    VentricularAmp_entry.grid(row=6, column=2, pady=2)
+    VentricularAmp_entry.grid(row=2, column=16, pady=2, columnspan=1)
 
-    VentricularPulseWidth_label = tk.Label(homepage_screen, text="Ventricular Pulse Width:", background="#8a8d91", font=("Helvetica", 11))
-    VentricularPulseWidth_label.grid(row=7, column=0, columnspan=2, pady=2)
+    VentricularPulseWidth_label = tk.Label(homepage_screen, text="Ventricular Pulse Width:", background="#8a8d91", font=("Helvetica", 10))
+    VentricularPulseWidth_label.grid(row=3, column=4, columnspan=12, pady=2)
     VentricularPulseWidth_entry = tk.Entry(homepage_screen)
-    VentricularPulseWidth_entry.grid(row=7, column=2, pady=2)
+    VentricularPulseWidth_entry.grid(row=3, column=16, pady=2, columnspan=1)
 
-    Vrp_label = tk.Label(homepage_screen, text="VRP:", background="#8a8d91", font=("Helvetica", 11))
-    Vrp_label.grid(row=8, column=0, columnspan=2, pady=2)
+    Vrp_label = tk.Label(homepage_screen, text="VRP:", background="#8a8d91", font=("Helvetica", 10))
+    Vrp_label.grid(row=4, column=4, columnspan=12, pady=2)
     Vrp_entry = tk.Entry(homepage_screen)
-    Vrp_entry.grid(row=8, column=2, pady=2)
+    Vrp_entry.grid(row=4, column=16, pady=2, columnspan=1)
 
-    Arp_label = tk.Label(homepage_screen, text="ARP:", background="#8a8d91", font=("Helvetica", 11))
-    Arp_label.grid(row=9, column=0, columnspan=2, pady=2)
+    Arp_label = tk.Label(homepage_screen, text="ARP:", background="#8a8d91", font=("Helvetica", 10))
+    Arp_label.grid(row=5, column=4, columnspan=12, pady=2)
     Arp_entry = tk.Entry(homepage_screen)
-    Arp_entry.grid(row=9, column=2, pady=2)
+    Arp_entry.grid(row=5, column=16, pady=2, columnspan=1)
 
-    
+    if pacing_mode_input == "AOO":
+        test_label = tk.Label(homepage_screen, text="TEST", background="#8a8d91", font=("Helvetica", 10))
+        test_label.grid(row=6, column=4, columnspan=12, pady=2)
+
     # ----------------- after choosing programmable parameters --------------------- #
     # if everything is filled in and the user wants to see the data filled in:
     #     pacing_display_screen()
