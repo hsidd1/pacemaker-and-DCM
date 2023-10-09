@@ -3,6 +3,8 @@ from PIL import ImageTk, Image
 from database import Database
 
 Database = Database()
+current_user = None
+
 
 def welcome_screen():
     """Welcome page for login and registration of users"""
@@ -37,8 +39,10 @@ def welcome_screen():
     def login_user():
         """wrapper for Database.login_user()
            takes user to homepage_screen() if successful"""
+        global current_user 
+        current_user = username_entry.get()
         Database.login_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry, homepage_screen=homepage_screen)
-
+ 
     # Log in and register buttons
     login_btn    = tk.Button(welcome_page, text="Login", width=10, height=1, bg="#eda758", command = login_user)
     login_btn.pack(pady=10)
@@ -127,7 +131,22 @@ def settings_screen(pacing_mode: str):
     
     def apply():
         #TODO: update all parameters in database
-        pass
+        param_data = {
+            "l_rate_limit": LowerRate_entry.get(),
+            "u_rate_limit": UpperRate_entry.get(),
+            "atrial_amplitude": AtrialAmp_entry.get(),
+            "atrial_pulse_width": AtrialPulseWidth_entry.get(),
+            "ARP": Arp_entry.get(),
+            "vent_amplitude": VentricularAmp_entry.get(),
+            "vent_pulse_width": VentricularPulseWidth_entry.get(),
+            "VRP": Vrp_entry.get()             
+        }
+
+        temp_data = dict(param_data)
+        for key in temp_data:
+            if (not len(temp_data[key])):
+                del param_data[key]
+        Database.update_parameters(current_user, pacing_mode, param_data)
 
     def ok():
         # apply and close
