@@ -193,14 +193,22 @@ class Database:
         homepage_screen()
         welcome_page.destroy()
 
-    def update_parameters(self, current_user: str, pacing_mode: str, data: dict):
+    def update_parameters(self, user: User, current_user: str, pacing_mode: str, data: dict):
         with open(self.database, "r") as f:
             try:
                 users = json.load(f)
             except json.JSONDecodeError:
                 users = []
             users[0][current_user]["pacing_mode_params"][pacing_mode] = data
-            #print(users[0][current_user]["pacing_mode_params"][pacing_mode])
         with open(self.database, "w") as f:
             # write the entire list of users to the file
             json.dump(users, f, indent=4)
+        user.update_parameters(data, pacing_mode)
+    
+    def read_from_file(self):
+        with open(self.database, "r") as f:
+            try:
+                users = json.load(f)
+            except json.JSONDecodeError:
+                users = []
+        return users
