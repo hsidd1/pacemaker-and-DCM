@@ -53,14 +53,6 @@ class Database:
         """Private method - removes user from database"""
         del self.users_map[username]
 
-    def __contains_special_characters(self, username: str):
-        """Private method - checks for special characters"""
-        special_characters = "/?!@#$%<>{[|"
-        for char in special_characters:
-            if char in username:
-                return True
-        return False
-
     def write_to_file(self, user: User):
         """writes user to database when registered"""
         self.__add_user(user)
@@ -203,7 +195,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
-        if self.__contains_special_characters(username_info):
+        if username_info.isalnum():
             message = tk.Label(
                 welcome_page,
                 text="Username cannot contain special characters",

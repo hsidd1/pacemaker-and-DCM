@@ -5,10 +5,10 @@ from backend import Backend
 from user import User
 
 Database = Database()
+Backend = Backend()
 
 # The current_user that is logged in
 current_user = None
-Backend = Backend()
 
 
 def welcome_screen():
@@ -16,7 +16,7 @@ def welcome_screen():
     welcome_page = tk.Tk()
     welcome_page.title("DCM Application - Welcome Page")
     welcome_page.geometry("600x500")
-    welcome_page.configure(bg="#8a8d91")  # 3 a nice grey colour
+    welcome_page.configure(bg="#8a8d91")
     # welcome_page.attributes('-fullscreen', True)
 
     tk.Label(
