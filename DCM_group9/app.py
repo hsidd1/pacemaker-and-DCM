@@ -58,7 +58,7 @@ def welcome_screen():
         """wrapper for Database.login_user()
         takes user to homepage_screen() if successful"""
         global current_user
-        current_username = username_entry.get()
+        current_username = username_entry.get().lower()
         current_password = username_entry.get()
         is_valid = Database.login_user(
             welcome_page=welcome_page,

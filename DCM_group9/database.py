@@ -99,7 +99,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
-        if username_info in self.users_map.keys():
+        if username_info.lower() in map(str.lower, self.users_map.keys()):
             # Username already exists
             message = tk.Label(
                 welcome_page,
@@ -195,7 +195,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
-        if username_info.isalnum():
+        if not username_info.isalnum():
             message = tk.Label(
                 welcome_page,
                 text="Username cannot contain special characters",
@@ -236,7 +236,7 @@ class Database:
         homepage_screen: tk.Tk,
     ) -> bool:
         """Logs user into homepage if user exists and if password is correct"""
-        username_info = username_entry.get()
+        username_info = username_entry.get().lower()
         password_info = password_entry.get()
 
         if not username_info or not password_info:
@@ -251,7 +251,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if username_info not in self.users_map.keys():
+        if username_info.lower() not in map(str.lower, self.users_map.keys()):
             # Username does not exist
             message = tk.Label(
                 welcome_page,
