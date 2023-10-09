@@ -2,7 +2,7 @@ from user import User
 import json
 import tkinter as tk
 
-DATABASE = "DCM_group/database.json"
+DATABASE = "DCM_group9/database.json"
 
 class Database:
     """Database class to store Users"""

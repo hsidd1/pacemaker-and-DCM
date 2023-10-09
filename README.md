@@ -15,12 +15,12 @@ To run the Device Controller-Monitor application, you will need
 the packages outlined in the requirements file:
 
 ```sh
-python -m pip install -r DCM_group/requirements.txt
+python -m pip install -r DCM_group9/requirements.txt
 ``` 
 
 Then the application can be started from the same directory:
 ```sh
-python DCM_group/app.py
+python DCM_group9/app.py
 ```
 
 #### Using the Pacemaker

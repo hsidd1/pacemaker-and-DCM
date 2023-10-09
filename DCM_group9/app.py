@@ -46,7 +46,7 @@ def welcome_screen():
     register_btn.pack()
 
     # Image logo
-    logo = Image.open("DCM_group/imgs/heartLogo.png")
+    logo = Image.open("DCM_group9/imgs/heartLogo.png")
     logo_resized = logo.resize((100, 100)) # maximum size to be able to still display three error messages on screen
     logo_resized = ImageTk.PhotoImage(logo_resized)
     logo_label = tk.Label(welcome_page, image = logo_resized, background="#8a8d91")
