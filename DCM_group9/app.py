@@ -1,11 +1,11 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from database import Database
+from backend import Backend
 
 Database = Database()
 current_user = None
-
-
+Backend = Backend()
 
 def welcome_screen():
     """Welcome page for login and registration of users"""
@@ -68,7 +68,7 @@ def welcome_screen():
     welcome_page.mainloop()
 
 
-def homepage_screen(is_connected=False):
+def homepage_screen():
     """Homepage screen for choosing pacing mode and viewing pacing data
        Takes User to pacing_display_screen() when all parameters are filled in"""
     # configuring the page attributes
@@ -111,9 +111,12 @@ def homepage_screen(is_connected=False):
                          width=10, height=1, bg="#eda758", command=logout)
     back_btn.grid(row=10, column=0, pady=10)
 # Connection Status
-
-    status_label = tk.Label(homepage_screen, text="Connection",
-                            background="#00FF00" if is_connected else "red", font=("Helvetica", 10, "bold"))
+    if Backend.is_connected:
+        text = "Connection status: Connected"
+    else:
+        text = "Connection status: Disconnected"
+    status_label = tk.Label(homepage_screen, text=text,
+                            background="#00FF00" if Backend.is_connected else "red", font=("Helvetica", 10, "bold"))
     status_label.grid(row=13, column=0, pady=10)
 
 
