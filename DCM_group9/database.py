@@ -4,14 +4,16 @@ import tkinter as tk
 
 DATABASE = "DCM_group9/database.json"
 
+
 class Database:
     """Database class to store Users"""
+
     def __init__(self, database: str = DATABASE):
         self.database = database
         # map of users' usernames and passwords
         # read from file to see who exists and add them to map each run
         self.users_map = self.load_users_from_json()
-    
+
     def load_users_from_json(self) -> dict:
         users_map = {}
         try:
@@ -50,10 +52,10 @@ class Database:
     def __remove_user(self, username: str):
         """Private method - removes user from database"""
         del self.users_map[username]
-    
+
     def __contains_special_characters(self, username: str):
         """Private method - checks for special characters"""
-        special_characters = '/?!@#$%<>{[|'
+        special_characters = "/?!@#$%<>{[|"
         for char in special_characters:
             if char in username:
                 return True
@@ -67,86 +69,152 @@ class Database:
                 users = json.load(f)
             except json.JSONDecodeError:
                 users = []
-            if (not users):
+            if not users:
                 users.append(user.to_dict())
-            else:   
+            else:
                 users[0].update(user.to_dict())
         with open(self.database, "w") as f:
             # write the entire list of users to the file
             json.dump(users, f, indent=4)
-    
-    def register_user(self, welcome_page: tk.Tk, username_entry: str, password_entry: str):
+
+    def register_user(
+        self, welcome_page: tk.Tk, username_entry: str, password_entry: str
+    ):
         """Registers user and writes to file if valid"""
         username_info = username_entry.get()
         password_info = password_entry.get()
         if not username_info or not password_info:
             # Empty entry
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Please enter valid username and password",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if self.get_user_count >= 10:
             # Too many users
-            message = tk.Label(welcome_page, text="Too many users", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Too many users",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info in self.users_map.keys():
             # Username already exists
-            message = tk.Label(welcome_page, text="Username already exists", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username already exists",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info == password_info:
             # Username and password cannot be the same
-            message = tk.Label(welcome_page, text="Username and password cannot be the same", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username and password cannot be the same",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if password_info and len(username_info) < 3:
             # Username must be at least 3 characters
-            message = tk.Label(welcome_page, text="Username must be at least 3 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username must be at least 3 characters",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info and len(password_info) < 8:
             # Password must be at least 8 characters
-            message = tk.Label(welcome_page, text="Password must be at least 8 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Password must be at least 8 characters",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if password_info and len(username_info) > 20:
             # Username must be at most 20 characters
-            message = tk.Label(welcome_page, text="Username must be at most 20 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username must be at most 20 characters",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info and len(password_info) > 64:
             # Password must be at most 64 characters
-            message = tk.Label(welcome_page, text="Password must be at most 64 characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Password must be at most 64 characters",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if password_info and username_info.isdigit():
             # Username cannot be all numbers
-            message = tk.Label(welcome_page, text="Username cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username cannot be all numbers",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if username_info and password_info.isdigit():
             # Password cannot be all numbers
-            message = tk.Label(welcome_page, text="Password cannot be all numbers", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Password cannot be all numbers",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
         if self.__contains_special_characters(username_info):
-            message = tk.Label(welcome_page, text="Username cannot contain special characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Username cannot contain special characters",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
 
-        
-        
         # remove spaces and make it case insensitive
         username_info = username_info.strip().lower()
 
@@ -157,44 +225,82 @@ class Database:
         username_entry.delete(0, tk.END)
         password_entry.delete(0, tk.END)
 
-        message = tk.Label(welcome_page, text="Registration Success", fg="green", background="#8a8d91", font=("calibri", 11))
+        message = tk.Label(
+            welcome_page,
+            text="Registration Success",
+            fg="green",
+            background="#8a8d91",
+            font=("calibri", 11),
+        )
         message.pack()
         welcome_page.after(2000, lambda: message.destroy())
         return
-    
-    def login_user(self, welcome_page: tk.Tk, username_entry: str, password_entry: str, homepage_screen: tk.Tk) -> bool:
+
+    def login_user(
+        self,
+        welcome_page: tk.Tk,
+        username_entry: str,
+        password_entry: str,
+        homepage_screen: tk.Tk,
+    ) -> bool:
         """Logs user into homepage if user exists and if password is correct"""
         username_info = username_entry.get()
         password_info = password_entry.get()
 
         if not username_info or not password_info:
             # Empty string
-            message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Please enter valid username and password",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
         if username_info not in self.users_map.keys():
             # Username does not exist
-            message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="User does not exist",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
         if self.users_map[username_info] != password_info:
             # Incorrect password
-            message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message = tk.Label(
+                welcome_page,
+                text="Incorrect password",
+                fg="red",
+                background="#8a8d91",
+                font=("calibri", 11, "bold"),
+            )
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        
+
         # Login success
-        message = tk.Label(welcome_page, text="Login Success", fg="green", background="#8a8d91", font=("calibri", 11))
+        message = tk.Label(
+            welcome_page,
+            text="Login Success",
+            fg="green",
+            background="#8a8d91",
+            font=("calibri", 11),
+        )
         message.pack()
-        # open home page 
+        # open home page
         homepage_screen()
         welcome_page.destroy()
         return True
 
-    def update_parameters(self, user: User, current_user: str, pacing_mode: str, data: dict):
+    def update_parameters(
+        self, user: User, current_user: str, pacing_mode: str, data: dict
+    ):
         with open(self.database, "r") as f:
             try:
                 users = json.load(f)
@@ -205,7 +311,7 @@ class Database:
             # write the entire list of users to the file
             json.dump(users, f, indent=4)
         user.update_parameters(data, pacing_mode)
-    
+
     def read_from_file(self):
         with open(self.database, "r") as f:
             try:

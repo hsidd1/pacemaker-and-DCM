@@ -1,5 +1,6 @@
 import serial
 
+
 class Backend:
     def __init__(self, port: str = None):
         if port is None:
