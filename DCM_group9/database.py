@@ -20,16 +20,19 @@ class Database:
                     data = json.load(f)
                 except json.JSONDecodeError:
                     data = []
-                for user_dict in data:
-                    try:
-                        username = user_dict.get("username")
-                        password = user_dict.get("password")
-                        if username and password:
-                            users_map[username] = password
-                    except json.JSONDecodeError as e:
-                        print(f"Error decoding JSON: {e}")
-                    except KeyError as e:
-                        print(f"KeyError: {e} - Invalid JSON structure")
+                try:
+                    for key in data[0]:
+                        try:
+                            username = key
+                            password = data[0][key]["password"]
+                            if username and password:
+                                users_map[username] = password
+                        except json.JSONDecodeError as e:
+                            print(f"Error decoding JSON: {e}")
+                        except KeyError as e:
+                            print(f"KeyError: {e} - Invalid JSON structure")
+                except IndexError:
+                    users_map = {}
         except FileNotFoundError:
             print(f"File not found: {self.database}")
 
@@ -47,6 +50,14 @@ class Database:
     def __remove_user(self, username: str):
         """Private method - removes user from database"""
         del self.users_map[username]
+    
+    def __contains_special_characters(self, username: str):
+        """Private method - checks for special characters"""
+        special_characters = '/?!@#$%<>{[|'
+        for char in special_characters:
+            if char in username:
+                return True
+        return False
 
     def write_to_file(self, user: User):
         """writes user to database when registered"""
@@ -56,10 +67,13 @@ class Database:
                 users = json.load(f)
             except json.JSONDecodeError:
                 users = []
-        users.append(user.to_dict())
+            if (not users):
+                users.append(user.to_dict())
+            else:   
+                users[0].update(user.to_dict())
         with open(self.database, "w") as f:
             # write the entire list of users to the file
-            json.dump(users, f)
+            json.dump(users, f, indent=4)
     
     def register_user(self, welcome_page: tk.Tk, username_entry: str, password_entry: str):
         """Registers user and writes to file if valid"""
@@ -125,6 +139,13 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return
+        if self.__contains_special_characters(username_info):
+            message = tk.Label(welcome_page, text="Username cannot contain special characters", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            message.pack()
+            welcome_page.after(2000, lambda: message.destroy())
+            return
+
+        
         
         # remove spaces and make it case insensitive
         username_info = username_info.strip().lower()
@@ -171,3 +192,15 @@ class Database:
         # open home page 
         homepage_screen()
         welcome_page.destroy()
+
+    def update_parameters(self, current_user: str, pacing_mode: str, data: dict):
+        with open(self.database, "r") as f:
+            try:
+                users = json.load(f)
+            except json.JSONDecodeError:
+                users = []
+            users[0][current_user]["pacing_mode_params"][pacing_mode] = data
+            #print(users[0][current_user]["pacing_mode_params"][pacing_mode])
+        with open(self.database, "w") as f:
+            # write the entire list of users to the file
+            json.dump(users, f, indent=4)
