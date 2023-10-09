@@ -91,14 +91,10 @@ def homepage_screen():
         welcome_screen()
     back_btn = tk.Button(homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout)
     back_btn.grid(row=10, column=0, pady=10)
-
-    # ----------------- after choosing programmable parameters --------------------- #
-    # if everything is filled in and the user wants to see the data filled in:
-    #     pacing_display_screen()
-    #     homepage_screen.destroy()
     
 def settings_screen(pacing_mode: str):
     settings_screen = tk.Tk()
+    settings_screen.geometry("520x350")
     settings_screen.title("DCM Application - Pacing Mode Settings")
     #settings_screen.geometry("600x500")
     settings_screen.configure(bg="#8a8d91")
@@ -130,10 +126,13 @@ def settings_screen(pacing_mode: str):
     Arp_entry = tk.Entry(settings_screen)
     
     def apply():
+        #TODO: update all parameters in database
         pass
 
     def ok():
-        pass
+        # apply and close
+        apply()
+        close()
 
     def close():
         settings_screen.destroy()
@@ -142,7 +141,7 @@ def settings_screen(pacing_mode: str):
     ok_btn = tk.Button(settings_screen, text="OK", width=10, height=1, bg="#eda758", command=ok)
     close_btn = tk.Button(settings_screen, text="Close", width=10, height=1, bg="#eda758", command=close)
 
-    if (pacing_mode == "AOO"):
+    if pacing_mode == "AOO":
         LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
         LowerRate_entry.grid(row=1, column=2, pady=2)
         UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
@@ -154,7 +153,7 @@ def settings_screen(pacing_mode: str):
         apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
         ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
         close_btn.grid(row=3, column=4, columnspan=2, pady=10) 
-    elif (pacing_mode == "VOO"):
+    elif pacing_mode == "VOO":
         LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
         LowerRate_entry.grid(row=1, column=2, pady=2)
         UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
@@ -166,7 +165,7 @@ def settings_screen(pacing_mode: str):
         apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
         ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
         close_btn.grid(row=3, column=4, columnspan=2, pady=10)
-    elif (pacing_mode == "VVI"):
+    elif pacing_mode == "VVI":
         LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
         LowerRate_entry.grid(row=1, column=2, pady=2)
         UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
@@ -180,7 +179,7 @@ def settings_screen(pacing_mode: str):
         apply_btn.grid(row=4, column=0, columnspan=2, pady=10)
         ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
         close_btn.grid(row=4, column=4, columnspan=2, pady=10)
-    elif (pacing_mode == "AAI"):
+    elif pacing_mode == "AAI":
         LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
         LowerRate_entry.grid(row=1, column=2, pady=2)
         UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
