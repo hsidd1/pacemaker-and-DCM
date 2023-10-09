@@ -47,7 +47,7 @@ class User:
     
     def to_dict(self) -> dict:
         """for *json* file writing"""
-        return {self.username: {"password": self.password, "pacing_mode_params": self.__parameter_dict}}
+        return {self.username: {"password": self.password, "pacing_mode_params": self.parameter_dict}}
     
     def update_parameters(self, data: dict, pacing_mode: str = None):
         if (pacing_mode):  

@@ -162,7 +162,7 @@ class Database:
         welcome_page.after(2000, lambda: message.destroy())
         return
     
-    def login_user(self, welcome_page: tk.Tk, username_entry: str, password_entry: str, homepage_screen: tk.Tk):
+    def login_user(self, welcome_page: tk.Tk, username_entry: str, password_entry: str, homepage_screen: tk.Tk) -> bool:
         """Logs user into homepage if user exists and if password is correct"""
         username_info = username_entry.get()
         password_info = password_entry.get()
@@ -172,19 +172,19 @@ class Database:
             message = tk.Label(welcome_page, text="Please enter valid username and password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
-            return
+            return False
         if username_info not in self.users_map.keys():
             # Username does not exist
             message = tk.Label(welcome_page, text="User does not exist", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
-            return
+            return False
         if self.users_map[username_info] != password_info:
             # Incorrect password
             message = tk.Label(welcome_page, text="Incorrect password", fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
-            return
+            return False
         
         # Login success
         message = tk.Label(welcome_page, text="Login Success", fg="green", background="#8a8d91", font=("calibri", 11))
@@ -192,6 +192,7 @@ class Database:
         # open home page 
         homepage_screen()
         welcome_page.destroy()
+        return True
 
     def update_parameters(self, user: User, current_user: str, pacing_mode: str, data: dict):
         with open(self.database, "r") as f:

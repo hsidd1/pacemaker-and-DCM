@@ -50,13 +50,13 @@ def welcome_screen():
         global current_user 
         current_username = username_entry.get()
         current_password = username_entry.get()
-        Database.login_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry, homepage_screen=homepage_screen)
-
+        is_valid = Database.login_user(welcome_page=welcome_page, username_entry=username_entry, password_entry=password_entry, homepage_screen=homepage_screen)
+        if not is_valid:
+            return
         users = Database.read_from_file()
 
         current_user = User(current_username, current_password, users[0][current_username]["pacing_mode_params"])
-        print(current_user.parameter_dict)
-        
+
     # Log in and register buttons
     login_btn = tk.Button(welcome_page, text="Login",
                           width=10, height=1, bg="#eda758", command=login_user)
@@ -189,7 +189,6 @@ def settings_screen(pacing_mode: str):
             if (not len(temp_data[key])):
                 del param_data[key]
         Database.update_parameters(current_user, current_user.username, pacing_mode, param_data)
-        print(current_user.parameter_dict)
 
     def ok():
         # apply and close

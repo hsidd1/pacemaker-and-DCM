@@ -123,6 +123,37 @@
                     "VRP": "No Data"
                 }
             }
+        },
+        "user2": {
+            "password": "jfsjkkljlkj",
+            "pacing_mode_params": {
+                "AOO": {
+                    "l_rate_limit": "No Data",
+                    "u_rate_limit": "No Data",
+                    "atrial_amplitude": "No Data",
+                    "atrial_pulse_width": "No Data"
+                },
+                "AAI": {
+                    "l_rate_limit": "No Data",
+                    "u_rate_limit": "No Data",
+                    "atrial_amplitude": "No Data",
+                    "atrial_pulse_width": "No Data",
+                    "ARP": "No Data"
+                },
+                "VOO": {
+                    "l_rate_limit": "No Data",
+                    "u_rate_limit": "No Data",
+                    "vent_amplitude": "No Data",
+                    "vent_pulse_width": "No Data"
+                },
+                "VVI": {
+                    "l_rate_limit": "No Data",
+                    "u_rate_limit": "No Data",
+                    "vent_amplitude": "No Data",
+                    "vent_pulse_width": "No Data",
+                    "VRP": "No Data"
+                }
+            }
         }
     }
 ]
