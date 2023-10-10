@@ -1,8 +1,14 @@
-class User:
-    """User class to store username and password
-    possibly extend to store pacemaker data"""
+"""Module for User class.
 
+User class stores username, password and pacing mode parameters."""
+
+class User:
     def __init__(self, username: str, password: str, data: dict = None):
+        """Initializes User class with username, password and pacing mode parameters.
+        :param username: username of the user
+        :param password: password of the user
+        :param data: pacing mode parameters of the user
+        """
         self.username = username
         self.password = password
         if data:
@@ -55,6 +61,10 @@ class User:
         }
 
     def update_parameters(self, data: dict, pacing_mode: str = None):
+        """Updates pacing mode parameters of the user.
+        :param data: pacing mode parameters of the user
+        :param pacing_mode: pacing mode of the user
+        """
         if pacing_mode:
             self.parameter_dict[pacing_mode] = data
         else:

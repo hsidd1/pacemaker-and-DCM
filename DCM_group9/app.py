@@ -1,9 +1,16 @@
+"""Main application program for the DCM application.
+
+This file contains all the screens of the application including
+the welcome screen, homepage screen, settings screen and pacing
+parameters display screen.
+"""
 import tkinter as tk
 from PIL import ImageTk, Image
 from database import Database
 from backend import Backend
 from user import User
 
+# Global variables
 Database = Database()
 Backend = Backend()
 
@@ -11,7 +18,7 @@ Backend = Backend()
 current_user = None
 
 
-def welcome_screen():
+def welcome_screen() -> None:
     """Welcome page for login and registration of users"""
     welcome_page = tk.Tk()
     welcome_page.title("DCM Application - Welcome Page")
@@ -46,20 +53,24 @@ def welcome_screen():
     password_entry = tk.Entry(welcome_page, text="password", show="*")
     password_entry.pack()
 
-    def register_user():
-        """wrapper for Database.register_user()"""
+    def register_user() -> None:
+        """wrapper for Database.register_user() for button command"""
         Database.register_user(
             welcome_page=welcome_page,
             username_entry=username_entry,
             password_entry=password_entry,
         )
 
-    def login_user():
-        """wrapper for Database.login_user()
+    def login_user() -> None:
+        """wrapper for Database.login_user() for button command.
         takes user to homepage_screen() if successful"""
         global current_user
+
+        # Username and password input (username is case insensitive)
         current_username = username_entry.get().lower()
         current_password = username_entry.get()
+
+        # Check if login is valid otherwise return
         is_valid = Database.login_user(
             welcome_page=welcome_page,
             username_entry=username_entry,
@@ -68,15 +79,17 @@ def welcome_screen():
         )
         if not is_valid:
             return
+        
         users = Database.read_from_file()
 
+        # Update current_user using User class
         current_user = User(
             current_username,
             current_password,
             users[0][current_username]["pacing_mode_params"],
         )
 
-    # Log in and register buttons
+    # Login and register buttons
     login_btn = tk.Button(
         welcome_page, text="Login", width=10, height=1, bg="#eda758", command=login_user
     )
@@ -93,7 +106,6 @@ def welcome_screen():
 
     # Image logo
     logo = Image.open("DCM_group9/imgs/heartLogo.png")
-    # maximum size to be able to still display three error messages on screen
     logo_resized = logo.resize((100, 100))
     logo_resized = ImageTk.PhotoImage(logo_resized)
     logo_label = tk.Label(welcome_page, image=logo_resized, background="#8a8d91")
@@ -102,10 +114,9 @@ def welcome_screen():
     welcome_page.mainloop()
 
 
-def homepage_screen():
-    """Homepage screen for choosing pacing mode and viewing pacing data
+def homepage_screen() -> None:
+    """Homepage screen for choosing pacing mode and viewing pacing data.
     Takes User to pacing_display_screen() when all parameters are filled in"""
-    # configuring the page attributes
     homepage_screen = tk.Tk()
     homepage_screen.title("DCM Application - Home Page")
     homepage_screen.geometry("600x500")
@@ -119,7 +130,7 @@ def homepage_screen():
     hompage_title_label.grid(row=0, column=0, columnspan=20, pady=10)
 
     # --------------- page features ------------------ #
-    # dropdown menu to choose pacing mode
+    # Dropdown menu to choose pacing mode
     pacing_mode_label = tk.Label(
         homepage_screen,
         text="Choose pacing mode:",
@@ -146,14 +157,15 @@ def homepage_screen():
     )
     settings_btn.grid(row=1, column=3, pady=2)
 
-    def get_pacing_mode():
+    def get_pacing_mode() -> None:
+        """Gets pacing mode from dropdown menu and calls settings_screen() 
+        for that pacing mode. Used as a wrapper for Settings button command"""
         pacing_mode_input = pacing_mode.get()
         settings_screen(pacing_mode_input)
 
-    # Button to go back to welcome page at bottom left
-    def logout():
-        """Logs user out and takes them back to welcome page
-        destroys homepage_screen"""
+    def logout() -> None:
+        """Logs user out and takes them back to welcome page.
+        Destroys homepage_screen. Used as a wrapper for Logout button command"""
         homepage_screen.destroy()
         welcome_screen()
 
@@ -161,6 +173,7 @@ def homepage_screen():
         homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout
     )
     back_btn.grid(row=10, column=0, pady=10)
+
     # Connection Status
     if Backend.is_connected:
         text = "Connection status: Connected"
@@ -175,7 +188,9 @@ def homepage_screen():
     status_label.grid(row=13, column=0, pady=10)
 
 
-def settings_screen(pacing_mode: str):
+def settings_screen(pacing_mode: str) -> None:
+    """Settings screen for changing pacing mode parameters.
+    Takes User to pacing_display_screen() when all parameters are filled in"""
     settings_screen = tk.Tk()
     settings_screen.geometry("520x350")
     settings_screen.title("DCM Application - Pacing Mode Settings")
@@ -189,6 +204,7 @@ def settings_screen(pacing_mode: str):
     )
     settings_title_label.grid(row=0, column=0, columnspan=20, pady=10)
 
+    # Labels and entries for pacing mode parameters
     LowerRate_label = tk.Label(
         settings_screen,
         text="Lower Rate Limit:",
@@ -248,7 +264,7 @@ def settings_screen(pacing_mode: str):
     Arp_entry = tk.Entry(settings_screen)
 
     def apply():
-        # TODO: update all parameters in database
+        """Applies the pacing mode parameters to the current_user"""
         param_data = {
             "l_rate_limit": LowerRate_entry.get(),
             "u_rate_limit": UpperRate_entry.get(),
@@ -260,6 +276,7 @@ def settings_screen(pacing_mode: str):
             "VRP": Vrp_entry.get(),
         }
 
+        # Remove empty parameters
         temp_data = dict(param_data)
         for key in temp_data:
             if not len(temp_data[key]):
@@ -269,11 +286,12 @@ def settings_screen(pacing_mode: str):
         )
 
     def ok():
-        # apply and close
+        """Do both apply and close, similar features to Windows settings"""
         apply()
         close()
 
     def close():
+        """Closes the settings screen"""
         settings_screen.destroy()
 
     apply_btn = tk.Button(
@@ -286,69 +304,57 @@ def settings_screen(pacing_mode: str):
         settings_screen, text="Close", width=10, height=1, bg="#eda758", command=close
     )
 
+    def display_parameters_layout(type: str) -> None:
+        """Displays the standard parameters for the pacing mode type provided"""
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
+        LowerRate_entry.grid(row=1, column=2, pady=2)
+        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
+        UpperRate_entry.grid(row=2, column=2, pady=2)
+        if type == "A":
+            # AOO and AAI pacing mode
+            AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+            AtrialAmp_entry.grid(row=1, column=10, pady=2)
+            AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+            AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
+            apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
+            ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
+            close_btn.grid(row=3, column=4, columnspan=2, pady=10)
+        elif type == "V":
+            # VOO and VVI pacing mode
+            VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+            VentricularAmp_entry.grid(row=1, column=10, pady=2)
+            VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
+            VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
+            apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
+            ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
+            close_btn.grid(row=3, column=4, columnspan=2, pady=10)
+        else:
+            raise ValueError("Invalid pacing mode type")
+    
     if pacing_mode == "AOO":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        AtrialAmp_entry.grid(row=1, column=10, pady=2)
-        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
-        apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=3, column=4, columnspan=2, pady=10)
+        display_parameters_layout("A")
     elif pacing_mode == "VOO":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        VentricularAmp_entry.grid(row=1, column=10, pady=2)
-        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
-        apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=3, column=4, columnspan=2, pady=10)
+        display_parameters_layout("V")
     elif pacing_mode == "VVI":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        VentricularAmp_entry.grid(row=1, column=10, pady=2)
-        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
+        display_parameters_layout("V")
         Vrp_label.grid(row=3, column=0, columnspan=2, pady=2)
         Vrp_entry.grid(row=3, column=2, pady=2, columnspan=1)
-        apply_btn.grid(row=4, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=4, column=4, columnspan=2, pady=10)
     elif pacing_mode == "AAI":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        AtrialAmp_entry.grid(row=1, column=10, pady=2)
-        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
+        display_parameters_layout("A")
         Arp_label.grid(row=3, column=0, columnspan=2, pady=2)
         Arp_entry.grid(row=3, column=2, pady=2, columnspan=1)
-        apply_btn.grid(row=4, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=4, column=4, columnspan=2, pady=10)
 
 
 def pacing_display_screen():
+    """Screen for displaying pacing data"""
     pass
 
 
 def main():
+    """Main function to run the application"""
     welcome_screen()
-    # homepage_screen() # for testing, skip login
+    tk._exit()
 
 
 if __name__ == "__main__":
     main()
-    tk._exit()
