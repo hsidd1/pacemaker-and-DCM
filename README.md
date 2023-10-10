@@ -22,6 +22,13 @@ Then the application can be started from the same directory:
 ```sh
 python DCM_group9/app.py
 ```
+##### Running Tests
+Tests are run using `pytest` automatically with Python 3.11 in an Ubuntu-latest environment via automated Github Actions CI/CD. 
+
+To run tests locally: 
+```sh
+./run_tests.sh
+```
 
 #### Using the Pacemaker
 
