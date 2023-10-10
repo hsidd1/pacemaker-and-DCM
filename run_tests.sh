@@ -1,10 +1,11 @@
 #!/bin/bash
 # Tests for DCM application automated with GitHub Actions
 
-# Set up the Python environment
-python -m pip install --upgrade pip
-pip install flake8 pytest
-if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+# Ensure database contains default content for each test
+DATABASE_FILE="DCM_group9/tests/test_database.json"
+DEFAULT_DATABASE="DCM_group9/tests/default_database.json"
+> "$DATABASE_FILE"
+cp "$DEFAULT_DATABASE" "$DATABASE_FILE"
 
 # Run the tests from the tests directory
 cd DCM_group9
