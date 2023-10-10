@@ -26,9 +26,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
-    - name: Add parent directory to PYTHONPATH
-      run: |
-       export PYTHONPATH="$PYTHONPATH:$(pwd)/DCM_group9"
     - name: Install dependencies
       working-directory: ./DCM_group9
       run: |
@@ -43,6 +40,7 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
-      working-directory: ./DCM_group9
+      working-directory: .
       run: |
-        pytest
+       ./run_tests.sh # pytest
+
