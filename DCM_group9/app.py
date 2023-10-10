@@ -155,10 +155,51 @@ def settings_screen(pacing_mode: str):
     Arp_label = tk.Label(settings_screen, text="ARP:",
                          background="#8a8d91", font=("Helvetica", 10))
     Arp_entry = tk.Entry(settings_screen)
+# check for integer
+
+    def is_valid_integer(value):
+        try:
+            int(value)
+            return True
+        except ValueError:
+            return False
 
     def apply():
-        # TODO: update all parameters in database
-        pass
+        lower_rate_val = LowerRate_entry.get()
+        upper_rate_val = UpperRate_entry.get()
+        AtrialAmp_val = AtrialAmp_entry.get()
+        AtrialPulseWidth_val = AtrialPulseWidth_entry.get()
+
+        if not is_valid_integer(lower_rate_val):
+            # Display an error message for invalid lower rate
+            error_label_lower_rate = tk.Label(settings_screen, text="Lower rate limit must be a valid integer",
+                                              fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            error_label_lower_rate.grid(row=2, column=0, columnspan=5, pady=1)
+
+        if not is_valid_integer(AtrialAmp_val):
+            # Display an error message for invalid Atrial Amplitude
+            error_label_atrial_amp = tk.Label(settings_screen, text="Atrial Amp must be a valid integer",
+                                              fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            error_label_atrial_amp.grid(row=2, column=6, columnspan=5, pady=1)
+
+        if not is_valid_integer(upper_rate_val):
+            # Display an error message for invalid upper rate
+            error_label_upper_rate = tk.Label(settings_screen, text="Upper rate limit must be a valid integer",
+                                              fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            error_label_upper_rate.grid(row=4, column=0, columnspan=5, pady=1)
+
+        if not is_valid_integer(AtrialPulseWidth_val):
+            # Display an error message for invalid Atrial Pulse Width
+            error_label_pulse_width = tk.Label(settings_screen, text="Pulse width must be a valid integer",
+                                               fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+            error_label_pulse_width.grid(row=4, column=6, columnspan=5, pady=1)
+
+        if is_valid_integer(lower_rate_val and upper_rate_val and AtrialAmp_val and AtrialPulseWidth_val):
+            settings_screen.destroy()
+
+        # def apply():
+    #     # TODO: update all parameters in database
+    #     pass
 
     def ok():
         # apply and close
@@ -176,57 +217,68 @@ def settings_screen(pacing_mode: str):
                           width=10, height=1, bg="#eda758", command=close)
 
     if pacing_mode == "AOO":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=4)
+        LowerRate_entry.grid(row=1, column=2, pady=4)
+        UpperRate_label.grid(row=3, column=0, columnspan=2, pady=11)
+        UpperRate_entry.grid(row=3, column=2, pady=11)
         AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
         AtrialAmp_entry.grid(row=1, column=10, pady=2)
-        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
-        apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=3, column=4, columnspan=2, pady=10)
+        AtrialPulseWidth_label.grid(row=3, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=3, column=10, pady=2)
+        apply_btn.grid(row=5, column=0, columnspan=2, pady=10)
+        ok_btn.grid(row=5, column=2, columnspan=2, pady=10)
+        close_btn.grid(row=5, column=4, columnspan=2, pady=10)
     elif pacing_mode == "VOO":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        VentricularAmp_entry.grid(row=1, column=10, pady=2)
-        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
-        apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=3, column=4, columnspan=2, pady=10)
-    elif pacing_mode == "VVI":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
-        VentricularAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
-        VentricularAmp_entry.grid(row=1, column=10, pady=2)
-        VentricularPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        VentricularPulseWidth_entry.grid(row=2, column=10, pady=2)
-        Vrp_label.grid(row=3, column=0, columnspan=2, pady=2)
-        Vrp_entry.grid(row=3, column=2, pady=2, columnspan=1)
-        apply_btn.grid(row=4, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=4, column=4, columnspan=2, pady=10)
-    elif pacing_mode == "AAI":
-        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=2)
-        LowerRate_entry.grid(row=1, column=2, pady=2)
-        UpperRate_label.grid(row=2, column=0, columnspan=2, pady=2)
-        UpperRate_entry.grid(row=2, column=2, pady=2)
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=4)
+        LowerRate_entry.grid(row=1, column=2, pady=4)
+        UpperRate_label.grid(row=3, column=0, columnspan=2, pady=11)
+        UpperRate_entry.grid(row=3, column=2, pady=11)
         AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
         AtrialAmp_entry.grid(row=1, column=10, pady=2)
-        AtrialPulseWidth_label.grid(row=2, column=4, columnspan=2, pady=2)
-        AtrialPulseWidth_entry.grid(row=2, column=10, pady=2)
-        Arp_label.grid(row=3, column=0, columnspan=2, pady=2)
-        Arp_entry.grid(row=3, column=2, pady=2, columnspan=1)
-        apply_btn.grid(row=4, column=0, columnspan=2, pady=10)
-        ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
-        close_btn.grid(row=4, column=4, columnspan=2, pady=10)
+        AtrialPulseWidth_label.grid(row=3, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=3, column=10, pady=2)
+        apply_btn.grid(row=5, column=0, columnspan=2, pady=10)
+        ok_btn.grid(row=5, column=2, columnspan=2, pady=10)
+        close_btn.grid(row=5, column=4, columnspan=2, pady=10)
+    elif pacing_mode == "VVI":
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=4)
+        LowerRate_entry.grid(row=1, column=2, pady=4)
+        UpperRate_label.grid(row=3, column=0, columnspan=2, pady=11)
+        UpperRate_entry.grid(row=3, column=2, pady=11)
+        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        AtrialAmp_entry.grid(row=1, column=10, pady=2)
+        AtrialPulseWidth_label.grid(row=3, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=3, column=10, pady=2)
+        apply_btn.grid(row=5, column=0, columnspan=2, pady=10)
+        ok_btn.grid(row=5, column=2, columnspan=2, pady=10)
+        close_btn.grid(row=5, column=4, columnspan=2, pady=10)
+    elif pacing_mode == "AAI":
+        LowerRate_label.grid(row=1, column=0, columnspan=2, pady=4)
+        LowerRate_entry.grid(row=1, column=2, pady=4)
+        UpperRate_label.grid(row=3, column=0, columnspan=2, pady=11)
+        UpperRate_entry.grid(row=3, column=2, pady=11)
+        AtrialAmp_label.grid(row=1, column=4, columnspan=2, pady=2)
+        AtrialAmp_entry.grid(row=1, column=10, pady=2)
+        AtrialPulseWidth_label.grid(row=3, column=4, columnspan=2, pady=2)
+        AtrialPulseWidth_entry.grid(row=3, column=10, pady=2)
+        apply_btn.grid(row=5, column=0, columnspan=2, pady=10)
+        ok_btn.grid(row=5, column=2, columnspan=2, pady=10)
+        close_btn.grid(row=5, column=4, columnspan=2, pady=10)
+
+    # having the implemented modes as integers because they are time intervals
+    # def is_int(value):
+    #     try:
+    #         int(value)
+    #         return True
+    #     except ValueError:
+    #         return False
+
+    # lower_rate_value = LowerRate_entry.get()
+
+    # if not is_int(lower_rate_value):
+    #     error_label = tk.Label(settings_screen, text="Lower Rate must be a valid integer",
+    #                            fg="red", background="#8a8d91", font=("calibri", 11, "bold"))
+    #     error_label.grid(row=4, column=0, columnspan=6, pady=10)
 
 
 def pacing_display_screen():
