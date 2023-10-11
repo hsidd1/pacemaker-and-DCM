@@ -65,31 +65,16 @@
         "user": {
             "password": "password",
             "pacing_mode_params": {
-                "AOO": {
-                    "l_rate_limit": "3214",
-                    "u_rate_limit": "4241",
-                    "atrial_amplitude": "4214",
-                    "atrial_pulse_width": "214214"
-                },
-                "AAI": {
-                    "l_rate_limit": "1",
-                    "u_rate_limit": "1",
-                    "atrial_amplitude": "1",
-                    "atrial_pulse_width": "1",
-                    "ARP": "11"
-                },
+                "AOO": {},
+                "AAI": {},
                 "VOO": {
-                    "l_rate_limit": "098",
-                    "u_rate_limit": "876",
-                    "vent_amplitude": "6478",
+                    "l_rate_limit": "8",
+                    "u_rate_limit": "0",
+                    "vent_amplitude": "0",
                     "vent_pulse_width": "8"
                 },
                 "VVI": {
-                    "l_rate_limit": "321321321",
-                    "u_rate_limit": "321",
-                    "vent_amplitude": "332",
-                    "vent_pulse_width": "1321321",
-                    "VRP": "321312"
+                    "vent_amplitude": "8"
                 }
             }
         },
