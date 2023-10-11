@@ -218,7 +218,21 @@ def homepage_screen() -> None:
     back_btn = tk.Button(
         homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout
     )
-    back_btn.grid(row=10, column=0, pady=10)
+
+    def egram() -> None:
+        """Takes user to egram screen"""
+        global page_geometry
+        page_geometry = homepage_screen.geometry()
+
+        homepage_screen.destroy()
+        egram_screen()
+
+    egram_btn = tk.Button(
+        homepage_screen, text="View Egram", width=10, height=1, bg="#eda758", command=egram
+    )
+
+    egram_btn.grid(row=15, column=0, pady=10)
+    back_btn.grid(row=15, column=1, pady=10)
     
     homepage_screen.bind('<Escape>', lambda event: logout())
 
@@ -233,7 +247,41 @@ def homepage_screen() -> None:
         background="#00FF00" if Backend.is_connected else "red",
         font=("Helvetica", 10, "bold"),
     )
-    status_label.grid(row=13, column=0, pady=10)
+    status_label.grid(row=12, column=0, pady=10)
+
+    # Board Connected
+    if Backend.board_connected:
+        text = "Board connected: " + Backend.board_connected
+    else:
+        text = "Board connected: None"
+    board_label = tk.Label(
+        homepage_screen,
+        text=text,
+        background="#00FF00" if Backend.board_connected else "red",
+        font=("Helvetica", 10, "bold"),
+    )
+    board_label.grid(row=12, column=1, pady=10)
+
+def egram_screen() -> None:
+    egram_screen = tk.Tk()
+    egram_screen.geometry(page_geometry)
+    egram_screen.title("DCM Application - Egram")
+    egram_screen.configure(bg="#8a8d91")
+    bring_to_front(egram_screen)
+
+    def back() -> None:
+        """Takes user back to homepage"""
+        global page_geometry
+        page_geometry = egram_screen.geometry()
+
+        egram_screen.destroy()
+        homepage_screen()
+
+    back_btn = tk.Button(
+        egram_screen, text="Back", width=10, height=1, bg="#eda758", command=back
+    )
+    back_btn.grid(row=0, column=0, pady=10)
+    egram_screen.bind('<Escape>', lambda event: back())
 
 
 def settings_screen(pacing_mode: str) -> None:
