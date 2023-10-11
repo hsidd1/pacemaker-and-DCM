@@ -12,21 +12,24 @@ from user import User
 
 class Application:
 
-    def __init__(self):
+    def __init__(self, run: bool = True):
         """Initialises the application with a database and backend object.
         :param database: Database object for storing user data
         :param backend: Backend object for communicating with the pacemaker
         :param current_user: User object for the current user logged in
         :param page_geometry: String of the current pages geometry
-        :param windowed_maximized: Boolean of whether the window is maximized or not"""
+        :param windowed_maximized: Boolean of whether the window is maximized or not
+        :param run: Boolean of whether the application should run or not"""
         self.database: Database = Database()
         self.backend: Backend = Backend()
         self.current_user: User | None = None
         self.page_geometry: str = "600x500"
         self.windowed_maximized: bool = False
+        self.run: bool = run
 
-        self.welcome_screen()
-        tk._exit()
+        if self.run:
+            self.welcome_screen()
+            tk._exit()
 
 
     def welcome_screen(self) -> None:
