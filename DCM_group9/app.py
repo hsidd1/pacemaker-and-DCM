@@ -223,7 +223,20 @@ class Application:
         back_btn = tk.Button(
             homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout
         )
-        back_btn.grid(row=10, column=0, pady=10)
+
+        def egram() -> None:
+            """Takes user to egram screen"""
+            self.page_geometry = homepage_screen.geometry()
+
+            homepage_screen.destroy()
+            self.egram_screen()
+
+        egram_btn = tk.Button(
+            homepage_screen, text="View Egram", width=10, height=1, bg="#eda758", command=egram
+        )
+
+        egram_btn.grid(row=15, column=0, pady=10)
+        back_btn.grid(row=15, column=1, pady=10)
         
         homepage_screen.bind('<Escape>', lambda event: logout())
 
@@ -238,7 +251,46 @@ class Application:
             background="#00FF00" if self.backend.is_connected else "red",
             font=("Helvetica", 10, "bold"),
         )
-        status_label.grid(row=13, column=0, pady=10)
+        status_label.grid(row=12, column=0, pady=10)
+        
+        # Board Connected ID (known or unknown)
+        if self.backend.board_connected:
+            if self.backend.device_id in self.backend.previous_device_ids:
+                text = f"ID: {self.backend.board_connected} (Known Device)"
+                color = "green"
+            else:
+                text = f"ID: {self.backend.board_connected} (Unknown Device)"
+                color = "red"
+        else:
+            text = "ID: None (Known Status Unavailable)"
+            color = "grey"
+        board_label = tk.Label(
+            homepage_screen,
+            text=text,
+            background=color,
+            font=("Helvetica", 10, "bold"),
+        )
+        board_label.grid(row=12, column=1, pady=10)
+
+    def egram_screen(self) -> None:
+        egram_screen = tk.Tk()
+        egram_screen.geometry(self.page_geometry)
+        egram_screen.title("DCM Application - Egram")
+        egram_screen.configure(bg="#8a8d91")
+        self.bring_to_front(egram_screen)
+
+        def back() -> None:
+            """Takes user back to homepage"""
+            self.page_geometry = egram_screen.geometry()
+
+            egram_screen.destroy()
+            self.homepage_screen()
+
+        back_btn = tk.Button(
+            egram_screen, text="Back", width=10, height=1, bg="#eda758", command=back
+        )
+        back_btn.grid(row=0, column=0, pady=10, padx=10, sticky='W')
+        egram_screen.bind('<Escape>', lambda event: back())
 
 
     def settings_screen(self, pacing_mode: str) -> None:
