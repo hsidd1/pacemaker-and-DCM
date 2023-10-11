@@ -104,6 +104,22 @@ def test_register_user_invalid_characters_username():
     password_entry.insert(0, "test")
     assert database_instance.register_user(welcome_page, username_entry, password_entry) == False
 
+def test_register_morethan10users():
+    database_instance = Database("tests/test_database.json")
+    welcome_page = tk.Tk()
+    # already 2 users in database
+    for i in range(8):
+        username_entry = tk.Entry(welcome_page)
+        username_entry.insert(0, "test" + str(i))
+        password_entry = tk.Entry(welcome_page)
+        password_entry.insert(0, "test12345678")
+        print(i)
+        assert database_instance.register_user(welcome_page, username_entry, password_entry) == True
+    username_entry = tk.Entry(welcome_page)
+    username_entry.insert(0, "test")
+    password_entry = tk.Entry(welcome_page)
+    password_entry.insert(0, "test")
+    assert database_instance.register_user(welcome_page, username_entry, password_entry) == False
 
 if __name__ == "__main__":
     pytest.main()
