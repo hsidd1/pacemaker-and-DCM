@@ -1,5 +1,1 @@
-__all__ = [
-    "app",
-    "database",
-    "user"
-]
+__all__ = ["app", "database", "user"]
