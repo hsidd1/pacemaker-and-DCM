@@ -10,6 +10,7 @@ from database import Database
 from backend import Backend
 from user import User
 from screens import Screen, WelcomeScreen, HomepageScreen, SettingsScreen
+from application_fsm import ApplicationFSM
 
 class Application:
 
@@ -515,5 +516,5 @@ class Application:
 
 
 if __name__ == "__main__":
-    app = Application()
+    app = ApplicationFSM()
     app.run_app()

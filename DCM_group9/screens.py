@@ -16,8 +16,8 @@ class Screen:
         }
         self.page_width = 0
         self.page_height = 0
-        self.num_columns = 11
-        self.num_rows = 11
+        self.num_columns = 0
+        self.num_rows = 0
 
 
     def create_button(self, text: str, command: callable, width: int = 10, height: int = 1, bg_colour: str = "#eda758"):
@@ -40,7 +40,7 @@ class Screen:
         self.widgets["Entry"].append(entry)
         return entry
     
-    def create_label(self, text: str, fontsize: int, bold: bool = False, font: str = "Helvetica"):
+    def create_label(self, text: str, fontsize: int, bold: bool = False, font: str = "Helvetica", wraplength: int = 0):
         if(bold):
             input_font = (font, fontsize, "bold")
         else:
@@ -50,6 +50,7 @@ class Screen:
             text=text,
             font=input_font,
             background="#8a8d91",
+            wraplength=wraplength
         )
         self.widgets["Label"].append(label)
         return label
@@ -61,12 +62,14 @@ class Screen:
         self.screen.after_idle(self.screen.attributes,'-topmost',False)
         self.screen.focus_force()   
 
-    def load_grid(self):
-        for i in range(0,self.num_columns):
-            self.screen.columnconfigure(i, weight=1)
-        for i in range(0,self.num_rows):
-            self.screen.rowconfigure(i, weight=1)
-        
+    def load_grid(self, cols: bool, rows: bool):
+        if (cols):
+            for i in range(0, self.num_columns):
+                self.screen.columnconfigure(i, weight=1)
+        if (rows):
+            for i in range(0, self.num_rows):
+                self.screen.rowconfigure(i, weight=1)
+
     def run_screen(self):
         self.screen = tk.Tk()
         self.screen.geometry(self.geometry)
@@ -89,7 +92,7 @@ class WelcomeScreen(Screen):
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
-        self.login = False
+        self.logged_in = False
         self.logged_user = None
     
     def run_screen(self):
@@ -133,7 +136,7 @@ class WelcomeScreen(Screen):
         )
         
 
-        self.login = True
+        self.logged_in = True
         self.geometry = self.screen.geometry()
         self.close_screen()
 
@@ -143,12 +146,47 @@ class HomepageScreen(Screen):
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Home Page"
         self.current_user = current_user
-        print(current_user.username, current_user.password, current_user.parameter_dict)
+        self.pacing_mode = None
+        self.num_columns = 3
+        self.logged_out = False
     
     def run_screen(self):
         super().run_screen()
+        super().load_grid(True, False)
         self.screen.title(self.title)
+        super().create_label("Pacemaker Device Controller-Monitor", 25, True).grid(row=0, column=0, columnspan=20, pady=10)
+        super().create_label("Choose pacing mode:", 10).grid(row=1, column=0, pady=10)
+        default = "Select a Pacing Mode"
+        self.pacing_mode = tk.StringVar(self.screen)
+        self.pacing_mode.set(default)  # default value
+        pacing_mode_dropdown = tk.OptionMenu(
+            self.screen, self.pacing_mode, "AOO", "AAI", "VOO", "VVI"
+        )
+        pacing_mode_dropdown.config(width=len(default))
+        pacing_mode_dropdown.grid(row=1, column=1, pady=2, sticky='EW')
+
+        super().create_button("Settings", self.get_pacing_mode).grid(row=1, column=2, pady=2)
+        super().create_button("Logout", self.logout).grid(row=15, column=1, pady=10)
         self.screen.mainloop()
+
+    def get_pacing_mode(self) -> None:
+        """Gets pacing mode from dropdown menu and calls settings_screen() 
+        for that pacing mode. Used as a wrapper for Settings button command"""
+
+        pacing_mode_input = self.pacing_mode.get()
+
+        if (pacing_mode_input == "Select a Pacing Mode"):
+            # Incorrect password
+            column_size = self.screen.winfo_width()/self.num_columns
+            super().create_label("Please select a valid pacing mode", 11, True, "calibri", column_size-2).grid(row=10, column=1, pady=2)
+            return
+        
+    def logout(self) -> None:
+        """Logs user out """
+        self.logged_out = True
+        self.geometry = self.screen.geometry()
+        self.close_screen()
+
 
 class SettingsScreen(Screen):
 
