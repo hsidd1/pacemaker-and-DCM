@@ -1,6 +1,10 @@
 import tkinter as tk
+from tkinter import ttk 
+from backend import Backend
 from database import Database
 from user import User
+from pacing_parameters import Parameters
+from custom_widgets import FunkyWidget
 
 class Screen:
 
@@ -55,6 +59,16 @@ class Screen:
         self.widgets["Label"].append(label)
         return label
     
+    def create_options(self, options: list, default_text: str = None):
+        string = tk.StringVar(self.screen)
+        if (default_text):
+            string.set(default_text)
+        dropdown = ttk.Combobox(
+            self.screen, textvariable=string, values=options, state="readonly"
+        )
+        self.widgets["OptionMenu"].append(dropdown)
+        return dropdown, string
+    
     def bring_to_front(self):
         """Brings screen to front"""
         self.screen.lift()
@@ -69,6 +83,10 @@ class Screen:
         if (rows):
             for i in range(0, self.num_rows):
                 self.screen.rowconfigure(i, weight=1)
+    
+    def prepare_screen_switch(self):
+        self.geometry = self.screen.geometry()
+        self.close_screen()
 
     def run_screen(self):
         self.screen = tk.Tk()
@@ -137,8 +155,15 @@ class WelcomeScreen(Screen):
         
 
         self.logged_in = True
-        self.geometry = self.screen.geometry()
-        self.close_screen()
+        super().prepare_screen_switch()
+
+    def register_user(self) -> None:
+        """wrapper for Database.register_user() for button command"""
+        self.database.register_user(
+            welcome_page=self.screen,
+            username_entry=self.widgets["Entry"][0],
+            password_entry=self.widgets["Entry"][1],
+        )
 
 class HomepageScreen(Screen):
 
@@ -149,6 +174,10 @@ class HomepageScreen(Screen):
         self.pacing_mode = None
         self.num_columns = 3
         self.logged_out = False
+        self.egram_view = False
+        self.settings_view = False
+        self.backend = Backend()
+        self.pacing_modes = ["AOO", "AAI", "VOO", "VVI", "AOOR", "VOOR", "AAIR", "VVIR"]
     
     def run_screen(self):
         super().run_screen()
@@ -157,16 +186,16 @@ class HomepageScreen(Screen):
         super().create_label("Pacemaker Device Controller-Monitor", 25, True).grid(row=0, column=0, columnspan=20, pady=10)
         super().create_label("Choose pacing mode:", 10).grid(row=1, column=0, pady=10)
         default = "Select a Pacing Mode"
-        self.pacing_mode = tk.StringVar(self.screen)
-        self.pacing_mode.set(default)  # default value
-        pacing_mode_dropdown = tk.OptionMenu(
-            self.screen, self.pacing_mode, "AOO", "AAI", "VOO", "VVI"
-        )
+        dropdown = super().create_options(self.pacing_modes, default)
+        pacing_mode_dropdown = dropdown[0]
+        self.pacing_mode = dropdown[1]
         pacing_mode_dropdown.config(width=len(default))
         pacing_mode_dropdown.grid(row=1, column=1, pady=2, sticky='EW')
 
         super().create_button("Settings", self.get_pacing_mode).grid(row=1, column=2, pady=2)
         super().create_button("Logout", self.logout).grid(row=15, column=1, pady=10)
+        super().create_button("View Egram", self.egram).grid(row=15, column=0, pady=10)
+        self.check_connection()
         self.screen.mainloop()
 
     def get_pacing_mode(self) -> None:
@@ -180,6 +209,11 @@ class HomepageScreen(Screen):
             column_size = self.screen.winfo_width()/self.num_columns
             super().create_label("Please select a valid pacing mode", 11, True, "calibri", column_size-2).grid(row=10, column=1, pady=2)
             return
+        else:
+            self.pacing_mode = pacing_mode_input
+            self.settings_view = True
+            super().prepare_screen_switch()
+
         
     def logout(self) -> None:
         """Logs user out """
@@ -187,14 +221,98 @@ class HomepageScreen(Screen):
         self.geometry = self.screen.geometry()
         self.close_screen()
 
+    def egram(self) -> None:
+        """Takes user to egram screen"""
+        self.egram_view = True
+        super().prepare_screen_switch()
+
+    def check_connection(self):
+        if self.backend.is_connected:
+            text = "Connection status: Connected"
+        else:
+            text = "Connection status: Disconnected"
+        status_label = tk.Label(
+            self.screen,
+            text=text,
+            background="#00FF00" if self.backend.is_connected else "red",
+            font=("Helvetica", 10, "bold"),
+        )
+        status_label.grid(row=12, column=0, pady=10)
+        
+        # Board Connected ID (known or unknown)
+        if self.backend.board_connected:
+            if self.backend.device_id in self.backend.previous_device_ids:
+                text = f"ID: {self.backend.board_connected} (Known Device)"
+                color = "green"
+            else:
+                text = f"ID: {self.backend.board_connected} (Unknown Device)"
+                color = "red"
+        else:
+            text = "ID: None (Known Status Unavailable)"
+            color = "grey"
+        board_label = tk.Label(
+            self.screen,
+            text=text,
+            background=color,
+            font=("Helvetica", 10, "bold"),
+        )
+        board_label.grid(row=12, column=1, pady=10)
 
 class SettingsScreen(Screen):
 
-    def __init__(self, geometry: str, current_user: User, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, current_user: User, pacing_mode: str, bg_colour: str = "#8a8d91"):
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
-        self.pacing_modes_map = {}
+        self.pacing_mode = pacing_mode
+        self.pacing_modes_map = {
+            "AOO" : [Parameters.LOWER_RATE_LIMIT,
+                      Parameters.UPPER_RATE_LIMIT, 
+                      Parameters.ATRIAL_AMPLITUDE, 
+                      Parameters.ATRIAL_PULSE_WIDTH],
+            "AAI" : [Parameters.LOWER_RATE_LIMIT,
+                      Parameters.UPPER_RATE_LIMIT, 
+                      Parameters.ATRIAL_AMPLITUDE, 
+                      Parameters.ATRIAL_PULSE_WIDTH,
+                      Parameters.ARP],
+            "VOO" : [Parameters.LOWER_RATE_LIMIT,
+                      Parameters.UPPER_RATE_LIMIT, 
+                      Parameters.VENTRICULAR_AMPLITUDE, 
+                      Parameters.VENTRICULAR_PULSE_WIDTH],
+            "VVI" : [Parameters.LOWER_RATE_LIMIT,
+                      Parameters.UPPER_RATE_LIMIT, 
+                      Parameters.VENTRICULAR_AMPLITUDE, 
+                      Parameters.VENTRICULAR_PULSE_WIDTH,
+                      Parameters.VRP],
+            "AOOR" : [], 
+            "AAIR" : [],
+            "VOOR" : [],
+            "VVIR" : []
+        }
+        self.num_columns = 5
+        self.num_rows = 5
+    
+    def run_screen(self):
+        super().run_screen()
+        self.screen.title(self.title)
+        self.load_grid(True, False)
+        parameters = self.pacing_modes_map.get(self.pacing_mode, None)
+
+        for i, param in enumerate(parameters):
+            super().create_label(param.value.name, 10).grid(row=i // self.num_columns, column=i % self.num_columns * 2, padx=5, pady=5, sticky="w")
+        
+
+        my_funky_widget = FunkyWidget(self.screen, Parameters.ATRIAL_AMPLITUDE.value.valid_interval_map, "hello").grid(row=2, column=0)
+
+        
+
+        self.screen.mainloop()
+
+class EgramScreen(Screen):
+
+    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+        super().__init__(geometry, bg_colour)
+        self.title = "DCM Application - Egram"
     
     def run_screen(self):
         super().run_screen()
