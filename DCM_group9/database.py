@@ -248,7 +248,6 @@ class Database:
         welcome_page: tk.Tk,
         username_entry,
         password_entry,
-        homepage_screen: tk.Tk,
     ) -> bool:
         """Logs user into homepage if user exists and if password is correct
         :param welcome_page: welcome page window from main app

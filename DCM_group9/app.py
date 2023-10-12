@@ -9,6 +9,7 @@ from PIL import ImageTk, Image
 from database import Database
 from backend import Backend
 from user import User
+from screens import Screen, WelcomeScreen, HomepageScreen, SettingsScreen
 
 class Application:
 
@@ -26,13 +27,19 @@ class Application:
         self.page_geometry: str = "600x500"
         self.windowed_maximized: bool = False
         self.run: bool = run
+        self.settings_screen = SettingsScreen(self.page_geometry, self.current_user)
 
-        if self.run:
-            self.welcome_screen()
+
+    def run_app(self):
+        while(self.run):
+            self.welcome_screen = WelcomeScreen(self.page_geometry)
+            self.welcome_screen.run_screen()
+            if(self.welcome_screen.login):
+                self.homepage_screen = HomepageScreen(self.welcome_screen.geometry, self.welcome_screen.logged_user)
+                self.homepage_screen.run_screen()
             tk._exit()
 
-
-    def welcome_screen(self) -> None:
+    def welcome_screentest(self) -> None:
         """Welcome page for login and registration of users"""
         welcome_page = tk.Tk()
         welcome_page.title("DCM Application - Welcome Page")
@@ -90,7 +97,6 @@ class Application:
                 welcome_page=welcome_page,
                 username_entry=username_entry,
                 password_entry=password_entry,
-                homepage_screen=self.homepage_screen,
             )
             if not is_valid:
                 return
@@ -137,7 +143,7 @@ class Application:
         welcome_page.mainloop()
 
 
-    def homepage_screen(self) -> None:
+    def homepage_screentest(self) -> None:
         """Homepage screen for choosing pacing mode and viewing pacing data.
         Takes User to pacing_display_screen() when all parameters are filled in"""
         homepage_screen = tk.Tk()
@@ -293,7 +299,7 @@ class Application:
         egram_screen.bind('<Escape>', lambda event: back())
 
 
-    def settings_screen(self, pacing_mode: str) -> None:
+    def settings_screentest(self, pacing_mode: str) -> None:
         """Settings screen for changing pacing mode parameters.
         Takes User to pacing_display_screen() when all parameters are filled in"""
         settings_screen = tk.Tk()
@@ -509,4 +515,5 @@ class Application:
 
 
 if __name__ == "__main__":
-    Application()
+    app = Application()
+    app.run_app()
