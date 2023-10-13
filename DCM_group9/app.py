@@ -12,8 +12,8 @@ from user import User
 from screens import Screen, WelcomeScreen, HomepageScreen, SettingsScreen
 from application_fsm import ApplicationFSM
 
-class Application:
 
+class Application:
     def __init__(self, run: bool = True):
         """Initialises the application with a database and backend object.
         :param database: Database object for storing user data
@@ -30,13 +30,14 @@ class Application:
         self.run: bool = run
         self.settings_screen = SettingsScreen(self.page_geometry, self.current_user)
 
-
     def run_app(self):
-        while(self.run):
+        while self.run:
             self.welcome_screen = WelcomeScreen(self.page_geometry)
             self.welcome_screen.run_screen()
-            if(self.welcome_screen.login):
-                self.homepage_screen = HomepageScreen(self.welcome_screen.geometry, self.welcome_screen.logged_user)
+            if self.welcome_screen.login:
+                self.homepage_screen = HomepageScreen(
+                    self.welcome_screen.geometry, self.welcome_screen.logged_user
+                )
                 self.homepage_screen.run_screen()
             tk._exit()
 
@@ -101,7 +102,7 @@ class Application:
             )
             if not is_valid:
                 return
-            
+
             users = self.database.read_from_file()
 
             # Update current_user using User class
@@ -118,7 +119,12 @@ class Application:
 
         # Login and register buttons
         login_btn = tk.Button(
-            welcome_page, text="Login", width=10, height=1, bg="#eda758", command=login_user
+            welcome_page,
+            text="Login",
+            width=10,
+            height=1,
+            bg="#eda758",
+            command=login_user,
         )
         login_btn.pack(pady=10)
         register_btn = tk.Button(
@@ -130,7 +136,7 @@ class Application:
             command=register_user,
         )
 
-        welcome_page.bind('<Return>', lambda event: login_user())
+        welcome_page.bind("<Return>", lambda event: login_user())
 
         register_btn.pack()
 
@@ -142,7 +148,6 @@ class Application:
         logo_label.pack(side="bottom", pady=50)
 
         welcome_page.mainloop()
-
 
     def homepage_screentest(self) -> None:
         """Homepage screen for choosing pacing mode and viewing pacing data.
@@ -161,7 +166,7 @@ class Application:
             background="#8a8d91",
         )
         hompage_title_label.grid(row=0, column=0, columnspan=20, pady=10)
-        
+
         self.bring_to_front(homepage_screen)
 
         # --------------- page features ------------------ #
@@ -180,7 +185,7 @@ class Application:
             homepage_screen, pacing_mode, "AOO", "AAI", "VOO", "VVI"
         )
         pacing_mode_dropdown.config(width=len(default))
-        pacing_mode_dropdown.grid(row=1, column=1, pady=2, sticky='EW')
+        pacing_mode_dropdown.grid(row=1, column=1, pady=2, sticky="EW")
 
         # get input into a variable (test this)
         # pacing_mode_input = pacing_mode.get()
@@ -196,23 +201,23 @@ class Application:
         settings_btn.grid(row=1, column=2, pady=2)
 
         def get_pacing_mode() -> None:
-            """Gets pacing mode from dropdown menu and calls settings_screen() 
+            """Gets pacing mode from dropdown menu and calls settings_screen()
             for that pacing mode. Used as a wrapper for Settings button command"""
             self.page_geometry = homepage_screen.geometry()
 
             pacing_mode_input = pacing_mode.get()
 
-            if (pacing_mode_input == "Select a Pacing Mode"):
+            if pacing_mode_input == "Select a Pacing Mode":
                 # Incorrect password
                 num_columns = 3
-                column_size = homepage_screen.winfo_width()/num_columns
+                column_size = homepage_screen.winfo_width() / num_columns
                 message = tk.Label(
                     homepage_screen,
                     text="Please select a valid pacing mode",
                     fg="red",
                     background="#8a8d91",
                     font=("calibri", 11, "bold"),
-                    wraplength=column_size-2,
+                    wraplength=column_size - 2,
                 ).grid(row=10, column=1, pady=2)
                 return
 
@@ -228,7 +233,12 @@ class Application:
             self.welcome_screen()
 
         back_btn = tk.Button(
-            homepage_screen, text="Logout", width=10, height=1, bg="#eda758", command=logout
+            homepage_screen,
+            text="Logout",
+            width=10,
+            height=1,
+            bg="#eda758",
+            command=logout,
         )
 
         def egram() -> None:
@@ -239,13 +249,18 @@ class Application:
             self.egram_screen()
 
         egram_btn = tk.Button(
-            homepage_screen, text="View Egram", width=10, height=1, bg="#eda758", command=egram
+            homepage_screen,
+            text="View Egram",
+            width=10,
+            height=1,
+            bg="#eda758",
+            command=egram,
         )
 
         egram_btn.grid(row=15, column=0, pady=10)
         back_btn.grid(row=15, column=1, pady=10)
-        
-        homepage_screen.bind('<Escape>', lambda event: logout())
+
+        homepage_screen.bind("<Escape>", lambda event: logout())
 
         # Connection Status
         if self.backend.is_connected:
@@ -259,7 +274,7 @@ class Application:
             font=("Helvetica", 10, "bold"),
         )
         status_label.grid(row=12, column=0, pady=10)
-        
+
         # Board Connected ID (known or unknown)
         if self.backend.board_connected:
             if self.backend.device_id in self.backend.previous_device_ids:
@@ -296,9 +311,8 @@ class Application:
         back_btn = tk.Button(
             egram_screen, text="Back", width=10, height=1, bg="#eda758", command=back
         )
-        back_btn.grid(row=0, column=0, pady=10, padx=10, sticky='W')
-        egram_screen.bind('<Escape>', lambda event: back())
-
+        back_btn.grid(row=0, column=0, pady=10, padx=10, sticky="W")
+        egram_screen.bind("<Escape>", lambda event: back())
 
     def settings_screentest(self, pacing_mode: str) -> None:
         """Settings screen for changing pacing mode parameters.
@@ -315,7 +329,7 @@ class Application:
             background="#8a8d91",
         )
         settings_title_label.grid(row=0, column=0, columnspan=20, pady=10)
-        self.bring_to_front(settings_screen)        
+        self.bring_to_front(settings_screen)
 
         # Labels and entries for pacing mode parameters
         LowerRate_label = tk.Label(
@@ -375,7 +389,7 @@ class Application:
             settings_screen, text="ARP:", background="#8a8d91", font=("Helvetica", 10)
         )
         Arp_entry = tk.Entry(settings_screen)
-        
+
         LowerRate_entry.focus_set()
 
         def apply():
@@ -413,17 +427,27 @@ class Application:
             self.homepage_screen()
 
         apply_btn = tk.Button(
-            settings_screen, text="Apply", width=10, height=1, bg="#eda758", command=apply
+            settings_screen,
+            text="Apply",
+            width=10,
+            height=1,
+            bg="#eda758",
+            command=apply,
         )
         ok_btn = tk.Button(
             settings_screen, text="OK", width=10, height=1, bg="#eda758", command=ok
         )
         close_btn = tk.Button(
-            settings_screen, text="Close", width=10, height=1, bg="#eda758", command=close
+            settings_screen,
+            text="Close",
+            width=10,
+            height=1,
+            bg="#eda758",
+            command=close,
         )
 
-        settings_screen.bind('<Return>', lambda event: ok())
-        settings_screen.bind('<Escape>', lambda event: close())
+        settings_screen.bind("<Return>", lambda event: ok())
+        settings_screen.bind("<Escape>", lambda event: close())
 
         def display_parameters_layout(type: str) -> None:
             """Displays the standard parameters for the pacing mode type provided"""
@@ -451,17 +475,25 @@ class Application:
                 close_btn.grid(row=3, column=4, columnspan=2, pady=10)
             else:
                 raise ValueError("Invalid pacing mode type")
-        
+
         if pacing_mode == "AOO":
             display_parameters_layout("A")
             apply_btn.grid(row=3, column=0, columnspan=2, pady=10)
             ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
             close_btn.grid(row=3, column=4, columnspan=2, pady=10)
 
-            LowerRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"])
-            UpperRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"])
-            AtrialAmp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["atrial_amplitude"])
-            AtrialPulseWidth_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["atrial_pulse_width"])
+            LowerRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"]
+            )
+            UpperRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"]
+            )
+            AtrialAmp_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["atrial_amplitude"]
+            )
+            AtrialPulseWidth_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["atrial_pulse_width"]
+            )
 
         elif pacing_mode == "VOO":
             display_parameters_layout("V")
@@ -469,10 +501,18 @@ class Application:
             ok_btn.grid(row=3, column=2, columnspan=2, pady=10)
             close_btn.grid(row=3, column=4, columnspan=2, pady=10)
 
-            LowerRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"])
-            UpperRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"])
-            VentricularAmp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["vent_amplitude"])
-            VentricularPulseWidth_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["vent_pulse_width"])        
+            LowerRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"]
+            )
+            UpperRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"]
+            )
+            VentricularAmp_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["vent_amplitude"]
+            )
+            VentricularPulseWidth_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["vent_pulse_width"]
+            )
         elif pacing_mode == "VVI":
             display_parameters_layout("V")
             Vrp_label.grid(row=3, column=0, columnspan=2, pady=2)
@@ -481,11 +521,19 @@ class Application:
             ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
             close_btn.grid(row=4, column=4, columnspan=2, pady=10)
 
-            LowerRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"])
-            UpperRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"])
-            VentricularAmp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["vent_amplitude"])
-            VentricularPulseWidth_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["vent_pulse_width"])        
-            Vrp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["VRP"])     
+            LowerRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"]
+            )
+            UpperRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"]
+            )
+            VentricularAmp_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["vent_amplitude"]
+            )
+            VentricularPulseWidth_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["vent_pulse_width"]
+            )
+            Vrp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["VRP"])
         elif pacing_mode == "AAI":
             display_parameters_layout("A")
             Arp_label.grid(row=3, column=0, columnspan=2, pady=2)
@@ -494,21 +542,27 @@ class Application:
             ok_btn.grid(row=4, column=2, columnspan=2, pady=10)
             close_btn.grid(row=4, column=4, columnspan=2, pady=10)
 
-            LowerRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"])
-            UpperRate_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"])
-            AtrialAmp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["atrial_amplitude"])
-            AtrialPulseWidth_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["atrial_pulse_width"])
+            LowerRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["l_rate_limit"]
+            )
+            UpperRate_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["u_rate_limit"]
+            )
+            AtrialAmp_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["atrial_amplitude"]
+            )
+            AtrialPulseWidth_entry.insert(
+                0, self.current_user.parameter_dict[pacing_mode]["atrial_pulse_width"]
+            )
             Arp_entry.insert(0, self.current_user.parameter_dict[pacing_mode]["ARP"])
 
     @staticmethod
     def bring_to_front(screen: tk):
         """Brings screen to front"""
         screen.lift()
-        screen.attributes('-topmost',True)
-        screen.after_idle(screen.attributes,'-topmost',False)
+        screen.attributes("-topmost", True)
+        screen.after_idle(screen.attributes, "-topmost", False)
         screen.focus_force()
-
-
 
     def pacing_display_screen(self):
         """Screen for displaying pacing data"""

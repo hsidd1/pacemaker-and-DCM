@@ -1,20 +1,25 @@
 import pytest
 import tkinter as tk
 import sys
+
 sys.path.append("..")
 from DCM_group9.database import Database
 
-def homepage_screen():
-    pass
 
 def test_login_user_nonexistent():
-    database_instance  = Database("tests/test_database.json")
+    database_instance = Database("tests/test_database.json")
     welcome_page = tk.Tk()
     username_entry = tk.Entry(welcome_page)
     username_entry.insert(0, "test")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "test")
-    assert database_instance .login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_correct():
     database_instance = Database("tests/test_database.json")
@@ -23,7 +28,13 @@ def test_login_user_correct():
     username_entry.insert(0, "user")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == True
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == True
+    )
+
 
 def test_login_user_wrongpassword():
     database_instance = Database("tests/test_database.json")
@@ -33,7 +44,13 @@ def test_login_user_wrongpassword():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "test" * 100)
     homepage_screen = tk.Tk()
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_wrongusername():
     database_instance = Database("tests/test_database.json")
@@ -42,7 +59,13 @@ def test_login_user_wrongusername():
     username_entry.insert(0, "test")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_empty():
     database_instance = Database("tests/test_database.json")
@@ -51,7 +74,13 @@ def test_login_user_empty():
     username_entry.insert(0, "")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_emptyusername():
     database_instance = Database("tests/test_database.json")
@@ -60,7 +89,13 @@ def test_login_user_emptyusername():
     username_entry.insert(0, "")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_emptypassword():
     database_instance = Database("tests/test_database.json")
@@ -69,7 +104,13 @@ def test_login_user_emptypassword():
     username_entry.insert(0, "user")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_case_sensitivity_password():
     database_instance = Database("tests/test_database.json")
@@ -78,7 +119,13 @@ def test_login_user_case_sensitivity_password():
     username_entry.insert(0, "user")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "Password")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == False
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == False
+    )
+
 
 def test_login_user_case_sensitivity_username():
     database_instance = Database("tests/test_database.json")
@@ -87,9 +134,13 @@ def test_login_user_case_sensitivity_username():
     username_entry.insert(0, "UsEr")
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
-    assert database_instance.login_user(welcome_page, username_entry, password_entry, homepage_screen) == True
+    assert (
+        database_instance.login_user(
+            welcome_page, username_entry, password_entry
+        )
+        == True
+    )
 
 
 if __name__ == "__main__":
     pytest.main()
-   

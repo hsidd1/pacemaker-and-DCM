@@ -9,7 +9,6 @@ DATABASE = "DCM_group9/database.json"
 
 
 class Database:
-
     def __init__(self, database: str = DATABASE, users_map: dict = None):
         """Initializes Database class with database file path.
         :param database: path to database file
@@ -19,7 +18,7 @@ class Database:
         self.users_map = self.load_users_from_json()
 
     def load_users_from_json(self) -> dict:
-        """loads users from json file and returns a dictionary of users and 
+        """loads users from json file and returns a dictionary of users and
         passwords for users_map field"""
         users_map = {}
         try:

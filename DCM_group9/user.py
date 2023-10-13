@@ -2,6 +2,7 @@
 
 User class stores username, password and pacing mode parameters."""
 
+
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
         """Initializes User class with username, password and pacing mode parameters.
