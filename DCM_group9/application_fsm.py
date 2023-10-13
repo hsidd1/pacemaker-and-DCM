@@ -42,6 +42,9 @@ class ApplicationFSM:
         elif homepage_screen.settings_view:
             self.current_state = "SettingsScreen"
             self.pacing_mode = homepage_screen.pacing_mode
+        elif (homepage_screen.egram_view):
+            self.current_state = "EgramScreen"
+            self.pacing_mode = homepage_screen.pacing_mode
         else:
             self.current_state = None
 

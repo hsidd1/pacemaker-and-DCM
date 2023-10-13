@@ -26,9 +26,7 @@ class FunkyWidget(tk.Frame):
         self.var = tk.StringVar(self)
         self.var.set(default)  # Set the default value
 
-        self.current_increment, self.current_interval = self.get_increment_interval(
-            self.var.get()
-        )
+        self.current_crement, self.current_interval = self.get_increment_interval(self.var.get())
 
         self.option_menu = ttk.Combobox(
             self, textvariable=self.var, values=self.intervals, width=10
@@ -68,47 +66,56 @@ class FunkyWidget(tk.Frame):
             else:
                 if current_value == intervals[0]:
                     increment = inc
-                    return inc, intervals
+                    return increment, intervals
+                
+    def get_next_increment_interval(self, current_interval: tuple):
+        index = (self.interval_list.index(self.current_interval) + 1) % len(self.interval_list)
+        return self.increment_list[index], self.interval_list[index]
+    
+    def get_previous_increment_interval(self, current_interval: tuple):
+        index = (self.interval_list.index(self.current_interval) - 1) % len(self.interval_list)
+        return self.increment_list[index], self.interval_list[index]
 
-    def get_next_increment_interval(self, current_interval: tuple) -> tuple:
-        try:
-            index = self.interval_list.index(self.current_interval) + 1
-            return self.increment_list[index], self.interval_list[index]
-        except IndexError:
-            return None, None
-        except ValueError:
-            return None, None
-
-    def increment_value(self) -> None:
-        if self.var.get() == "No Data":
+    def increment_value(self):
+        epsilon = 1e-10
+        if (self.var.get() == "No Data"):
             self.current_interval = self.interval_list[0]
-            self.current_increment = self.increment_list[0]
+            self.current_crement = self.increment_list[0]
             self.var.set(self.current_interval[0])
             return
         current_value = float(self.var.get())
-        next_increment, next_interval = self.get_next_increment_interval(
-            self.current_interval
-        )
-        if current_value + self.current_increment > self.current_interval[1]:
-            self.current_increment, self.current_interval = (
-                next_increment,
-                next_interval,
-            )
+        next_increment, next_interval = self.get_next_increment_interval(self.current_interval)
+        # print("===================================")
+        # print(f"currentval - {current_value}\ncurrentinc - {self.current_crement}\ncurrint - {self.current_interval}")
+        # print("===================================")
+        # print(f"nextval - {current_value+self.current_crement}\nnextinc - {next_increment}\nnextint - {next_interval}")
+        # print("===================================")
+        if (current_value+self.current_crement > self.current_interval[1] + epsilon):
+            self.current_crement, self.current_interval = next_increment, next_interval
             current_value = self.current_interval[0]
-            if current_value is None:
-                current_value = self.var.get()
         else:
-            current_value += self.current_increment
-            if next_interval is not None and current_value == next_interval[0]:
-                self.current_increment, self.current_interval = (
-                    next_increment,
-                    next_interval,
-                )
-        self.var.set(str(round(current_value, 1)))
+            current_value += self.current_crement
+            if (next_interval is not None and current_value == next_interval[0]):
+                self.current_crement, self.current_interval = next_increment, next_interval
+        self.var.set(str(round(current_value, 2)))
 
-    def decrement_value(self) -> None:
-        pass
-
-    @property
-    def get(self) -> float:
+    def decrement_value(self):
+        epsilon = 1e-10
+        if (self.var.get() == "No Data"):
+            self.current_interval = self.interval_list[-1]
+            self.current_crement = self.increment_list[-1]
+            self.var.set(self.current_interval[1])
+            return
+        current_value = float(self.var.get())
+        next_increment, next_interval = self.get_next_increment_interval(self.current_interval)
+        if (current_value-self.current_crement < self.current_interval[0] - epsilon):
+            self.current_crement, self.current_interval = next_increment, next_interval
+            current_value = self.current_interval[1]
+        else:
+            current_value -= self.current_crement
+            if (next_interval is not None and current_value == next_interval[1]):
+                self.current_crement, self.current_interval = next_increment, next_interval
+        self.var.set(str(round(current_value, 2)))
+        
+    def get(self):
         return self.var.get()
