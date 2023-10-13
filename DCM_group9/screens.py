@@ -86,13 +86,13 @@ class Screen:
         self.screen.after_idle(self.screen.attributes,'-topmost',False)
         self.screen.focus_force()   
 
-    def load_grid(self, cols: bool, rows: bool):
+    def load_grid(self, cols: bool, rows: bool, uniform: bool = False):
         if (cols):
             for i in range(0, self.num_columns):
-                self.screen.columnconfigure(i, weight=1, uniform="cols_group")
+                self.screen.columnconfigure(i, weight=1, uniform="cols_group" if uniform else "")
         if (rows):
             for i in range(0, self.num_rows):
-                self.screen.rowconfigure(i, weight=1,uniform="row_group")
+                self.screen.rowconfigure(i, weight=1, uniform="row_group" if uniform else "")
     
     def prepare_screen_switch(self):
         self.geometry = self.screen.geometry()
@@ -217,6 +217,10 @@ class HomepageScreen(Screen):
         if (pacing_mode_input == "Select a Pacing Mode"):
             # Incorrect password
             column_size = self.screen.winfo_width()/self.num_columns
+            try:
+                self.widgets["Label"].pop(2).destroy()
+            except IndexError:
+                pass
             super().create_label("Please select a valid pacing mode", 11, True, "calibri", column_size-2).grid(row=10, column=1, pady=2)
             return
         else:
@@ -228,8 +232,7 @@ class HomepageScreen(Screen):
     def logout(self) -> None:
         """Logs user out """
         self.logged_out = True
-        self.geometry = self.screen.geometry()
-        self.close_screen()
+        super().prepare_screen_switch()
 
     def egram(self) -> None:
         """Takes user to egram screen"""
@@ -299,7 +302,7 @@ class SettingsScreen(Screen):
             "VOOR" : [],
             "VVIR" : []
         }
-        self.num_columns = 5    
+        self.num_columns = 3   
         self.num_rows = 4
         self.last_row = 4*len(self.pacing_modes_map.get(pacing_mode, None)) // self.num_columns
         self.closed = False
@@ -308,9 +311,9 @@ class SettingsScreen(Screen):
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
-        self.load_grid(True, False)
+        self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
-        print(parameters[0].value.name)
+        column_width = self.screen.winfo_width()/self.num_columns
 
         for i, param in enumerate(parameters):
             super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(row=(i // self.num_columns + i  // self.num_columns), column=i % self.num_columns, padx=5, pady=5)
@@ -319,8 +322,9 @@ class SettingsScreen(Screen):
         super().create_spacer(30).grid(row=self.last_row, column=0)
 
         super().create_button("Apply", self.apply).grid(row=self.last_row+1, column=0)
-        super().create_button("Ok", self.ok).grid(row=self.last_row+1, column=1)    
+        super().create_button("Ok", self.ok).grid(row=self.last_row+1, column=1)   
         super().create_button("Close", self.close).grid(row=self.last_row+1, column=2)        
+
 
         self.screen.mainloop()
     
