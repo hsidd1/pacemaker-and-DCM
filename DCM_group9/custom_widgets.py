@@ -61,6 +61,8 @@ class FunkyWidget(tk.Frame):
             return self.increment_list[index], self.interval_list[index]
         except IndexError:
             return None, None
+        except ValueError:
+            return None, None
 
     def increment_value(self):
         if (self.var.get() == "No Data"):

@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk 
+from tkinter import ttk
+from PIL import Image, ImageTk
 from backend import Backend
 from database import Database
 from user import User
@@ -75,6 +76,15 @@ class Screen:
         self.widgets["FunkyWidget"].append(funky_widget)
         return funky_widget
 
+    def create_logo(self, image_path: str, dimensions: tuple):
+        logo = Image.open(image_path)
+        logo_resized = logo.resize(dimensions)
+        logo_resized = ImageTk.PhotoImage(logo_resized)
+        logo_label = self.create_label("", 0) # Empty label to hold image
+        logo_label.configure(image=logo_resized)
+        logo_label.image = logo_resized
+        return logo_label
+
     def create_spacer(self, space: int):
         spacer = tk.Frame(self.screen, height=space, bg=self.bg_colour)
         return spacer
@@ -133,6 +143,7 @@ class WelcomeScreen(Screen):
         super().create_entry(True).pack()
         super().create_button("Login", self.login_user).pack(pady=10)
         super().create_button("Register", self.register_user).pack()
+        super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(side="bottom", pady=50)
         self.screen.bind('<Return>', lambda event: self.login_user())
         self.screen.mainloop()
 
@@ -205,6 +216,8 @@ class HomepageScreen(Screen):
         super().create_button("Settings", self.get_pacing_mode).grid(row=1, column=2, pady=2)
         super().create_button("Logout", self.logout).grid(row=15, column=1, pady=10)
         super().create_button("View Egram", self.egram).grid(row=15, column=0, pady=10)
+        super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).grid(row=16, column=0, columnspan=20, pady=50)
+
         self.check_connection()
         self.screen.mainloop()
 
@@ -320,7 +333,8 @@ class SettingsScreen(Screen):
 
         super().create_button("Apply", self.apply).grid(row=self.last_row+1, column=0)
         super().create_button("Ok", self.ok).grid(row=self.last_row+1, column=1)    
-        super().create_button("Close", self.close).grid(row=self.last_row+1, column=2)        
+        super().create_button("Close", self.close).grid(row=self.last_row+1, column=2)
+        super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).grid(row=self.last_row+2, column=0, columnspan=20, pady=50)
 
         self.screen.mainloop()
     
@@ -354,4 +368,6 @@ class EgramScreen(Screen):
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
+        super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(side="bottom", pady=50)
+
         self.screen.mainloop()
