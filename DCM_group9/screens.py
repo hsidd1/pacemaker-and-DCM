@@ -317,6 +317,7 @@ class SettingsScreen(Screen):
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
         self.pacing_mode = pacing_mode
+        #TODO: update R type modes in assignment 2
         self.pacing_modes_map = {
             "AOO": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -344,11 +345,34 @@ class SettingsScreen(Screen):
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VRP,
             ],
-            "AOOR": [],
-            "AAIR": [],
-            "VOOR": [],
-            "VVIR": [],
+            "AOOR": [
+                Parameters.LOWER_RATE_LIMIT,
+                Parameters.UPPER_RATE_LIMIT,
+                Parameters.ATRIAL_AMPLITUDE,
+                Parameters.ATRIAL_PULSE_WIDTH,
+            ],
+            "AAIR":  [
+                Parameters.LOWER_RATE_LIMIT,
+                Parameters.UPPER_RATE_LIMIT,
+                Parameters.ATRIAL_AMPLITUDE,
+                Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.ARP,
+            ],
+            "VOOR":  [
+                Parameters.LOWER_RATE_LIMIT,
+                Parameters.UPPER_RATE_LIMIT,
+                Parameters.VENTRICULAR_AMPLITUDE,
+                Parameters.VENTRICULAR_PULSE_WIDTH,
+            ],
+            "VVIR":  [
+                Parameters.LOWER_RATE_LIMIT,
+                Parameters.UPPER_RATE_LIMIT,
+                Parameters.VENTRICULAR_AMPLITUDE,
+                Parameters.VENTRICULAR_PULSE_WIDTH,
+                Parameters.VRP,
+            ],
         }
+
         self.num_columns = 3   
         self.num_rows = 4
         self.last_row = (
@@ -389,13 +413,12 @@ class SettingsScreen(Screen):
 
 
         self.screen.mainloop()
-
     def apply(self):
         param_map = self.pacing_modes_map[self.pacing_mode]
         param_data = {param.value.name: "" for param in param_map}
 
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
-            param_data[param] = funky.get
+            param_data[param] = funky.get()
 
         self.database.update_parameters(
             self.current_user, self.current_user.username, self.pacing_mode, param_data

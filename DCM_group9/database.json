@@ -4,17 +4,17 @@
             "password": "password",
             "pacing_mode_params": {
                 "AOO": {
+                    "Lower Rate Limit": "35.0",
+                    "Upper Rate Limit": "60.0",
+                    "Atrial Amplitude": "0.5",
+                    "Atrial Pulse Width": "0.1"
+                },
+                "AAI": {
                     "Lower Rate Limit": "No Data",
                     "Upper Rate Limit": "No Data",
                     "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data"
-                },
-                "AAI": {
-                    "Lower Rate Limit": "30",
-                    "Upper Rate Limit": "55.0",
-                    "Atrial Amplitude": "0.5",
-                    "Atrial Pulse Width": "0.05",
-                    "ARP": "150"
+                    "Atrial Pulse Width": "No Data",
+                    "ARP": "No Data"
                 },
                 "VOO": {
                     "Lower Rate Limit": "No Data",
@@ -28,6 +28,31 @@
                     "Ventricular Amplitude": "No Data",
                     "Ventricular Pulse Width": "No Data",
                     "VRP": "No Data"
+                },
+                "AOOR": {
+                    "Lower Rate Limit": "35.0",
+                    "Upper Rate Limit": "55.0",
+                    "Atrial Amplitude": "0.5",
+                    "Atrial Pulse Width": "0.1"
+                },
+                "AAIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
+                    "ARP": "No Data"
+                },
+                "VOOR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data"
+                },
+                "VVIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data"
                 }
             }
         }
