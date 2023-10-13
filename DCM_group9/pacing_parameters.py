@@ -2,36 +2,36 @@
 
 To be used in assignment 2."""
 from enum import Enum
+from collections import OrderedDict
 
-l_rate_int = {
-    (30, 50) : 5,
-    (50, 90) : 1,
-    (90, 175) : 5
-}
+l_rate_int = OrderedDict([
+    ((30, 50), 5),
+    ((50, 90), 1),
+    ((90, 175), 5)
+])
 
-u_rate_int = {
-    (50,175) : 5
-}
+u_rate_int = OrderedDict([
+    ((50, 175), 5)
+])
 
-amplitude_int = {
-    (0,0) : 0,
-    (0.5, 3.2) : 0.1,
-    (3.5, 7.0) : 0.5
-}
+amplitude_int = OrderedDict([
+    ((0, 0), 1),
+    ((0.5, 3.2), 0.1),
+    ((3.5, 7.0), 0.5)
+])
 
-pulse_width_int = {
-    (0.05, 0.05) : 0,
-    (0.1, 1.9) : 0.1
-}
+pulse_width_int = OrderedDict([
+    ((0.05, 0.05), 1),
+    ((0.1, 1.9), 0.1)
+])
 
-arp_int = {
-    (150,500) : 10
-}
+arp_int = OrderedDict([
+    ((150, 500), 10)
+])
 
-vrp_int = {
-    (150,500) : 10
-}
-
+vrp_int = OrderedDict([
+    ((150, 500), 10)
+])
 class PacingParameters:
     def __init__(self, name: str, valid_interval_map: dict, unit: str = ""):
         self.name = name

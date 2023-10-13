@@ -3,7 +3,7 @@ from screens import *
 class ApplicationFSM:
     def __init__(self) -> None:
 
-        self.page_geometry: str = "600x500"
+        self.page_geometry: str = "800x600"
         self.current_user = None
         self.pacing_mode = None
         self.current_state = "WelcomeScreen"
@@ -49,7 +49,14 @@ class ApplicationFSM:
         settings_screen.run_screen()
 
         self.page_geometry = settings_screen.geometry
-        self.current_state = None
+        if (settings_screen.closed):
+            self.current_state = "HomepageScreen"
+        else:
+            self.current_state = None
 
     def handle_egram_screen(self):
         egram_screen = EgramScreen(self.page_geometry)
+        egram_screen.run_screen()
+        
+        self.page_geometry = egram_screen.geometry
+        self.current_state = None

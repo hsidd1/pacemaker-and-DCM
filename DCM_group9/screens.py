@@ -16,7 +16,8 @@ class Screen:
             "Button"     : [],
             "Entry"      : [],
             "Label"      : [],
-            "OptionMenu" : []
+            "OptionMenu" : [],
+            "FunkyWidget" : []
         }
         self.page_width = 0
         self.page_height = 0
@@ -69,6 +70,15 @@ class Screen:
         self.widgets["OptionMenu"].append(dropdown)
         return dropdown, string
     
+    def create_funky_widget(self, entry_map: dict, data: str):
+        funky_widget = FunkyWidget(self.screen, entry_map, data)
+        self.widgets["FunkyWidget"].append(funky_widget)
+        return funky_widget
+
+    def create_spacer(self, space: int):
+        spacer = tk.Frame(self.screen, height=space, bg=self.bg_colour)
+        return spacer
+
     def bring_to_front(self):
         """Brings screen to front"""
         self.screen.lift()
@@ -79,10 +89,10 @@ class Screen:
     def load_grid(self, cols: bool, rows: bool):
         if (cols):
             for i in range(0, self.num_columns):
-                self.screen.columnconfigure(i, weight=1)
+                self.screen.columnconfigure(i, weight=1, uniform="cols_group")
         if (rows):
             for i in range(0, self.num_rows):
-                self.screen.rowconfigure(i, weight=1)
+                self.screen.rowconfigure(i, weight=1,uniform="row_group")
     
     def prepare_screen_switch(self):
         self.geometry = self.screen.geometry()
@@ -105,8 +115,8 @@ class Screen:
 class WelcomeScreen(Screen):
 
     def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
-        """Only the WelcomeScreen should have access to database !!!
-        USE THE CURRENTUSER IN DEEPER SCREENS!!!!!!"""
+        """Only the WelcomeScreen and SettingsScreen should have access to database !!!
+        USE THE CURRENTUSER IN HomePage!!!!!!"""
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
@@ -122,7 +132,7 @@ class WelcomeScreen(Screen):
         super().create_label("Password", 12).pack()
         super().create_entry(True).pack()
         super().create_button("Login", self.login_user).pack(pady=10)
-        super().create_button("Register", self.login_user).pack()
+        super().create_button("Register", self.register_user).pack()
         self.screen.bind('<Return>', lambda event: self.login_user())
         self.screen.mainloop()
 
@@ -289,24 +299,51 @@ class SettingsScreen(Screen):
             "VOOR" : [],
             "VVIR" : []
         }
-        self.num_columns = 5
-        self.num_rows = 5
+        self.num_columns = 5    
+        self.num_rows = 4
+        self.last_row = 4*len(self.pacing_modes_map.get(pacing_mode, None)) // self.num_columns
+        self.closed = False
+        self.database = Database()
     
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
         self.load_grid(True, False)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
+        print(parameters[0].value.name)
 
         for i, param in enumerate(parameters):
-            super().create_label(param.value.name, 10).grid(row=i // self.num_columns, column=i % self.num_columns * 2, padx=5, pady=5, sticky="w")
+            super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(row=(i // self.num_columns + i  // self.num_columns), column=i % self.num_columns, padx=5, pady=5)
+            super().create_funky_widget(param.value.valid_interval_map, self.current_user.parameter_dict.get(self.pacing_mode)[param.value.name]).grid(row=(i // self.num_columns + i  // self.num_columns) + 1,  column=i % self.num_columns)
         
+        super().create_spacer(30).grid(row=self.last_row, column=0)
 
-        my_funky_widget = FunkyWidget(self.screen, Parameters.ATRIAL_AMPLITUDE.value.valid_interval_map, "hello").grid(row=2, column=0)
-
-        
+        super().create_button("Apply", self.apply).grid(row=self.last_row+1, column=0)
+        super().create_button("Ok", self.ok).grid(row=self.last_row+1, column=1)    
+        super().create_button("Close", self.close).grid(row=self.last_row+1, column=2)        
 
         self.screen.mainloop()
+    
+    def apply(self):
+        
+        param_map = self.pacing_modes_map[self.pacing_mode]
+        param_data = {param.value.name: '' for param in param_map}
+
+        for funky, param in zip(self.widgets["FunkyWidget"], param_data):
+            param_data[param] = funky.get()
+
+        self.database.update_parameters(self.current_user, self.current_user.username, self.pacing_mode, param_data)
+
+    def ok(self):
+        """Do both apply and close, similar features to Windows settings"""
+        self.apply()
+        self.closed = True
+        self.prepare_screen_switch()
+    
+    def close(self):
+        self.closed = True
+        self.prepare_screen_switch()
+
 
 class EgramScreen(Screen):
 
