@@ -2,6 +2,7 @@
 
 User class stores username, password and pacing mode parameters."""
 
+
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
         """Initializes User class with username, password and pacing mode parameters.
@@ -14,6 +15,7 @@ class User:
         if data:
             self.parameter_dict = data
         else:
+            #TODO: update R type modes in assignment 2
             self.parameter_dict = {
                 "AOO": {
                     "Lower Rate Limit": "No Data",
@@ -40,6 +42,31 @@ class User:
                     "Ventricular Amplitude": "No Data",
                     "Ventricular Pulse Width": "No Data",
                     "VRP": "No Data",
+                },
+                "AOOR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
+                },
+                "AAIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
+                    "ARP": "No Data",
+                },
+                "VOOR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
+                },
+                "VVIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
                 },
             }
 
