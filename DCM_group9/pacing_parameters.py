@@ -28,9 +28,7 @@ class Parameters(Enum):
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_PULSE_WIDTH = PacingParameters("Atrial Pulse Width", PULSE_WIDTH_INT, "msec")
     ARP = PacingParameters("ARP", ARP_INT, "msec")
-    VENTRICULAR_AMPLITUDE = PacingParameters(
-        "Ventricular Amplitude", AMPLITUDE_INT, "V"
-    )
+    VENTRICULAR_AMPLITUDE = PacingParameters("Ventricular Amplitude", AMPLITUDE_INT, "V")
     VENTRICULAR_PULSE_WIDTH = PacingParameters(
         "Ventricular Pulse Width", PULSE_WIDTH_INT, "msec"
     )

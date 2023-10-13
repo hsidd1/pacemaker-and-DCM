@@ -29,7 +29,7 @@ class FunkyWidget(tk.Frame):
         self.current_crement, self.current_interval = self.get_increment_interval(self.var.get())
 
         self.option_menu = ttk.Combobox(
-            self, textvariable=self.var, values=self.intervals, width=10
+            self, textvariable=self.var, values=self.intervals, width=10, state="readonly"
         )
         self.option_menu.pack(side="left")
 

@@ -17,10 +17,10 @@
                     "ARP": "No Data"
                 },
                 "VOO": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
+                    "Lower Rate Limit": "50.0",
+                    "Upper Rate Limit": "50",
                     "Ventricular Amplitude": "No Data",
-                    "Ventricular Pulse Width": "No Data"
+                    "Ventricular Pulse Width": "0.1"
                 },
                 "VVI": {
                     "Lower Rate Limit": "No Data",
