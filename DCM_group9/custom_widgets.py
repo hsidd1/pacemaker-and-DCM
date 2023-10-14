@@ -92,6 +92,7 @@ class FunkyWidget(tk.Frame):
                 if current_value == intervals[0]:
                     increment = inc
                     return increment, intervals
+        return None, None
 
     def get_next_increment_interval(self, current_interval: tuple) -> tuple:
         """Gets the increment and interval of the next value.
