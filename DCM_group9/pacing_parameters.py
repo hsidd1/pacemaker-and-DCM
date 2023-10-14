@@ -30,12 +30,15 @@ class PacingParameters:
 
 class Parameters(Enum):
     """Enum class for pacing parameters."""
+
     LOWER_RATE_LIMIT = PacingParameters("Lower Rate Limit", L_RATE_INT, "ppm")
     UPPER_RATE_LIMIT = PacingParameters("Upper Rate Limit", U_RATE_INT, "ppm")
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_PULSE_WIDTH = PacingParameters("Atrial Pulse Width", PULSE_WIDTH_INT, "msec")
     ARP = PacingParameters("ARP", ARP_INT, "msec")
-    VENTRICULAR_AMPLITUDE = PacingParameters("Ventricular Amplitude", AMPLITUDE_INT, "V")
+    VENTRICULAR_AMPLITUDE = PacingParameters(
+        "Ventricular Amplitude", AMPLITUDE_INT, "V"
+    )
     VENTRICULAR_PULSE_WIDTH = PacingParameters(
         "Ventricular Pulse Width", PULSE_WIDTH_INT, "msec"
     )

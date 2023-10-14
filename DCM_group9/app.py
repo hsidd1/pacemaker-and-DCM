@@ -5,6 +5,7 @@ App is run here.
 """
 from screens import *
 
+
 class Application:
     def __init__(self) -> None:
         """Initializes Application class with page geometry, current user and pacing mode parameters."""
@@ -49,7 +50,7 @@ class Application:
         elif homepage_screen.settings_view:
             self.current_screen = "SettingsScreen"
             self.pacing_mode = homepage_screen.pacing_mode
-        elif (homepage_screen.egram_view):
+        elif homepage_screen.egram_view:
             self.current_screen = "EgramScreen"
             self.pacing_mode = homepage_screen.pacing_mode
         else:
@@ -78,6 +79,7 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+
 
 if __name__ == "__main__":
     app = Application()

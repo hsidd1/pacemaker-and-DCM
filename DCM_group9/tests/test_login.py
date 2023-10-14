@@ -14,9 +14,7 @@ def test_login_user_nonexistent():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "test")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -29,9 +27,7 @@ def test_login_user_correct():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == True
     )
 
@@ -45,9 +41,7 @@ def test_login_user_wrongpassword():
     password_entry.insert(0, "test" * 100)
     homepage_screen = tk.Tk()
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -60,9 +54,7 @@ def test_login_user_wrongusername():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -75,9 +67,7 @@ def test_login_user_empty():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -90,9 +80,7 @@ def test_login_user_emptyusername():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -105,9 +93,7 @@ def test_login_user_emptypassword():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -120,9 +106,7 @@ def test_login_user_case_sensitivity_password():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "Password")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == False
     )
 
@@ -135,9 +119,7 @@ def test_login_user_case_sensitivity_username():
     password_entry = tk.Entry(welcome_page)
     password_entry.insert(0, "password")
     assert (
-        database_instance.login_user(
-            welcome_page, username_entry, password_entry
-        )
+        database_instance.login_user(welcome_page, username_entry, password_entry)
         == True
     )
 

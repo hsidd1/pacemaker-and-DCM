@@ -13,7 +13,7 @@ class User:
         if data:
             self.parameter_dict = data
         else:
-            #TODO: update R type modes in assignment 2
+            # TODO: update R type modes in assignment 2
             self.parameter_dict = {
                 "AOO": {
                     "Lower Rate Limit": "No Data",
@@ -74,7 +74,8 @@ class User:
 
     def to_dict(self) -> dict:
         """for *json* file writing
-        :return: dictionary with username, password and pacing mode parameters of the user"""
+        :return: dictionary with username, password and pacing mode parameters of the user
+        """
         return {
             self.username: {
                 "password": self.password,

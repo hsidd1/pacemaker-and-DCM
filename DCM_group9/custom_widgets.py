@@ -30,15 +30,21 @@ class FunkyWidget(tk.Frame):
 
         self.var = tk.StringVar(self)
         try:
-            x = round(default,2)
+            x = round(default, 2)
         except TypeError:
             x = default
         self.var.set(x)  # Set the default value
 
-        self.current_crement, self.current_interval = self.get_increment_interval(self.var.get())
+        self.current_crement, self.current_interval = self.get_increment_interval(
+            self.var.get()
+        )
 
         self.option_menu = ttk.Combobox(
-            self, textvariable=self.var, values=self.intervals, width=10, state="readonly"
+            self,
+            textvariable=self.var,
+            values=self.intervals,
+            width=10,
+            state="readonly",
         )
         self.option_menu.pack(side="left")
 
@@ -69,7 +75,7 @@ class FunkyWidget(tk.Frame):
         increment = 0
         if current_value == "No Data":
             return None, None
-        
+
         # Get the increment and interval of the current value
         for intervals in self.limits.keys():
             inc = self.limits[intervals]
@@ -84,21 +90,25 @@ class FunkyWidget(tk.Frame):
                 if current_value == intervals[0]:
                     increment = inc
                     return increment, intervals
-                
+
     def get_next_increment_interval(self, current_interval: tuple) -> tuple:
         """Gets the increment and interval of the next value.
         :param current_interval: current interval of the widget
         :return: increment and interval of the next value
         """
-        index = (self.interval_list.index(self.current_interval) + 1) % len(self.interval_list)
+        index = (self.interval_list.index(self.current_interval) + 1) % len(
+            self.interval_list
+        )
         return self.increment_list[index], self.interval_list[index]
-    
+
     def get_previous_increment_interval(self, current_interval: tuple) -> tuple:
         """Gets the increment and interval of the previous value.
         :param current_interval: current interval of the widget
         :return: increment and interval of the previous value
         """
-        index = (self.interval_list.index(self.current_interval) - 1) % len(self.interval_list)
+        index = (self.interval_list.index(self.current_interval) - 1) % len(
+            self.interval_list
+        )
         return self.increment_list[index], self.interval_list[index]
 
     def increment_value(self) -> None:
@@ -109,12 +119,14 @@ class FunkyWidget(tk.Frame):
             self.current_crement = self.increment_list[0]
             self.var.set(self.current_interval[0])
             return
-        
+
         current_value = float(self.var.get())
-        next_increment, next_interval = self.get_next_increment_interval(self.current_interval)
-       
-       # If the current value is at the end of the interval, increment the interval
-        if current_value+self.current_crement > self.current_interval[1] + epsilon:
+        next_increment, next_interval = self.get_next_increment_interval(
+            self.current_interval
+        )
+
+        # If the current value is at the end of the interval, increment the interval
+        if current_value + self.current_crement > self.current_interval[1] + epsilon:
             self.current_crement, self.current_interval = next_increment, next_interval
             if current_value == next_interval[0]:
                 current_value += next_increment
@@ -124,7 +136,10 @@ class FunkyWidget(tk.Frame):
             # Increment the current value
             current_value += self.current_crement
             if next_interval is not None and current_value == next_interval[0]:
-                self.current_crement, self.current_interval = next_increment, next_interval
+                self.current_crement, self.current_interval = (
+                    next_increment,
+                    next_interval,
+                )
         self.var.set(str(round(current_value, 2)))
 
     def decrement_value(self) -> None:
@@ -135,22 +150,27 @@ class FunkyWidget(tk.Frame):
             self.current_crement = self.increment_list[-1]
             self.var.set(self.current_interval[1])
             return
-        
+
         current_value = float(self.var.get())
-        next_increment, next_interval = self.get_previous_increment_interval(self.current_interval)
-       
-        if current_value-self.current_crement < self.current_interval[0] - epsilon:
+        next_increment, next_interval = self.get_previous_increment_interval(
+            self.current_interval
+        )
+
+        if current_value - self.current_crement < self.current_interval[0] - epsilon:
             self.current_crement, self.current_interval = next_increment, next_interval
-            if (current_value == next_interval[1]):
+            if current_value == next_interval[1]:
                 current_value -= next_increment
             else:
                 current_value = self.current_interval[1]
         else:
             current_value -= self.current_crement
             if current_value == next_interval[1]:
-                self.current_crement, self.current_interval = next_increment, next_interval
+                self.current_crement, self.current_interval = (
+                    next_increment,
+                    next_interval,
+                )
         self.var.set(str(round(current_value, 2)))
-        
+
     def get(self):
         """Gets the value of the widget."""
         return self.var.get()

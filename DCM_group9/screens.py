@@ -122,13 +122,17 @@ class Screen:
         self.screen.focus_force()
 
     def load_grid(self, cols: bool, rows: bool, uniform: bool = False) -> None:
-        if (cols):
+        if cols:
             for i in range(0, self.num_columns):
-                self.screen.columnconfigure(i, weight=1, uniform="cols_group" if uniform else "")
-        if (rows):
+                self.screen.columnconfigure(
+                    i, weight=1, uniform="cols_group" if uniform else ""
+                )
+        if rows:
             for i in range(0, self.num_rows):
-                self.screen.rowconfigure(i, weight=1, uniform="row_group" if uniform else "")
-    
+                self.screen.rowconfigure(
+                    i, weight=1, uniform="row_group" if uniform else ""
+                )
+
     def prepare_screen_switch(self) -> None:
         self.geometry = self.screen.geometry()
         self.close_screen()
@@ -269,12 +273,18 @@ class HomepageScreen(Screen):
 
         if pacing_mode_input == "Select a Pacing Mode":
             # Incorrect password
-            column_size = self.screen.winfo_width()/self.num_columns
+            column_size = self.screen.winfo_width() / self.num_columns
             try:
                 self.widgets["Label"].pop(2).destroy()
             except IndexError:
                 pass
-            super().create_label("Please select a valid pacing mode", 11, True, "calibri", column_size-2).grid(row=10, column=1, pady=2)
+            super().create_label(
+                "Please select a valid pacing mode",
+                11,
+                True,
+                "calibri",
+                column_size - 2,
+            ).grid(row=10, column=1, pady=2)
             return
         else:
             self.pacing_mode = pacing_mode_input
@@ -338,7 +348,7 @@ class SettingsScreen(Screen):
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
         self.pacing_mode = pacing_mode
-        #TODO: update R type modes in assignment 2
+        # TODO: update R type modes in assignment 2
         self.pacing_modes_map = {
             "AOO": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -372,20 +382,20 @@ class SettingsScreen(Screen):
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH,
             ],
-            "AAIR":  [
+            "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.ARP,
             ],
-            "VOOR":  [
+            "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
             ],
-            "VVIR":  [
+            "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
@@ -394,7 +404,7 @@ class SettingsScreen(Screen):
             ],
         }
 
-        self.num_columns = 3   
+        self.num_columns = 3
         self.num_rows = 4
         self.last_row = (
             4 * len(self.pacing_modes_map.get(pacing_mode, None)) // self.num_columns
@@ -407,7 +417,7 @@ class SettingsScreen(Screen):
         self.screen.title(self.title)
         self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
-        column_width = self.screen.winfo_width()/self.num_columns
+        column_width = self.screen.winfo_width() / self.num_columns
 
         for i, param in enumerate(parameters):
             super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(
@@ -428,12 +438,12 @@ class SettingsScreen(Screen):
 
         super().create_spacer(30).grid(row=self.last_row, column=0)
 
-        super().create_button("Apply", self.apply).grid(row=self.last_row+1, column=0)
-        super().create_button("Ok", self.ok).grid(row=self.last_row+1, column=1)   
-        super().create_button("Close", self.close).grid(row=self.last_row+1, column=2)        
-
+        super().create_button("Apply", self.apply).grid(row=self.last_row + 1, column=0)
+        super().create_button("Ok", self.ok).grid(row=self.last_row + 1, column=1)
+        super().create_button("Close", self.close).grid(row=self.last_row + 1, column=2)
 
         self.screen.mainloop()
+
     def apply(self):
         param_map = self.pacing_modes_map[self.pacing_mode]
         param_data = {param.value.name: "" for param in param_map}
@@ -466,14 +476,13 @@ class EgramScreen(Screen):
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
-        super().create_button("Close", self.close).pack(side="top", padx=200,pady=20)
+        super().create_button("Close", self.close).pack(side="top", padx=200, pady=20)
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
 
         self.screen.mainloop()
-    
+
     def close(self):
         self.closed = True
         self.prepare_screen_switch()
-
