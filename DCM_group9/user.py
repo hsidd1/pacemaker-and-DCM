@@ -1,6 +1,5 @@
-"""Module for User class.
+"""User class for storing user information and pacing mode parameters."""
 
-User class stores username, password and pacing mode parameters."""
 
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
@@ -14,45 +13,69 @@ class User:
         if data:
             self.parameter_dict = data
         else:
+            # TODO: update R type modes in assignment 2
             self.parameter_dict = {
                 "AOO": {
-                    "l_rate_limit": "No Data",
-                    "u_rate_limit": "No Data",
-                    "atrial_amplitude": "No Data",
-                    "atrial_pulse_width": "No Data",
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
                 },
                 "AAI": {
-                    "l_rate_limit": "No Data",
-                    "u_rate_limit": "No Data",
-                    "atrial_amplitude": "No Data",
-                    "atrial_pulse_width": "No Data",
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
                     "ARP": "No Data",
                 },
                 "VOO": {
-                    "l_rate_limit": "No Data",
-                    "u_rate_limit": "No Data",
-                    "vent_amplitude": "No Data",
-                    "vent_pulse_width": "No Data",
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
                 },
                 "VVI": {
-                    "l_rate_limit": "No Data",
-                    "u_rate_limit": "No Data",
-                    "vent_amplitude": "No Data",
-                    "vent_pulse_width": "No Data",
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
                     "VRP": "No Data",
+                },
+                "AOOR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
+                },
+                "AAIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Atrial Amplitude": "No Data",
+                    "Atrial Pulse Width": "No Data",
+                    "ARP": "No Data",
+                },
+                "VOOR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
+                },
+                "VVIR": {
+                    "Lower Rate Limit": "No Data",
+                    "Upper Rate Limit": "No Data",
+                    "Ventricular Amplitude": "No Data",
+                    "Ventricular Pulse Width": "No Data",
                 },
             }
 
-    def user_string(self) -> str:
-        """for *text* file writing"""
-        return f"{self.username}\t{self.password}"
-
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """for printing"""
         return f"User with username: {self.username} and password: {self.password}"
 
     def to_dict(self) -> dict:
-        """for *json* file writing"""
+        """for *json* file writing
+        :return: dictionary with username, password and pacing mode parameters of the user
+        """
         return {
             self.username: {
                 "password": self.password,
