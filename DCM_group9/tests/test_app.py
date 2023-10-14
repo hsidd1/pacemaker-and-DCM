@@ -2,14 +2,14 @@ import pytest
 import sys
 
 sys.path.append("..")
-from DCM_group9.application_fsm import ApplicationFSM
+from DCM_group9.app import Application
 
 sys.path.remove("..")
 
 
 def test_app():
     # App should be created without any errors
-    app = ApplicationFSM()
+    app = Application()
     assert app != None
 
 
