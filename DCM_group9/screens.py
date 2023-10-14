@@ -1,3 +1,4 @@
+"""Contains the screens for the DCM app."""
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -10,6 +11,10 @@ from custom_widgets import FunkyWidget
 
 class Screen:
     def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+        """Initializes Screen class with geometry and background colour.
+        :param geometry: geometry of the screen
+        :param bg_colour: background colour of the screen
+        """
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
@@ -32,7 +37,8 @@ class Screen:
         width: int = 10,
         height: int = 1,
         bg_colour: str = "#eda758",
-    ):
+    ) -> tk.Button:
+        """Creates a button widget with command and returns it."""
         button = tk.Button(
             self.screen,
             text=text,
@@ -44,7 +50,8 @@ class Screen:
         self.widgets["Button"].append(button)
         return button
 
-    def create_entry(self, encrypted: bool = False):
+    def create_entry(self, encrypted: bool = False) -> tk.Entry:
+        """Creates an entry widget and returns it."""
         if encrypted:
             entry = tk.Entry(self.screen, show="*")
         else:
@@ -59,7 +66,8 @@ class Screen:
         bold: bool = False,
         font: str = "Helvetica",
         wraplength: int = 0,
-    ):
+    ) -> tk.Label:
+        """Creates a label widget and returns it."""
         if bold:
             input_font = (font, fontsize, "bold")
         else:
@@ -74,7 +82,8 @@ class Screen:
         self.widgets["Label"].append(label)
         return label
 
-    def create_options(self, options: list, default_text: str = None):
+    def create_options(self, options: list, default_text: str = None) -> tuple:
+        """Creates an option menu widget and returns it."""
         string = tk.StringVar(self.screen)
         if default_text:
             string.set(default_text)
@@ -84,12 +93,14 @@ class Screen:
         self.widgets["OptionMenu"].append(dropdown)
         return dropdown, string
 
-    def create_funky_widget(self, entry_map: dict, data: str):
+    def create_funky_widget(self, entry_map: dict, data: str) -> FunkyWidget:
+        """Creates a funky widget and returns it."""
         funky_widget = FunkyWidget(self.screen, entry_map, data)
         self.widgets["FunkyWidget"].append(funky_widget)
         return funky_widget
 
-    def create_logo(self, image_path: str, dimensions: tuple):
+    def create_logo(self, image_path: str, dimensions: tuple) -> tk.Label:
+        """Creates a logo widget and returns it."""
         logo = Image.open(image_path)
         logo_resized = logo.resize(dimensions)
         logo_resized = ImageTk.PhotoImage(logo_resized)
@@ -98,18 +109,19 @@ class Screen:
         logo_label.image = logo_resized
         return logo_label
 
-    def create_spacer(self, space: int):
+    def create_spacer(self, space: int) -> tk.Frame:
+        """Creates a spacer widget and returns it."""
         spacer = tk.Frame(self.screen, height=space, bg=self.bg_colour)
         return spacer
 
-    def bring_to_front(self):
+    def bring_to_front(self) -> None:
         """Brings screen to front"""
         self.screen.lift()
         self.screen.attributes("-topmost", True)
         self.screen.after_idle(self.screen.attributes, "-topmost", False)
         self.screen.focus_force()
 
-    def load_grid(self, cols: bool, rows: bool, uniform: bool = False):
+    def load_grid(self, cols: bool, rows: bool, uniform: bool = False) -> None:
         if (cols):
             for i in range(0, self.num_columns):
                 self.screen.columnconfigure(i, weight=1, uniform="cols_group" if uniform else "")
@@ -117,11 +129,12 @@ class Screen:
             for i in range(0, self.num_rows):
                 self.screen.rowconfigure(i, weight=1, uniform="row_group" if uniform else "")
     
-    def prepare_screen_switch(self):
+    def prepare_screen_switch(self) -> None:
         self.geometry = self.screen.geometry()
         self.close_screen()
 
-    def run_screen(self):
+    def run_screen(self) -> None:
+        """Creates screen with geometry and background colour."""
         self.screen = tk.Tk()
         self.screen.geometry(self.geometry)
         self.screen.configure(bg=self.bg_colour)
@@ -137,7 +150,12 @@ class Screen:
 
 class WelcomeScreen(Screen):
     def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
-        """Only the WelcomeScreen and SettingsScreen should have access to database !!!
+        """
+        Initializes WelcomeScreen class with geometry and background colour.
+        :param geometry: geometry of the screen
+        :param bg_colour: background colour of the screen
+
+        Only the WelcomeScreen and SettingsScreen should have access to database !!!
         USE THE CURRENTUSER IN HomePage!!!!!!"""
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Welcome Page"
@@ -145,7 +163,7 @@ class WelcomeScreen(Screen):
         self.logged_in = False
         self.logged_user = None
 
-    def run_screen(self):
+    def run_screen(self) -> None:
         super().run_screen()
         self.screen.title(self.title)
         super().create_label("Pacemaker Device Controller-Monitor", 25, True).pack(
@@ -204,6 +222,7 @@ class WelcomeScreen(Screen):
 
 class HomepageScreen(Screen):
     def __init__(self, geometry: str, current_user: User, bg_colour: str = "#8a8d91"):
+        """Initializes HomepageScreen class with geometry, current user and background colour."""
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Home Page"
         self.current_user = current_user
@@ -215,7 +234,7 @@ class HomepageScreen(Screen):
         self.backend = Backend()
         self.pacing_modes = ["AOO", "AAI", "VOO", "VVI", "AOOR", "VOOR", "AAIR", "VVIR"]
 
-    def run_screen(self):
+    def run_screen(self) -> None:
         super().run_screen()
         super().load_grid(True, False)
         self.screen.title(self.title)
@@ -272,7 +291,8 @@ class HomepageScreen(Screen):
         self.egram_view = True
         super().prepare_screen_switch()
 
-    def check_connection(self):
+    def check_connection(self) -> None:
+        """Checks connection status from backend and displays it on the screen."""
         if self.backend.is_connected:
             text = "Connection status: Connected"
         else:
@@ -313,6 +333,7 @@ class SettingsScreen(Screen):
         pacing_mode: str,
         bg_colour: str = "#8a8d91",
     ):
+        """Initializes SettingsScreen class with geometry, current user, pacing mode and background colour."""
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
@@ -437,6 +458,7 @@ class SettingsScreen(Screen):
 
 class EgramScreen(Screen):
     def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+        """Initializes EgramScreen class with geometry and background colour."""
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Egram"
         self.closed = False

@@ -1,6 +1,6 @@
-"""This module contains the backend class for the DCM group 9 project.
+"""Contains the backend class for the DCM app.
 
-For assignment 1, this class is used to check communication status"""
+For assignment 1, this class is used to set up future functionalities."""
 import serial
 from serial.tools import list_ports
 

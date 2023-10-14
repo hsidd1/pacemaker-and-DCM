@@ -1,13 +1,13 @@
-"""Main application program for the DCM application.
+"""Main application class for the DCM application.
 
-This file contains all the screens of the application including
-the welcome screen, homepage screen, settings screen and pacing
-parameters display screen.
+Handles the state of the application and the transitions between screens.
+App is run here.
 """
 from screens import *
 
 class Application:
     def __init__(self) -> None:
+        """Initializes Application class with page geometry, current user and pacing mode parameters."""
         self.page_geometry: str = "800x600"
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
@@ -20,11 +20,13 @@ class Application:
         }
 
     def run_app(self):
+        """Runs the application."""
         while self.current_screen:
             state_handler = self.screens[self.current_screen]
             state_handler()
 
     def handle_welcome_screen(self):
+        """Handles the WelcomeScreen state of the application."""
         welcome_screen = WelcomeScreen(self.page_geometry)
         welcome_screen.run_screen()
 
@@ -36,6 +38,7 @@ class Application:
             self.current_screen = None
 
     def handle_homepage_screen(self):
+        """Handles the HomepageScreen state of the application."""
         homepage_screen = HomepageScreen(self.page_geometry, self.current_user)
         homepage_screen.run_screen()
 
@@ -53,6 +56,7 @@ class Application:
             self.current_screen = None
 
     def handle_settings_screen(self):
+        """Handles the SettingsScreen state of the application."""
         settings_screen = SettingsScreen(
             self.page_geometry, self.current_user, self.pacing_mode
         )
@@ -65,6 +69,7 @@ class Application:
             self.current_screen = None
 
     def handle_egram_screen(self):
+        """Handles the EgramScreen state of the application."""
         egram_screen = EgramScreen(self.page_geometry)
         egram_screen.run_screen()
 

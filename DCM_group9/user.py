@@ -1,6 +1,4 @@
-"""Module for User class.
-
-User class stores username, password and pacing mode parameters."""
+"""User class for storing user information and pacing mode parameters."""
 
 
 class User:
@@ -70,16 +68,13 @@ class User:
                 },
             }
 
-    def user_string(self) -> str:
-        """for *text* file writing"""
-        return f"{self.username}\t{self.password}"
-
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """for printing"""
         return f"User with username: {self.username} and password: {self.password}"
 
     def to_dict(self) -> dict:
-        """for *json* file writing"""
+        """for *json* file writing
+        :return: dictionary with username, password and pacing mode parameters of the user"""
         return {
             self.username: {
                 "password": self.password,

@@ -1,6 +1,5 @@
-"""Module for Database class.
+"""Contains Database class which stores users' usernames, passwords and pacing mode parameters."""
 
-Database class stores users' usernames, passwords and pacing mode parameters."""
 from user import User
 import json
 import tkinter as tk
@@ -9,7 +8,7 @@ DATABASE = "DCM_group9/database.json"
 
 
 class Database:
-    def __init__(self, database: str = DATABASE, users_map: dict = None):
+    def __init__(self, database: str = DATABASE, users_map: dict | None = None):
         """Initializes Database class with database file path.
         :param database: path to database file
         :param users_map: dictionary of users
@@ -18,7 +17,7 @@ class Database:
         self.users_map = self.load_users_from_json()
 
     def load_users_from_json(self) -> dict:
-        """loads users from json file and returns a dictionary of users and
+        """Loads users from json file and returns a dictionary of users and
         passwords for users_map field"""
         users_map = {}
         try:

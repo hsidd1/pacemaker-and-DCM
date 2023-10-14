@@ -1,7 +1,8 @@
-"""Contains the class PacingParameters, which is used to handle the pacing parameters."""
+"""Contains the class PacingParameters, used to handle the pacing parameters."""
 from enum import Enum
 from collections import OrderedDict
 
+# Parameter intervals and increments
 L_RATE_INT = OrderedDict([((30, 50), 5), ((50, 90), 1), ((90, 175), 5)])
 
 U_RATE_INT = OrderedDict([((50, 175), 5)])
@@ -17,12 +18,18 @@ VRP_INT = OrderedDict([((150, 500), 10)])
 
 class PacingParameters:
     def __init__(self, name: str, valid_interval_map: dict, unit: str = ""):
+        """Initializes PacingParameters class with name, valid interval map and unit.
+        :param name: name of pacing parameter
+        :param valid_interval_map: valid interval map of pacing parameter
+        :param unit: unit of pacing parameter
+        """
         self.name = name
         self.valid_interval_map = valid_interval_map
         self.unit = unit
 
 
 class Parameters(Enum):
+    """Enum class for pacing parameters."""
     LOWER_RATE_LIMIT = PacingParameters("Lower Rate Limit", L_RATE_INT, "ppm")
     UPPER_RATE_LIMIT = PacingParameters("Upper Rate Limit", U_RATE_INT, "ppm")
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
