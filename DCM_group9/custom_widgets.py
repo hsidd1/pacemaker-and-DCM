@@ -24,7 +24,11 @@ class FunkyWidget(tk.Frame):
         ]
 
         self.var = tk.StringVar(self)
-        self.var.set(default)  # Set the default value
+        try:
+            x = round(default,2)
+        except TypeError:
+            x = default
+        self.var.set(x)  # Set the default value
 
         self.current_crement, self.current_interval = self.get_increment_interval(self.var.get())
 
@@ -85,14 +89,17 @@ class FunkyWidget(tk.Frame):
             return
         current_value = float(self.var.get())
         next_increment, next_interval = self.get_next_increment_interval(self.current_interval)
-        # print("===================================")
+        # print("=============incremenet=============")
         # print(f"currentval - {current_value}\ncurrentinc - {self.current_crement}\ncurrint - {self.current_interval}")
         # print("===================================")
         # print(f"nextval - {current_value+self.current_crement}\nnextinc - {next_increment}\nnextint - {next_interval}")
         # print("===================================")
         if (current_value+self.current_crement > self.current_interval[1] + epsilon):
             self.current_crement, self.current_interval = next_increment, next_interval
-            current_value = self.current_interval[0]
+            if (current_value == next_interval[0]):
+                current_value += next_increment
+            else:
+                current_value = next_interval[0]
         else:
             current_value += self.current_crement
             if (next_interval is not None and current_value == next_interval[0]):
@@ -107,13 +114,21 @@ class FunkyWidget(tk.Frame):
             self.var.set(self.current_interval[1])
             return
         current_value = float(self.var.get())
-        next_increment, next_interval = self.get_next_increment_interval(self.current_interval)
+        next_increment, next_interval = self.get_previous_increment_interval(self.current_interval)
+        # print("=============decrement=============")
+        # print(f"currentval - {current_value}\ncurrentinc - {self.current_crement}\ncurrint - {self.current_interval}")
+        # print("===================================")
+        # print(f"nextval - {current_value+self.current_crement}\nnextinc - {next_increment}\nnextint - {next_interval}")
+        # print("===================================")
         if (current_value-self.current_crement < self.current_interval[0] - epsilon):
             self.current_crement, self.current_interval = next_increment, next_interval
-            current_value = self.current_interval[1]
+            if (current_value == next_interval[1]):
+                current_value -= next_increment
+            else:
+                current_value = self.current_interval[1]
         else:
             current_value -= self.current_crement
-            if (next_interval is not None and current_value == next_interval[1]):
+            if (current_value == next_interval[1]):
                 self.current_crement, self.current_interval = next_increment, next_interval
         self.var.set(str(round(current_value, 2)))
         

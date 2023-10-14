@@ -439,12 +439,19 @@ class EgramScreen(Screen):
     def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
         super().__init__(geometry, bg_colour)
         self.title = "DCM Application - Egram"
+        self.closed = False
 
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
+        super().create_button("Close", self.close).pack(side="top", padx=200,pady=20)
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
 
         self.screen.mainloop()
+    
+    def close(self):
+        self.closed = True
+        self.prepare_screen_switch()
+
