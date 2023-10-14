@@ -62,20 +62,20 @@
                 "AOO": {
                     "Lower Rate Limit": "60",
                     "Upper Rate Limit": "120",
-                    "Atrial Amplitude": "3.75",
+                    "Atrial Amplitude": "3.1",
                     "Atrial Pulse Width": "0.4"
                 },
                 "AAI": {
                     "Lower Rate Limit": "125.0",
                     "Upper Rate Limit": "120",
-                    "Atrial Amplitude": "3.75",
+                    "Atrial Amplitude": "5.5",
                     "Atrial Pulse Width": "0.8",
                     "ARP": "250"
                 },
                 "VOO": {
                     "Lower Rate Limit": "60",
                     "Upper Rate Limit": "120",
-                    "Ventricular Amplitude": "3.5",
+                    "Ventricular Amplitude": "3.2",
                     "Ventricular Pulse Width": "0.4"
                 },
                 "VVI": {
@@ -88,13 +88,13 @@
                 "AOOR": {
                     "Lower Rate Limit": "55.0",
                     "Upper Rate Limit": "130.0",
-                    "Atrial Amplitude": "3.75",
+                    "Atrial Amplitude": "3.5",
                     "Atrial Pulse Width": "0.1"
                 },
                 "AAIR": {
                     "Lower Rate Limit": "60",
                     "Upper Rate Limit": "120",
-                    "Atrial Amplitude": "3.75",
+                    "Atrial Amplitude": "3.5",
                     "Atrial Pulse Width": "0.4",
                     "ARP": "250"
                 },

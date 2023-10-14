@@ -74,24 +74,18 @@ class FunkyWidget(tk.Frame):
         :param current_value: current value of the widget
         :return: increment and interval of the current value
         """
-        increment = 0
         if current_value == "No Data":
             return None, None
-
-        # Get the increment and interval of the current value
-        for intervals in self.limits.keys():
-            inc = self.limits[intervals]
-            if inc:
-                interval = arange(
-                    float(intervals[0]), float(intervals[1] + inc), float(inc)
-                )
-                if float(current_value) in interval:
-                    increment = inc
-                    return increment, intervals
-            else:
-                if current_value == intervals[0]:
-                    increment = inc
-                    return increment, intervals
+        current_value = float(current_value)
+        for intervals, inc in self.limits.items():
+            start, end = map(float, intervals)
+            if current_value >= start and current_value <= end:
+                if inc:
+                    interval = arange(start, end + inc, inc)
+                    if current_value in interval:
+                        return inc, intervals
+                else:
+                    return None, intervals
         return None, None
 
     def get_next_increment_interval(self, current_interval: tuple) -> tuple:
