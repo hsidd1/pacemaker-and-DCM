@@ -1,6 +1,8 @@
 """Contains the backend class for the DCM app.
 
 For assignment 1, this class is used to set up future functionalities."""
+from __future__ import annotations
+
 import serial
 from serial.tools import list_ports
 

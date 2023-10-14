@@ -1,4 +1,6 @@
 """Contains the class PacingParameters, used to handle the pacing parameters."""
+from __future__ import annotations
+
 from enum import Enum
 from collections import OrderedDict
 

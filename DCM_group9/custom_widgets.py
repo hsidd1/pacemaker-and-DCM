@@ -1,4 +1,6 @@
 """Contains custom widgets for the GUI."""
+from __future__ import annotations
+
 import tkinter as tk
 from tkinter import ttk
 from numpy import arange
@@ -20,7 +22,7 @@ class FunkyWidget(tk.Frame):
         super().__init__(screen, **kwargs)
 
         self.limits = limits
-        self.interval_list = list(self.limits.keys())
+        self.interval_list = list(self.limits.keys()) 
         self.increment_list = list(self.limits.values())
 
         self.intervals = [

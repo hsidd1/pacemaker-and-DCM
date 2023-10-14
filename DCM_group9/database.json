@@ -55,6 +55,118 @@
                     "Ventricular Pulse Width": "No Data"
                 }
             }
+        },
+        "hamza": {
+            "password": "hamzahamza",
+            "pacing_mode_params": {
+                "AOO": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Atrial Amplitude": "3.75",
+                    "Atrial Pulse Width": "0.4"
+                },
+                "AAI": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Atrial Amplitude": "3.75",
+                    "Atrial Pulse Width": "0.4",
+                    "ARP": "250"
+                },
+                "VOO": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Ventricular Amplitude": "3.5",
+                    "Ventricular Pulse Width": "0.4"
+                },
+                "VVI": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Ventricular Amplitude": "3.5",
+                    "Ventricular Pulse Width": "0.4",
+                    "VRP": "320"
+                },
+                "AOOR": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Atrial Amplitude": "3.75",
+                    "Atrial Pulse Width": "0.4"
+                },
+                "AAIR": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Atrial Amplitude": "3.75",
+                    "Atrial Pulse Width": "0.4",
+                    "ARP": "250"
+                },
+                "VOOR": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Ventricular Amplitude": "3.5",
+                    "Ventricular Pulse Width": "0.4"
+                },
+                "VVIR": {
+                    "Lower Rate Limit": "60",
+                    "Upper Rate Limit": "120",
+                    "Ventricular Amplitude": "3.5",
+                    "Ventricular Pulse Width": "0.4"
+                }
+            }
+        },
+        "billy": {
+            "password": "billybilly",
+            "pacing_mode_params": {
+                "AOO": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4
+                },
+                "AAI": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
+                    "ARP": 250
+                },
+                "VOO": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4
+                },
+                "VVI": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4,
+                    "VRP": 320
+                },
+                "AOOR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4
+                },
+                "AAIR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
+                    "ARP": 250
+                },
+                "VOOR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4
+                },
+                "VVIR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4
+                }
+            }
         }
     }
 ]

@@ -1,4 +1,5 @@
 """Contains Database class which stores users' usernames, passwords and pacing mode parameters."""
+from __future__ import annotations
 
 from user import User
 import json

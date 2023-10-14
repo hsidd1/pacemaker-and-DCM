@@ -1,5 +1,5 @@
 """User class for storing user information and pacing mode parameters."""
-
+from __future__ import annotations
 
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
@@ -16,55 +16,55 @@ class User:
             # TODO: update R type modes in assignment 2
             self.parameter_dict = {
                 "AOO": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
                 },
                 "AAI": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data",
-                    "ARP": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
+                    "ARP": 250,
                 },
                 "VOO": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Ventricular Amplitude": "No Data",
-                    "Ventricular Pulse Width": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4,
                 },
                 "VVI": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Ventricular Amplitude": "No Data",
-                    "Ventricular Pulse Width": "No Data",
-                    "VRP": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4,
+                    "VRP": 320,
                 },
                 "AOOR": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
                 },
                 "AAIR": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data",
-                    "ARP": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.75,
+                    "Atrial Pulse Width": 0.4,
+                    "ARP": 250,
                 },
                 "VOOR": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Ventricular Amplitude": "No Data",
-                    "Ventricular Pulse Width": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4,
                 },
                 "VVIR": {
-                    "Lower Rate Limit": "No Data",
-                    "Upper Rate Limit": "No Data",
-                    "Ventricular Amplitude": "No Data",
-                    "Ventricular Pulse Width": "No Data",
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 0.4,
                 },
             }
 
