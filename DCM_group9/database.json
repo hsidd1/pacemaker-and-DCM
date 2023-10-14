@@ -12,8 +12,8 @@
                 "AAI": {
                     "Lower Rate Limit": "No Data",
                     "Upper Rate Limit": "No Data",
-                    "Atrial Amplitude": "No Data",
-                    "Atrial Pulse Width": "No Data",
+                    "Atrial Amplitude": "3.5",
+                    "Atrial Pulse Width": "0.05",
                     "ARP": "No Data"
                 },
                 "VOO": {
