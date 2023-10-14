@@ -1,5 +1,13 @@
 # pacemaker-and-DCM
-A pacemaker system modelled in Simulink with a corresponding DCM application
+<img src="DCM_group9/imgs/heartLogo.png" alt="Logo" width="50" height="50">
+
+
+![Supported Python Versions](https://img.shields.io/badge/supported%20python%20versions-3.10%20%7C%203.11-blue) [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) ![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen) [![Docs Passing](https://img.shields.io/badge/docs-passing-brightgreen)](docs_group9/)
+
+
+
+
+A Pacemaker system modelled in Simulink with a corresponding DCM application
 
 ### Usage 
 
