@@ -418,6 +418,7 @@ class SettingsScreen(Screen):
         )
         self.closed = False
         self.database = Database()
+        self.pending_after_id = None
 
     def run_screen(self):
         super().run_screen()
@@ -472,7 +473,7 @@ class SettingsScreen(Screen):
             )
             destroy_applied_msg = partial(applied_msg.destroy)
             try:
-                self.screen.after(2000, destroy_applied_msg)
+                self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
             except tk.TclError:
                 pass
 
@@ -480,10 +481,16 @@ class SettingsScreen(Screen):
         """Do both apply and close, similar features to Windows settings"""
         self.apply(from_button=False)
         self.closed = True
+         # Check if any after events are still running
+        if self.pending_after_id:
+            self.screen.after_cancel(self.pending_after_id)
         self.prepare_screen_switch()
 
     def close(self):
         self.closed = True
+        # Check if any after events are still running
+        if self.pending_after_id:
+            self.screen.after_cancel(self.pending_after_id)
         self.prepare_screen_switch()
 
 
