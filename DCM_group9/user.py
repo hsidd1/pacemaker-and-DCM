@@ -18,13 +18,13 @@ class User:
                 "AOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.75,
+                    "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4,
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.75,
+                    "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4,
                     "ARP": 250,
                 },
@@ -44,13 +44,13 @@ class User:
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.75,
+                    "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4,
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.75,
+                    "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4,
                     "ARP": 250,
                 },

@@ -50,20 +50,20 @@ class FunkyWidget(tk.Frame):
         )
         self.option_menu.pack(side="left")
 
-        self.decrement_button = tk.Button(self, text="-", command=self.decrement_value)
+        self.decrement_button = tk.Button(self, text="-", command=self.__decrement_value)
         self.decrement_button.pack(side="left")
 
-        self.increment_button = tk.Button(self, text="+", command=self.increment_value)
+        self.increment_button = tk.Button(self, text="+", command=self.__increment_value)
         self.increment_button.pack(side="left")
 
-        self.option_menu.bind("<<ComboboxSelected>>", self.update_display)
+        self.option_menu.bind("<<ComboboxSelected>>", self.__update_display)
 
-    def update_increment(self, selected_interval) -> None:
+    def __update_increment(self, selected_interval) -> None:
         """Updates the increment of the widget."""
         self.current_interval = selected_interval
         self.increment = self.limits[selected_interval]
 
-    def update_display(self, event) -> None:
+    def __update_display(self, event) -> None:
         """Updates the display of the widget."""
         int_string = self.var.get()
         min_value = int_string.split("-")[0]
@@ -108,7 +108,7 @@ class FunkyWidget(tk.Frame):
         )
         return self.increment_list[index], self.interval_list[index]
 
-    def increment_value(self) -> None:
+    def __increment_value(self) -> None:
         """Increments the value of the widget."""
         epsilon = 1e-10
         if self.var.get() == "No Data":
@@ -139,7 +139,7 @@ class FunkyWidget(tk.Frame):
                 )
         self.var.set(str(round(current_value, 2)))
 
-    def decrement_value(self) -> None:
+    def __decrement_value(self) -> None:
         """Decrements the value of the widget."""
         epsilon = 1e-10
         if self.var.get() == "No Data":
@@ -170,4 +170,4 @@ class FunkyWidget(tk.Frame):
 
     def get(self):
         """Gets the value of the widget."""
-        return self.var.get()
+        return float(self.var.get())
