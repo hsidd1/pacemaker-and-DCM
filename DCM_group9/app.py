@@ -3,6 +3,8 @@
 Handles the state of the application and the transitions between screens.
 App is run here.
 """
+from __future__ import annotations
+
 from screens import *
 
 
