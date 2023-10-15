@@ -48,13 +48,13 @@ class FunkyWidget(tk.Frame):
         )
         self.option_menu.pack(side="left")
 
-        self.decrement_button = tk.Button(self, text="-", command=self.decrement_value)
+        self.decrement_button = tk.Button(self, text="-", command=self.__decrement_value)
         self.decrement_button.pack(side="left")
 
-        self.increment_button = tk.Button(self, text="+", command=self.increment_value)
+        self.increment_button = tk.Button(self, text="+", command=self.__increment_value)
         self.increment_button.pack(side="left")
 
-        self.option_menu.bind("<<ComboboxSelected>>", self.update_display)
+        self.option_menu.bind("<<ComboboxSelected>>", self.__update_display)
 
     def __update_increment(self, selected_interval) -> None:
         """Updates the increment of the widget."""
