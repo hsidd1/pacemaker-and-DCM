@@ -20,7 +20,6 @@
 *.slx binary merge=mlAutoMerge
 *.slxp binary
 
-# other common binary file types
 *.docx binary
 *.exe binary
 *.jpg binary
