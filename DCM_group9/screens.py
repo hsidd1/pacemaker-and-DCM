@@ -263,6 +263,8 @@ class HomepageScreen(Screen):
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).grid(
             row=16, column=0, columnspan=20, pady=50
         )
+        
+        self.screen.bind("<Escape>", lambda event: self.logout())
 
         self.check_connection()
         self.screen.mainloop()
@@ -420,6 +422,7 @@ class SettingsScreen(Screen):
         self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
         column_width = self.screen.winfo_width() / self.num_columns
+        self.screen.bind()
 
         for i, param in enumerate(parameters):
             super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(
@@ -443,6 +446,9 @@ class SettingsScreen(Screen):
         super().create_button("Apply", self.apply).grid(row=self.last_row + 1, column=0)
         super().create_button("Ok", self.ok).grid(row=self.last_row + 1, column=1)
         super().create_button("Close", self.close).grid(row=self.last_row + 1, column=2)
+
+        self.screen.bind("<Escape>", lambda event: self.close())
+        self.screen.bind("<Return>", lambda event: self.ok())
 
         self.screen.mainloop()
 
@@ -483,6 +489,7 @@ class EgramScreen(Screen):
             side="bottom", pady=50
         )
 
+        self.screen.bind("<Escape>", lambda event: self.close())
         self.screen.mainloop()
 
     def close(self):
