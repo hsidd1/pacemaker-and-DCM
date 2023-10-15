@@ -4,7 +4,7 @@
             "password": "password",
             "pacing_mode_params": {
                 "AOO": {
-                    "Lower Rate Limit": 50.0,
+                    "Lower Rate Limit": 60.0,
                     "Upper Rate Limit": 120.0,
                     "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4
@@ -14,20 +14,20 @@
                     "Upper Rate Limit": 120.0,
                     "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 0.4,
-                    "ARP": 210.0
+                    "ARP": 250.0
                 },
                 "VOO": {
-                    "Lower Rate Limit": 60,
-                    "Upper Rate Limit": 120,
+                    "Lower Rate Limit": 60.0,
+                    "Upper Rate Limit": 120.0,
                     "Ventricular Amplitude": 3.5,
                     "Ventricular Pulse Width": 0.4
                 },
                 "VVI": {
-                    "Lower Rate Limit": 60,
-                    "Upper Rate Limit": 120,
+                    "Lower Rate Limit": 60.0,
+                    "Upper Rate Limit": 120.0,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
-                    "VRP": 320
+                    "Ventricular Pulse Width": 0.7,
+                    "VRP": 320.0
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
