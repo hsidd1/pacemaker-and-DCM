@@ -17,7 +17,7 @@ class Database:
         self.database = database
         self.users_map = self.load_users_from_json()
 
-    def load_users_from_json(self) -> dict:
+    def __load_users_from_json(self) -> dict:
         """Loads users from json file and returns a dictionary of users and
         passwords for users_map field"""
         users_map = {}
@@ -60,7 +60,7 @@ class Database:
         :param username: username of user to be removed"""
         del self.users_map[username]
 
-    def write_to_file(self, user: User):
+    def __write_to_file(self, user: User):
         """writes user to database when registered
         :param user: User object"""
         self.__add_user(user)
