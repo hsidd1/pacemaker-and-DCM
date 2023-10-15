@@ -4,6 +4,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+from functools import partial
 from backend import Backend
 from database import Database
 from user import User
@@ -417,6 +418,7 @@ class SettingsScreen(Screen):
         )
         self.closed = False
         self.database = Database()
+        self.pending_after_id = None
 
     def run_screen(self):
         super().run_screen()
@@ -454,7 +456,7 @@ class SettingsScreen(Screen):
 
         self.screen.mainloop()
 
-    def apply(self):
+    def apply(self, from_button: bool = True):
         param_map = self.pacing_modes_map[self.pacing_mode]
         param_data = {param.value.name: "" for param in param_map}
 
@@ -464,20 +466,31 @@ class SettingsScreen(Screen):
         self.database.update_parameters(
             self.current_user, self.current_user.username, self.pacing_mode, param_data
         )
-        applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
-        applied_msg.grid(
-            row=self.last_row - 1, column=1, pady=2
-        )
-        self.screen.after(2000, lambda: applied_msg.destroy())
+        if from_button:
+            applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
+            applied_msg.grid(
+                row=self.last_row - 1, column=1, pady=2
+            )
+            destroy_applied_msg = partial(applied_msg.destroy)
+            try:
+                self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
+            except tk.TclError:
+                pass
 
     def ok(self):
         """Do both apply and close, similar features to Windows settings"""
-        self.apply()
+        self.apply(from_button=False)
         self.closed = True
+         # Check if any after events are still running
+        if self.pending_after_id:
+            self.screen.after_cancel(self.pending_after_id)
         self.prepare_screen_switch()
 
     def close(self):
         self.closed = True
+        # Check if any after events are still running
+        if self.pending_after_id:
+            self.screen.after_cancel(self.pending_after_id)
         self.prepare_screen_switch()
 
 
