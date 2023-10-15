@@ -58,12 +58,12 @@ class FunkyWidget(tk.Frame):
 
         self.option_menu.bind("<<ComboboxSelected>>", self.update_display)
 
-    def __update_increment(self, selected_interval) -> None:
+    def update_increment(self, selected_interval) -> None:
         """Updates the increment of the widget."""
         self.current_interval = selected_interval
         self.increment = self.limits[selected_interval]
 
-    def __update_display(self, event) -> None:
+    def update_display(self, event) -> None:
         """Updates the display of the widget."""
         int_string = self.var.get()
         min_value = int_string.split("-")[0]
@@ -108,7 +108,7 @@ class FunkyWidget(tk.Frame):
         )
         return self.increment_list[index], self.interval_list[index]
 
-    def __increment_value(self) -> None:
+    def increment_value(self) -> None:
         """Increments the value of the widget."""
         epsilon = 1e-10
         if self.var.get() == "No Data":
@@ -139,7 +139,7 @@ class FunkyWidget(tk.Frame):
                 )
         self.var.set(str(round(current_value, 2)))
 
-    def __decrement_value(self) -> None:
+    def decrement_value(self) -> None:
         """Decrements the value of the widget."""
         epsilon = 1e-10
         if self.var.get() == "No Data":
