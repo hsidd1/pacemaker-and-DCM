@@ -170,4 +170,4 @@ class FunkyWidget(tk.Frame):
 
     def get(self):
         """Gets the value of the widget."""
-        return self.var.get()
+        return float(self.var.get())
