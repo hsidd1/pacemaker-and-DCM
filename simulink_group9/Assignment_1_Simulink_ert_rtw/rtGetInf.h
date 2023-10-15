@@ -3,7 +3,7 @@
  * course requirements at degree granting institutions only.  Not for
  * government, commercial, or other organizational use.
  *
- * File: rtmodel.h
+ * File: rtGetInf.h
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
@@ -17,15 +17,16 @@
  * Validation result: Not run
  */
 
-#ifndef RTW_HEADER_rtmodel_h_
-#define RTW_HEADER_rtmodel_h_
-#include "Assignment_1_Simulink.h"
+#ifndef RTW_HEADER_rtGetInf_h_
+#define RTW_HEADER_rtGetInf_h_
+#include "rtwtypes.h"
 
-/* Macros generated for backwards compatibility  */
-#ifndef rtmGetStopRequested
-#define rtmGetStopRequested(rtm)       ((void*) 0)
-#endif
-#endif                                 /* RTW_HEADER_rtmodel_h_ */
+extern real_T rtGetInf(void);
+extern real32_T rtGetInfF(void);
+extern real_T rtGetMinusInf(void);
+extern real32_T rtGetMinusInfF(void);
+
+#endif                                 /* RTW_HEADER_rtGetInf_h_ */
 
 /*
  * File trailer for generated code.

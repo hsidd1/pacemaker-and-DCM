@@ -4,6 +4,9 @@ MW_PWM.o
 ert_main.o
 Assignment_1_Simulink.o
 Assignment_1_Simulink_data.o
+rtGetInf.o
+rtGetNaN.o
+rt_nonfinite.o
 startup.o
 system_MK64F12.o
 startup_MK64F12.o

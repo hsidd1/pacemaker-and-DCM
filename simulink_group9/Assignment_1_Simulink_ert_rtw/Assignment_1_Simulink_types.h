@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
- * Model version                  : 2.18
+ * Model version                  : 2.48
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Oct 13 01:55:35 2023
+ * C/C++ source code generated on : Sun Oct 15 04:22:17 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,8 +21,78 @@
 #define RTW_HEADER_Assignment_1_Simulink_types_h_
 #include "rtwtypes.h"
 #include "MW_SVD.h"
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Mode_
+#define DEFINED_TYPEDEF_FOR_Pace_Mode_
 
-/* Custom Type definition for MATLABSystem: '<S3>/PWM Output1' */
+typedef enum {
+  OFF = 0,                             /* Default value */
+  DDD = 3330,
+  VDD = 2330,
+  DDI = 3310,
+  DOO = 3000,
+  AOO = 1000,
+  AAI = 1110,
+  VOO = 2000,
+  VVI = 2210,
+  AAT = 1120,
+  VVT = 2220,
+  DDDR = 3331,
+  VDDR = 2331,
+  DDIR = 3311,
+  DOOR = 3001,
+  AOOR = 1001,
+  AAIR = 1111,
+  VOOR = 2001,
+  VVIR = 2211
+} Pace_Mode;
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Chamber_
+#define DEFINED_TYPEDEF_FOR_Pace_Chamber_
+
+typedef enum {
+  Atrium = 1,                          /* Default value */
+  Ventricle,
+  Dual
+} Pace_Chamber;
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Sense_Response_
+#define DEFINED_TYPEDEF_FOR_Pace_Sense_Response_
+
+typedef enum {
+  Nothing = 0,                         /* Default value */
+  Inhibit,
+  Track,
+  Dual_Response
+} Pace_Sense_Response;
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Sense_Chamber_
+#define DEFINED_TYPEDEF_FOR_Pace_Sense_Chamber_
+
+typedef enum {
+  Atrium_Sense = 1,                    /* Default value */
+  Ventricle_Sense,
+  Dual_Sense
+} Pace_Sense_Chamber;
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
+#define DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
+
+typedef enum {
+  Disabled = 0,                        /* Default value */
+  Enabled
+} Pace_Rate_Mode;
+
+#endif
+
+/* Custom Type definition for MATLABSystem: '<S2>/PWM Output1' */
 #include "MW_SVD.h"
 #ifndef struct_tag_0QIIqIWUIOhUbf1p9QN9pB
 #define struct_tag_0QIIqIWUIOhUbf1p9QN9pB

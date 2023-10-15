@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
- * Model version                  : 2.18
+ * Model version                  : 2.48
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Oct 13 01:55:35 2023
+ * C/C++ source code generated on : Sun Oct 15 04:22:17 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,60 +21,65 @@
 
 /* Block parameters (default storage) */
 P_Assignment_1_Simulink_T Assignment_1_Simulink_P = {
+  /* Mask Parameter: EnumeratedConstant_Value
+   * Referenced by: '<S7>/Constant'
+   */
+  AAI,
+
   /* Expression: SampleTime
-   * Referenced by: '<S3>/Digital Read'
+   * Referenced by: '<S2>/Digital Read'
    */
   0.001,
 
   /* Expression: SampleTime
-   * Referenced by: '<S3>/Digital Read1'
+   * Referenced by: '<S2>/Digital Read1'
    */
   0.001,
 
-  /* Expression: 2
-   * Referenced by: '<Root>/Constant2'
+  /* Expression: 4
+   * Referenced by: '<S5>/Constant1'
    */
-  2.0,
-
-  /* Expression: 0
-   * Referenced by: '<Root>/Constant'
-   */
-  0.0,
+  4.0,
 
   /* Expression: 20
-   * Referenced by: '<Root>/Constant1'
+   * Referenced by: '<S4>/Gain2'
    */
   20.0,
 
-  /* Expression: 1
-   * Referenced by: '<Root>/Constant6'
+  /* Expression: 150
+   * Referenced by: '<S5>/Constant4'
    */
-  1.0,
+  150.0,
 
-  /* Expression: 1000
-   * Referenced by: '<Root>/Constant5'
+  /* Expression: 1.1
+   * Referenced by: '<S5>/Constant3'
    */
-  1000.0,
+  1.1,
 
-  /* Expression: 300
-   * Referenced by: '<Root>/Constant4'
+  /* Expression: 60
+   * Referenced by: '<S5>/Constant'
    */
-  300.0,
+  60.0,
 
-  /* Expression: 70
-   * Referenced by: '<Root>/Constant3'
+  /* Expression: 1000/60
+   * Referenced by: '<S4>/Multiply'
    */
-  70.0,
+  16.666666666666668,
 
-  /* Expression: 70
-   * Referenced by: '<Root>/Constant7'
+  /* Expression: 0.7
+   * Referenced by: '<S5>/Constant2'
    */
-  70.0,
+  0.7,
 
-  /* Expression: true
-   * Referenced by: '<Root>/Constant8'
+  /* Expression: 100
+   * Referenced by: '<S4>/Gain'
    */
-  true
+  100.0,
+
+  /* Expression: 100
+   * Referenced by: '<S4>/Gain1'
+   */
+  100.0
 };
 
 /*

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
- * Model version                  : 2.18
+ * Model version                  : 2.48
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Fri Oct 13 01:55:35 2023
+ * C/C++ source code generated on : Sun Oct 15 04:22:17 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,6 +21,7 @@
 #include "Assignment_1_Simulink_private.h"
 #include "rtwtypes.h"
 #include "limits.h"
+#include "rt_nonfinite.h"
 #include "board.h"
 #include "mw_cmsis_rtos.h"
 #define UNUSED(x)                      x = x

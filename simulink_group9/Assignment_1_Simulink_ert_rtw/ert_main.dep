@@ -8,6 +8,9 @@ ert_main.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/Assignment_1_Simulink_types.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rtGetNaN.h \
+ C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rt_nonfinite.h \
+ C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rtGetInf.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/Assignment_1_Simulink_private.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/board.h \
  C:/Freescale/KSDK_1.2.0/platform/devices/fsl_device_registers.h \
@@ -52,6 +55,12 @@ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/free
 C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/Assignment_1_Simulink_types.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rtGetNaN.h:
+
+C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rt_nonfinite.h:
+
+C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/rtGetInf.h:
 
 C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~1/Assignment_1_Simulink_ert_rtw/Assignment_1_Simulink_private.h:
 
