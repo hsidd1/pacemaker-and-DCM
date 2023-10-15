@@ -37,9 +37,13 @@ class FunkyWidget(tk.Frame):
             x = default
         self.var.set(x)  # Set the default value
 
-        self.current_crement, self.current_interval = self.get_increment_interval(
-            self.var.get()
-        )
+
+        try:
+            self.current_crement, self.current_interval = self.get_increment_interval(
+                self.var.get()
+            )
+        except TypeError:
+            print(self.get_increment_interval(self.var.get()))
 
         self.option_menu = ttk.Combobox(
             self,
@@ -74,6 +78,7 @@ class FunkyWidget(tk.Frame):
         :param current_value: current value of the widget
         :return: increment and interval of the current value
         """
+        epsilon = 1e-10
         if current_value == "No Data":
             return None, None
         current_value = float(current_value)
@@ -82,10 +87,10 @@ class FunkyWidget(tk.Frame):
             if current_value >= start and current_value <= end:
                 if inc:
                     interval = arange(start, end + inc, inc)
-                    if current_value in interval:
+                    if (interval[0]-epsilon) < current_value < (interval[-1]+epsilon):
                         return inc, intervals
                 else:
-                    return None, intervals
+                    return inc, intervals
         return None, None
 
     def get_next_increment_interval(self, current_interval: tuple) -> tuple:
