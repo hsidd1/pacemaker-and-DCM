@@ -14,6 +14,7 @@ class Backend:
         :param device_id: device id of board
         :param previous_device_ids: previous device ids interrogated
         """
+        self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
         """
@@ -60,3 +61,30 @@ class Backend:
                     break
                 self.device_id = None
         return self.device_id
+
+
+    def get_egram_dict(self) -> dict:
+        """Gets the egram data from the serial port.
+        :return: dictionary of egram data"""
+        egram_data = {}
+
+        if self.is_connected:
+            try:                
+                while True:
+                    # Read data from serial port
+                    data = self.ser.readline().decode().strip()
+                    
+                    if not data:
+                        break
+                    
+                    # Data for time and voltage TODO: change in a2 to match expected transfer
+                    time, voltage = map(float, data.split(','))
+                    egram_data[time] = voltage
+
+                self.ser.close()
+            except serial.SerialException:
+                print("Error: Failed to open the serial port.")
+            except ValueError:
+                print("Error: Invalid data received from the serial port.")
+
+        return egram_data

@@ -68,6 +68,7 @@ class Screen:
         bold: bool = False,
         font: str = "Helvetica",
         wraplength: int = 0,
+        fg: str = "black",
     ) -> tk.Label:
         """Creates a label widget and returns it."""
         if bold:
@@ -78,6 +79,7 @@ class Screen:
             self.screen,
             text=text,
             font=input_font,
+            fg=fg,
             background="#8a8d91",
             wraplength=wraplength,
         )
@@ -462,6 +464,11 @@ class SettingsScreen(Screen):
         self.database.update_parameters(
             self.current_user, self.current_user.username, self.pacing_mode, param_data
         )
+        applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
+        applied_msg.grid(
+            row=self.last_row - 1, column=1, pady=2
+        )
+        self.screen.after(2000, lambda: applied_msg.destroy())
 
     def ok(self):
         """Do both apply and close, similar features to Windows settings"""
