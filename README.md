@@ -41,8 +41,24 @@ To run tests locally:
 ```
 
 #### Using the Pacemaker
+[MATLAB R2022b (or higher)](https://www.mathworks.com/products/matlab.html) with Simulink is required along with the following add-ons:
+- Embedded Coder
+- Fixed-Point Designer
+- MATLAB Coder
+- Simulink Check
+- Simulink Coder
+- Simulink Coverage
+- Simulink Design Verifier
+- Simulink Desktop Real-Time
+- Simulink Test
+- Stateflow
+The [Simulink Coder Support Package for NXP FRDM-K64F Board](https://www.mathworks.com/matlabcentral/fileexchange/55318-simulink-coder-support-package-for-nxp-frdm-k64f-board) will also need to be installed.
 
+Additionally, [HeartView](https://github.com/theguymeyer/heartview) is also required along with the NXP FRDM-K64F board to act as the pacemaker, and Nucleo F446RE to act as the heart.
 
+The [Simulink model](https://github.com/hsidd1/pacemaker-and-DCM/blob/main/simulink_group9/Assignment_1_Simulink.slx) will need to be opened and the heart and pacemaker will need to be connected to your computer via USB.
+
+Within the Simulink model, the desired pacing mode can be chosen along with other parameters, and the result of the heart signal can be viewed in HeartView once the heart characteristics have been specified.
 <!---
 #### Contributors
 add your credits here
