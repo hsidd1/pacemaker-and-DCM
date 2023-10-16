@@ -4,7 +4,7 @@
 
 ![Supported Python Versions](https://img.shields.io/badge/supported%20python%20versions-3.10%20%7C%203.11-blue) [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![Tests](https://github.com/pylint-dev/pylint/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/hsidd1/pacemaker-and-dcm/actions)
  [![Docs Passing](https://img.shields.io/badge/docs-passing-brightgreen)](docs_group9/) [![Linting](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint) 
-
+<a href="https://github.com/hsidd1/pacemaker-and-dcm/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 
 
 
