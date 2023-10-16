@@ -23,11 +23,11 @@
                     "Ventricular Pulse Width": 1.2
                 },
                 "VVI": {
-                    "Lower Rate Limit": 60.0,
+                    "Lower Rate Limit": 125.0,
                     "Upper Rate Limit": 120.0,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.7,
-                    "VRP": 320.0
+                    "Ventricular Pulse Width": 1.5,
+                    "VRP": 300.0
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,

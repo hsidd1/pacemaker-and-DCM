@@ -10,4 +10,4 @@ cp "$DEFAULT_DATABASE" "$DATABASE_FILE"
 # Run the tests from the tests directory
 cd DCM_group9
 # Running as a module
-python -m tests.test_login
+python -m tests.test_login --html=pytest_report.html --self-contained-html
