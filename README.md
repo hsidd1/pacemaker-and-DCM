@@ -52,6 +52,7 @@ To run tests locally:
 - Simulink Desktop Real-Time
 - Simulink Test
 - Stateflow
+
 The [Simulink Coder Support Package for NXP FRDM-K64F Board](https://www.mathworks.com/matlabcentral/fileexchange/55318-simulink-coder-support-package-for-nxp-frdm-k64f-board) will also need to be installed.
 
 Additionally, [HeartView](https://github.com/theguymeyer/heartview) is also required along with the NXP FRDM-K64F board to act as the pacemaker, and Nucleo F446RE to act as the heart.
