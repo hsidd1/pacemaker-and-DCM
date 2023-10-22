@@ -10,14 +10,16 @@ from database import Database
 from user import User
 from pacing_parameters import Parameters
 from custom_widgets import FunkyWidget
+from config import AccessibilityConfig
 
 
 class Screen:
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """Initializes Screen class with geometry and background colour.
         :param geometry: geometry of the screen
         :param bg_colour: background colour of the screen
         """
+        self.accessibility_config = accessibility_config
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
@@ -158,7 +160,7 @@ class Screen:
 
 
 class WelcomeScreen(Screen):
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """
         Initializes WelcomeScreen class with geometry and background colour.
         :param geometry: geometry of the screen
@@ -166,7 +168,7 @@ class WelcomeScreen(Screen):
 
         Only the WelcomeScreen and SettingsScreen should have access to database !!!
         USE THE CURRENTUSER IN HomePage!!!!!!"""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config,  bg_colour)
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
         self.logged_in = False
@@ -228,11 +230,14 @@ class WelcomeScreen(Screen):
             password_entry=self.widgets["Entry"][1],
         )
 
+class AccessibilitySettingsScreen(Screen):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+        super().__init__(geometry, accessibility_config, bg_colour)
 
 class HomepageScreen(Screen):
-    def __init__(self, geometry: str, current_user: User, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, current_user: User, bg_colour: str = "#8a8d91"):
         """Initializes HomepageScreen class with geometry, current user and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Home Page"
         self.current_user = current_user
         self.pacing_mode = None
@@ -346,12 +351,13 @@ class SettingsScreen(Screen):
     def __init__(
         self,
         geometry: str,
+        accessibility_config: AccessibilityConfig, 
         current_user: User,
         pacing_mode: str,
         bg_colour: str = "#8a8d91",
     ):
         """Initializes SettingsScreen class with geometry, current user, pacing mode and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
         self.pacing_mode = pacing_mode
@@ -495,9 +501,9 @@ class SettingsScreen(Screen):
 
 
 class EgramScreen(Screen):
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """Initializes EgramScreen class with geometry and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Egram"
         self.closed = False
 
