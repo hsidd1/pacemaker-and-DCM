@@ -19,6 +19,7 @@ class Application:
         self.current_screen: str = "WelcomeScreen"
         self.screens: dict = {
             "WelcomeScreen": self.handle_welcome_screen,
+            "AccessibilitySettingsScreen": self.handle_accessibility_settings_screen,
             "HomepageScreen": self.handle_homepage_screen,
             "SettingsScreen": self.handle_settings_screen,
             "EgramScreen": self.handle_egram_screen,
@@ -39,8 +40,17 @@ class Application:
         if welcome_screen.logged_in:
             self.current_screen = "HomepageScreen"
             self.current_user = welcome_screen.logged_user
+        elif welcome_screen.view_settings:
+            self.current_screen = "AccessibilitySettingsScreen"
         else:
             self.current_screen = None
+    
+    def handle_accessibility_settings_screen(self):
+        accessibility_settings_screen= AccessibilitySettingsScreen(self.page_geometry, self.accessibility_config)
+        accessibility_settings_screen.run_screen()
+
+        self.page_geometry = accessibility_settings_screen.geometry
+        self.current_screen = None
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""

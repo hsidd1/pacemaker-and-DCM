@@ -172,6 +172,7 @@ class WelcomeScreen(Screen):
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
         self.logged_in = False
+        self.view_settings = False
         self.logged_user = None
 
     def run_screen(self) -> None:
@@ -189,8 +190,13 @@ class WelcomeScreen(Screen):
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
+        super().create_button("Settings", self.open_settings).place(x=20, y=self.screen.winfo_height()-45)
         self.screen.bind("<Return>", lambda event: self.login_user())
+        self.screen.bind("<Configure>", self.update)
         self.screen.mainloop()
+    
+    def update(self, event):
+        self.widgets["Button"][2].place(x=20, y=self.screen.winfo_height()-45)
 
     def login_user(self) -> User:
         """wrapper for Database.login_user() for button command.
@@ -229,10 +235,21 @@ class WelcomeScreen(Screen):
             username_entry=self.widgets["Entry"][0],
             password_entry=self.widgets["Entry"][1],
         )
+    
+    def open_settings(self):
+        self.view_settings = True
+        super().prepare_screen_switch()
+
 
 class AccessibilitySettingsScreen(Screen):
     def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         super().__init__(geometry, accessibility_config, bg_colour)
+        self.title = "DCM Application - Accessibility Settings"
+        
+    def run_screen(self):
+        super().run_screen()
+
+        self.screen.mainloop()
 
 class HomepageScreen(Screen):
     def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, current_user: User, bg_colour: str = "#8a8d91"):
