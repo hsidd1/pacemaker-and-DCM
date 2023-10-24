@@ -46,5 +46,11 @@ class AccessibilityConfig:
         pass
 
     def get_settings(self):
-        settings = [self.display_names[setting] for setting in dir(self) if not callable(getattr(self, setting))]
+        attributes = dir(self)
+        settings = []
+        for attribute in attributes:
+            try:
+                settings.append(self.display_names[attribute])
+            except KeyError:
+                pass
         return settings

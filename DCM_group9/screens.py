@@ -245,9 +245,14 @@ class AccessibilitySettingsScreen(Screen):
     def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Accessibility Settings"
+        self.settings = accessibility_config.get_settings()
+        self.num_rows = 4
         
     def run_screen(self):
         super().run_screen()
+
+        for i, setting in enumerate(self.settings):
+            super().create_label(f"{self.settings[i]}", 10).grid(row=i%self.num_rows, column=i//self.num_rows)
 
         self.screen.mainloop()
 
@@ -492,7 +497,7 @@ class SettingsScreen(Screen):
         if from_button:
             applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
             applied_msg.grid(
-                row=self.last_row - 1, column=1, pady=2
+                row=self.last_row + 2, column=1, pady=2
             )
             destroy_applied_msg = partial(applied_msg.destroy)
             try:
