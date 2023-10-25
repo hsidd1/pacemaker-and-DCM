@@ -6,12 +6,19 @@ class AccessibilityConfig:
     def __init__(self):
         self._font_size = None
         self._colour_mode = None
-        self.__get_settings_from_file()
-
-        self.display_names = {
-            "_font_size": "Font Size",
-            "_colour_mode": "Colour Mode"
+        self.settings_map = {
+            "_font_size": {
+                "Font Size" : [10,30]
+            },
+            "_colour_mode": {
+                "Colour Mode" : ["Trichromacy", "Protanopia", "Deuteranopia", "Tritanopia"]
+            }
         }
+        self.default_settings = {
+            "Font Size": "10",
+            "Colour Mode": "Trichromacy"
+        }
+        self.__get_settings_from_file()
 
     @property
     def font_size(self):
@@ -37,9 +44,11 @@ class AccessibilityConfig:
                 try:
                     data = json.load(f)
                 except json.JSONDecodeError:
-                    data = []
+                    with open(config, "w") as f:
+                        json.dump(self.default_settings, f, indent=4)
         except FileNotFoundError:
             with open(config, "w") as f:
+                json.dump(self.default_settings, f, indent=4)
                 pass           
 
     def __write_settings_to_file(self):
@@ -50,7 +59,7 @@ class AccessibilityConfig:
         settings = []
         for attribute in attributes:
             try:
-                settings.append(self.display_names[attribute])
+                settings.append(self.settings_map[attribute])
             except KeyError:
                 pass
         return settings

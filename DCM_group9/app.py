@@ -50,7 +50,10 @@ class Application:
         accessibility_settings_screen.run_screen()
 
         self.page_geometry = accessibility_settings_screen.geometry
-        self.current_screen = None
+        if accessibility_settings_screen.closed:
+            self.current_screen = "WelcomeScreen"
+        else:
+            self.current_screen = None
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""

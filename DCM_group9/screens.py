@@ -34,6 +34,7 @@ class Screen:
         self.page_height = 0
         self.num_columns = 0
         self.num_rows = 0
+        self.title = ""
 
     def create_button(
         self,
@@ -72,6 +73,7 @@ class Screen:
         font: str = "Helvetica",
         wraplength: int = 0,
         fg: str = "black",
+        bg: str = "#8a8d91"
     ) -> tk.Label:
         """Creates a label widget and returns it."""
         if bold:
@@ -85,6 +87,7 @@ class Screen:
             fg=fg,
             background="#8a8d91",
             wraplength=wraplength,
+            bg=bg,
         )
         self.widgets["Label"].append(label)
         return label
@@ -97,7 +100,7 @@ class Screen:
         dropdown = ttk.Combobox(
             self.screen, textvariable=string, values=options, state="readonly"
         )
-        self.widgets["OptionMenu"].append(dropdown)
+        self.widgets["OptionMenu"].append((dropdown, string))
         return dropdown, string
 
     def create_funky_widget(self, entry_map: dict, data: str) -> FunkyWidget:
@@ -118,7 +121,7 @@ class Screen:
 
     def create_spacer(self, space: int) -> tk.Frame:
         """Creates a spacer widget and returns it."""
-        spacer = tk.Frame(self.screen, height=space, bg=self.bg_colour)
+        spacer = tk.Frame(self.screen, height=space, width=space, bg=self.bg_colour)
         return spacer
 
     def bring_to_front(self) -> None:
@@ -153,6 +156,7 @@ class Screen:
         self.page_height = self.screen.winfo_height()
         self.page_width = self.screen.winfo_width()
         self.rows, self.columns = self.screen.grid_size()
+        self.screen.title(self.title)
         self.bring_to_front()
 
     def close_screen(self) -> None:
@@ -247,14 +251,33 @@ class AccessibilitySettingsScreen(Screen):
         self.title = "DCM Application - Accessibility Settings"
         self.settings = accessibility_config.get_settings()
         self.num_rows = 4
+        self.closed = False
         
     def run_screen(self):
         super().run_screen()
-
-        for i, setting in enumerate(self.settings):
-            super().create_label(f"{self.settings[i]}", 10).grid(row=i%self.num_rows, column=i//self.num_rows)
-
+        super().load_grid(True, True, True)
+        super().create_label(list(self.settings[0].keys())[0], 10).grid(row=0,column=0, padx=5)
+        super().create_options(self.settings[0][list(self.settings[0].keys())[0]])[0].grid(row=0,column=1)
+        super().create_spacer(100).grid(row=0,column=2)
+        tk.Label(self.screen, width=6,height=3, bg="red").grid(row=0,column=3)
+        tk.Label(self.screen, width=6,height=3, bg="green").grid(row=0,column=4)
+        print(self.settings[0].values())
+        tk.Scale(self.screen, from_=self.settings[1][list(self.settings[1].keys())[0]][0],to_=self.settings[1][list(self.settings[1].keys())[0]][1], orient="horizontal",label="Font Size").grid(row=1, column=0, columnspan=2)
+        super().create_button("Apply", self.close).grid(row=2, column=0, columnspan=2)
+        super().create_button("Ok", self.close).grid(row=2, column=2, padx=20)
+        super().create_button("Close", self.close).grid(row=2, column=5)
         self.screen.mainloop()
+
+    def apply(self):
+        pass
+
+    def close(self):
+        self.closed = True
+        self.prepare_screen_switch()
+    
+    def ok(self):
+        self.apply()
+        self.close()
 
 class HomepageScreen(Screen):
     def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, current_user: User, bg_colour: str = "#8a8d91"):
