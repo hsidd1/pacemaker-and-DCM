@@ -29,12 +29,15 @@ class Screen:
             "Label": [],
             "OptionMenu": [],
             "FunkyWidget": [],
+            "Scale" : [],
         }
         self.page_width = 0
         self.page_height = 0
         self.num_columns = 0
         self.num_rows = 0
         self.title = ""
+        self.column_size = 0
+        self.config = accessibility_config
 
     def create_button(
         self,
@@ -158,9 +161,17 @@ class Screen:
         self.rows, self.columns = self.screen.grid_size()
         self.screen.title(self.title)
         self.bring_to_front()
+        self.screen.bind("<Configure>", self.update_column_size)
 
     def close_screen(self) -> None:
         self.screen.destroy()
+
+    def update_column_size(self, event):
+        if (self.num_columns):
+            self.column_size = self.screen.winfo_width() / self.num_columns
+        else:
+            self.column_size = self.screen.winfo_width()
+        
 
 
 class WelcomeScreen(Screen):
@@ -249,6 +260,7 @@ class AccessibilitySettingsScreen(Screen):
     def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Accessibility Settings"
+        self.config = accessibility_config
         self.settings = accessibility_config.get_settings()
         self.num_rows = 4
         self.closed = False
@@ -257,19 +269,36 @@ class AccessibilitySettingsScreen(Screen):
         super().run_screen()
         super().load_grid(True, True, True)
         super().create_label(list(self.settings[0].keys())[0], 10).grid(row=0,column=0, padx=5)
-        super().create_options(self.settings[0][list(self.settings[0].keys())[0]])[0].grid(row=0,column=1)
+        super().create_options(self.settings[0][list(self.settings[0].keys())[0]], self.config.colour_mode)[0].grid(row=0,column=1)
         super().create_spacer(100).grid(row=0,column=2)
-        tk.Label(self.screen, width=6,height=3, bg="red").grid(row=0,column=3)
-        tk.Label(self.screen, width=6,height=3, bg="green").grid(row=0,column=4)
-        print(self.settings[0].values())
-        tk.Scale(self.screen, from_=self.settings[1][list(self.settings[1].keys())[0]][0],to_=self.settings[1][list(self.settings[1].keys())[0]][1], orient="horizontal",label="Font Size").grid(row=1, column=0, columnspan=2)
-        super().create_button("Apply", self.close).grid(row=2, column=0, columnspan=2)
+
+        red = tk.Label(self.screen, width=6,height=3, bg="red")
+        green = tk.Label(self.screen, width=6,height=3, bg="green")
+        red.grid(row=0,column=3)
+        green.grid(row=0,column=4)
+
+        scale = tk.Scale(self.screen, from_=self.settings[1][list(self.settings[1].keys())[0]][0],to_=self.settings[1][list(self.settings[1].keys())[0]][1], orient="horizontal",label="Font Size")
+        scale.grid(row=1, column=0, columnspan=2)
+        scale.set(self.config.font_size)
+        self.widgets["Scale"].append(scale)
+        self.widgets["Label"].append(red)
+        self.widgets["Label"].append(green)
+
+        self.create_label('Hello World!',self.config.font_size).grid(row=1, column=2, columnspan=4)
+
+        super().create_button("Apply", self.apply).grid(row=2, column=0, columnspan=2)
         super().create_button("Ok", self.close).grid(row=2, column=2, padx=20)
         super().create_button("Close", self.close).grid(row=2, column=5)
         self.screen.mainloop()
 
     def apply(self):
-        pass
+        font_size = int(self.widgets["Scale"][0].get())
+        colour_mode = self.widgets["OptionMenu"][0][0].get()
+
+        self.config.font_size = font_size
+        self.config.colour_mode = colour_mode
+
+        self.widgets["Label"][3].configure(font=("Helvetica", self.config.font_size))
 
     def close(self):
         self.closed = True
@@ -286,6 +315,7 @@ class HomepageScreen(Screen):
         self.title = "DCM Application - Home Page"
         self.current_user = current_user
         self.pacing_mode = None
+        self.config = accessibility_config
         self.num_columns = 3
         self.logged_out = False
         self.egram_view = False
@@ -300,7 +330,10 @@ class HomepageScreen(Screen):
         super().create_label("Pacemaker Device Controller-Monitor", 25, True).grid(
             row=0, column=0, columnspan=20, pady=10
         )
-        super().create_label("Choose pacing mode:", 10).grid(row=1, column=0, pady=10)
+
+        self.screen.update()
+
+        super().create_label("Choose pacing mode:", self.config.font_size, wraplength=self.column_size).grid(row=1, column=0, pady=10)
         default = "Select a Pacing Mode"
         dropdown = super().create_options(self.pacing_modes, default)
         pacing_mode_dropdown = dropdown[0]
@@ -330,18 +363,25 @@ class HomepageScreen(Screen):
 
         if pacing_mode_input == "Select a Pacing Mode":
             # Incorrect password
-            column_size = self.screen.winfo_width() / self.num_columns
+            # column_size = self.screen.winfo_width() / self.num_columns
             try:
                 self.widgets["Label"].pop(2).destroy()
             except IndexError:
                 pass
-            super().create_label(
+            applied = super().create_label(
                 "Please select a valid pacing mode",
                 11,
                 True,
                 "calibri",
-                column_size - 2,
-            ).grid(row=10, column=1, pady=2)
+                self.column_size - 2,
+            )
+            applied.grid(row=10, column=1, pady=2)
+            destroy_applied_msg = partial(applied.destroy)
+            try:
+                self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
+            except tk.TclError:
+                pass
+
             return
         else:
             self.pacing_mode = pacing_mode_input
@@ -476,11 +516,11 @@ class SettingsScreen(Screen):
         self.screen.title(self.title)
         self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
-        column_width = self.screen.winfo_width() / self.num_columns
-        self.screen.bind()
+        
+        self.screen.update()
 
         for i, param in enumerate(parameters):
-            super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(
+            super().create_label(f"{param.value.name} ({param.value.unit})", self.config.font_size, wraplength=self.column_size-5).grid(
                 row=(i // self.num_columns + i // self.num_columns),
                 column=i % self.num_columns,
                 padx=5,
