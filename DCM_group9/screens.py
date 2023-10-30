@@ -455,7 +455,6 @@ class SettingsScreen(Screen):
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH, 
-                Parameters.ATRIAL_SENSITIVITY,
             ],
             "AAI": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -471,7 +470,6 @@ class SettingsScreen(Screen):
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH, 
-                Parameters.VENTRICULAR_SENSITIVITY,
             ],
             "VVI": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -485,15 +483,13 @@ class SettingsScreen(Screen):
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
-                Parameters.ATRIAL_AMPLITUDE,
+                Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH, 
-                Parameters.ATRIAL_SENSITIVITY, 
-
             ],
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
-                Parameters.ATRIAL_AMPLITUDE,
+                Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.ARP, 
                 Parameters.ATRIAL_SENSITIVITY,
@@ -502,7 +498,7 @@ class SettingsScreen(Screen):
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
-                Parameters.VENTRICULAR_AMPLITUDE,
+                Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH, 
                 Parameters.VENTRICULAR_SENSITIVITY,
 
@@ -510,7 +506,7 @@ class SettingsScreen(Screen):
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
-                Parameters.VENTRICULAR_AMPLITUDE,
+                Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH, 
                 Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.VRP,
