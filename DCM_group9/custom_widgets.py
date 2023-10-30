@@ -61,9 +61,12 @@ class FunkyWidget(tk.Frame):
         self.increment_button.pack(side="left")
 
         self.option_menu.bind("<<ComboboxSelected>>", self.__update_display)
+        print(self.intervals)
 
     def __update_increment(self, selected_interval) -> None:
         """Updates the increment of the widget."""
+
+        # somebody find a way to incorporate this method.
         self.current_interval = selected_interval
         self.increment = self.limits[selected_interval]
 
@@ -72,6 +75,10 @@ class FunkyWidget(tk.Frame):
         int_string = self.var.get()
         min_value = int_string.split("-")[0]
         self.var.set(min_value)
+
+        index = self.intervals.index(int_string)
+        self.current_interval = self.interval_list[index]
+        self.current_crement = self.increment_list[index]
 
     def get_increment_interval(self, current_value: float) -> tuple:
         """Gets the increment and interval of the current value.
@@ -159,6 +166,7 @@ class FunkyWidget(tk.Frame):
         )
 
         if current_value - self.current_crement < self.current_interval[0] - epsilon:
+            print(current_value, self.current_crement, self.current_interval)
             self.current_crement, self.current_interval = next_increment, next_interval
             if current_value == next_interval[1]:
                 current_value -= next_increment
