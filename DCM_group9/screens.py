@@ -10,14 +10,16 @@ from database import Database
 from user import User
 from pacing_parameters import Parameters
 from custom_widgets import FunkyWidget
+from config import AccessibilityConfig
 
 
 class Screen:
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """Initializes Screen class with geometry and background colour.
         :param geometry: geometry of the screen
         :param bg_colour: background colour of the screen
         """
+        self.accessibility_config = accessibility_config
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
@@ -27,11 +29,15 @@ class Screen:
             "Label": [],
             "OptionMenu": [],
             "FunkyWidget": [],
+            "Scale" : [],
         }
         self.page_width = 0
         self.page_height = 0
         self.num_columns = 0
         self.num_rows = 0
+        self.title = ""
+        self.column_size = 0
+        self.config = accessibility_config
 
     def create_button(
         self,
@@ -70,6 +76,7 @@ class Screen:
         font: str = "Helvetica",
         wraplength: int = 0,
         fg: str = "black",
+        bg: str = "#8a8d91"
     ) -> tk.Label:
         """Creates a label widget and returns it."""
         if bold:
@@ -83,6 +90,7 @@ class Screen:
             fg=fg,
             background="#8a8d91",
             wraplength=wraplength,
+            bg=bg,
         )
         self.widgets["Label"].append(label)
         return label
@@ -95,7 +103,7 @@ class Screen:
         dropdown = ttk.Combobox(
             self.screen, textvariable=string, values=options, state="readonly"
         )
-        self.widgets["OptionMenu"].append(dropdown)
+        self.widgets["OptionMenu"].append((dropdown, string))
         return dropdown, string
 
     def create_funky_widget(self, entry_map: dict, data: str) -> FunkyWidget:
@@ -116,7 +124,7 @@ class Screen:
 
     def create_spacer(self, space: int) -> tk.Frame:
         """Creates a spacer widget and returns it."""
-        spacer = tk.Frame(self.screen, height=space, bg=self.bg_colour)
+        spacer = tk.Frame(self.screen, height=space, width=space, bg=self.bg_colour)
         return spacer
 
     def bring_to_front(self) -> None:
@@ -151,14 +159,23 @@ class Screen:
         self.page_height = self.screen.winfo_height()
         self.page_width = self.screen.winfo_width()
         self.rows, self.columns = self.screen.grid_size()
+        self.screen.title(self.title)
         self.bring_to_front()
+        self.screen.bind("<Configure>", self.update_column_size)
 
     def close_screen(self) -> None:
         self.screen.destroy()
 
+    def update_column_size(self, event):
+        if (self.num_columns):
+            self.column_size = self.screen.winfo_width() / self.num_columns
+        else:
+            self.column_size = self.screen.winfo_width()
+        
+
 
 class WelcomeScreen(Screen):
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """
         Initializes WelcomeScreen class with geometry and background colour.
         :param geometry: geometry of the screen
@@ -166,10 +183,11 @@ class WelcomeScreen(Screen):
 
         Only the WelcomeScreen and SettingsScreen should have access to database !!!
         USE THE CURRENTUSER IN HomePage!!!!!!"""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config,  bg_colour)
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
         self.logged_in = False
+        self.view_settings = False
         self.logged_user = None
 
     def run_screen(self) -> None:
@@ -187,8 +205,13 @@ class WelcomeScreen(Screen):
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
+        super().create_button("Settings", self.open_settings).place(x=20, y=self.screen.winfo_height()-45)
         self.screen.bind("<Return>", lambda event: self.login_user())
+        self.screen.bind("<Configure>", self.update)
         self.screen.mainloop()
+    
+    def update(self, event):
+        self.widgets["Button"][2].place(x=20, y=self.screen.winfo_height()-45)
 
     def login_user(self) -> User:
         """wrapper for Database.login_user() for button command.
@@ -227,15 +250,74 @@ class WelcomeScreen(Screen):
             username_entry=self.widgets["Entry"][0],
             password_entry=self.widgets["Entry"][1],
         )
+    
+    def open_settings(self):
+        self.view_settings = True
+        super().prepare_screen_switch()
 
+
+class AccessibilitySettingsScreen(Screen):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+        super().__init__(geometry, accessibility_config, bg_colour)
+        self.title = "DCM Application - Accessibility Settings"
+        self.config = accessibility_config
+        self.settings = accessibility_config.get_settings()
+        self.num_rows = 4
+        self.closed = False
+        
+    def run_screen(self):
+        super().run_screen()
+        super().load_grid(True, True, True)
+        super().create_label(list(self.settings[0].keys())[0], 10).grid(row=0,column=0, padx=5)
+        super().create_options(self.settings[0][list(self.settings[0].keys())[0]], self.config.colour_mode)[0].grid(row=0,column=1)
+        super().create_spacer(100).grid(row=0,column=2)
+
+        red = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][0])
+        green = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][1])
+        red.grid(row=0,column=3)
+        green.grid(row=0,column=4)
+
+        scale = tk.Scale(self.screen, from_=self.settings[1][list(self.settings[1].keys())[0]][0],to_=self.settings[1][list(self.settings[1].keys())[0]][1], orient="horizontal",label="Font Size")
+        scale.grid(row=1, column=0, columnspan=2)
+        scale.set(self.config.font_size)
+        self.widgets["Scale"].append(scale)
+        self.widgets["Label"].append(red)
+        self.widgets["Label"].append(green)
+
+        self.create_label('Hello World!',self.config.font_size).grid(row=1, column=2, columnspan=4)
+
+        super().create_button("Apply", self.apply).grid(row=2, column=0, columnspan=2)
+        super().create_button("Ok", self.ok).grid(row=2, column=2, padx=20)
+        super().create_button("Close", self.close).grid(row=2, column=5)
+        self.screen.mainloop()
+
+    def apply(self):
+        font_size = int(self.widgets["Scale"][0].get())
+        colour_mode = self.widgets["OptionMenu"][0][0].get()
+
+        self.config.font_size = font_size
+        self.config.colour_mode = colour_mode
+
+        self.widgets["Label"][3].configure(font=("Helvetica", self.config.font_size))
+        self.widgets["Label"][1].configure(bg=self.config.colour_map[colour_mode][0])
+        self.widgets["Label"][2].configure(bg=self.config.colour_map[colour_mode][1])
+
+    def close(self):
+        self.closed = True
+        self.prepare_screen_switch()
+    
+    def ok(self):
+        self.apply()
+        self.close()
 
 class HomepageScreen(Screen):
-    def __init__(self, geometry: str, current_user: User, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, current_user: User, bg_colour: str = "#8a8d91"):
         """Initializes HomepageScreen class with geometry, current user and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Home Page"
         self.current_user = current_user
         self.pacing_mode = None
+        self.config = accessibility_config
         self.num_columns = 3
         self.logged_out = False
         self.egram_view = False
@@ -250,7 +332,10 @@ class HomepageScreen(Screen):
         super().create_label("Pacemaker Device Controller-Monitor", 25, True).grid(
             row=0, column=0, columnspan=20, pady=10
         )
-        super().create_label("Choose pacing mode:", 10).grid(row=1, column=0, pady=10)
+
+        self.screen.update()
+
+        super().create_label("Choose pacing mode:", self.config.font_size, wraplength=self.column_size).grid(row=1, column=0, pady=10)
         default = "Select a Pacing Mode"
         dropdown = super().create_options(self.pacing_modes, default)
         pacing_mode_dropdown = dropdown[0]
@@ -280,18 +365,25 @@ class HomepageScreen(Screen):
 
         if pacing_mode_input == "Select a Pacing Mode":
             # Incorrect password
-            column_size = self.screen.winfo_width() / self.num_columns
+            # column_size = self.screen.winfo_width() / self.num_columns
             try:
                 self.widgets["Label"].pop(2).destroy()
             except IndexError:
                 pass
-            super().create_label(
+            applied = super().create_label(
                 "Please select a valid pacing mode",
                 11,
                 True,
                 "calibri",
-                column_size - 2,
-            ).grid(row=10, column=1, pady=2)
+                self.column_size - 2,
+            )
+            applied.grid(row=10, column=1, pady=2)
+            destroy_applied_msg = partial(applied.destroy)
+            try:
+                self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
+            except tk.TclError:
+                pass
+
             return
         else:
             self.pacing_mode = pacing_mode_input
@@ -317,7 +409,7 @@ class HomepageScreen(Screen):
         status_label = tk.Label(
             self.screen,
             text=text,
-            background="#00FF00" if self.backend.is_connected else "red",
+            background=self.config.colour_map[self.config.colour_mode][1] if self.backend.is_connected else self.config.colour_map[self.config.colour_mode][0],
             font=("Helvetica", 10, "bold"),
         )
         status_label.grid(row=12, column=0, pady=10)
@@ -346,12 +438,13 @@ class SettingsScreen(Screen):
     def __init__(
         self,
         geometry: str,
+        accessibility_config: AccessibilityConfig, 
         current_user: User,
         pacing_mode: str,
         bg_colour: str = "#8a8d91",
     ):
         """Initializes SettingsScreen class with geometry, current user, pacing mode and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
         self.pacing_mode = pacing_mode
@@ -438,11 +531,11 @@ class SettingsScreen(Screen):
         self.screen.title(self.title)
         self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
-        column_width = self.screen.winfo_width() / self.num_columns
-        self.screen.bind()
+        
+        self.screen.update()
 
         for i, param in enumerate(parameters):
-            super().create_label(f"{param.value.name} ({param.value.unit})", 10).grid(
+            super().create_label(f"{param.value.name} ({param.value.unit})", self.config.font_size, wraplength=self.column_size-5).grid(
                 row=(i // self.num_columns + i // self.num_columns),
                 column=i % self.num_columns,
                 padx=5,
@@ -482,7 +575,7 @@ class SettingsScreen(Screen):
         if from_button:
             applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
             applied_msg.grid(
-                row=self.last_row - 1, column=1, pady=2
+                row=self.last_row + 2, column=1, pady=2
             )
             destroy_applied_msg = partial(applied_msg.destroy)
             try:
@@ -508,9 +601,9 @@ class SettingsScreen(Screen):
 
 
 class EgramScreen(Screen):
-    def __init__(self, geometry: str, bg_colour: str = "#8a8d91"):
+    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
         """Initializes EgramScreen class with geometry and background colour."""
-        super().__init__(geometry, bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Egram"
         self.closed = False
 
