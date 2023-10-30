@@ -22,10 +22,10 @@ class AccessibilityConfig:
         }
 
         self.colour_map = {
-            "Trichromacy" : [],
-            "Protanopia" : [],
-            "Deuteranopia" : [],
-            "Tritanopia" : []
+            "Trichromacy" : ["#ff0000", "#00FF00"],
+            "Protanopia" : ["#ffdb58", "#4169e1"],
+            "Deuteranopia" : ["#ffd700", "#000080"],
+            "Tritanopia" : ["#dc143c", "#87ceeb"]
         }
         self.__get_settings_from_file()
 

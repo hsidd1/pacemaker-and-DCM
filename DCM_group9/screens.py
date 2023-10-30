@@ -272,8 +272,8 @@ class AccessibilitySettingsScreen(Screen):
         super().create_options(self.settings[0][list(self.settings[0].keys())[0]], self.config.colour_mode)[0].grid(row=0,column=1)
         super().create_spacer(100).grid(row=0,column=2)
 
-        red = tk.Label(self.screen, width=6,height=3, bg="red")
-        green = tk.Label(self.screen, width=6,height=3, bg="green")
+        red = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][0])
+        green = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][1])
         red.grid(row=0,column=3)
         green.grid(row=0,column=4)
 
@@ -287,7 +287,7 @@ class AccessibilitySettingsScreen(Screen):
         self.create_label('Hello World!',self.config.font_size).grid(row=1, column=2, columnspan=4)
 
         super().create_button("Apply", self.apply).grid(row=2, column=0, columnspan=2)
-        super().create_button("Ok", self.close).grid(row=2, column=2, padx=20)
+        super().create_button("Ok", self.ok).grid(row=2, column=2, padx=20)
         super().create_button("Close", self.close).grid(row=2, column=5)
         self.screen.mainloop()
 
@@ -299,6 +299,8 @@ class AccessibilitySettingsScreen(Screen):
         self.config.colour_mode = colour_mode
 
         self.widgets["Label"][3].configure(font=("Helvetica", self.config.font_size))
+        self.widgets["Label"][1].configure(bg=self.config.colour_map[colour_mode][0])
+        self.widgets["Label"][2].configure(bg=self.config.colour_map[colour_mode][1])
 
     def close(self):
         self.closed = True
@@ -407,7 +409,7 @@ class HomepageScreen(Screen):
         status_label = tk.Label(
             self.screen,
             text=text,
-            background="#00FF00" if self.backend.is_connected else "red",
+            background=self.config.colour_map[self.config.colour_mode][1] if self.backend.is_connected else self.config.colour_map[self.config.colour_mode][0],
             font=("Helvetica", 10, "bold"),
         )
         status_label.grid(row=12, column=0, pady=10)

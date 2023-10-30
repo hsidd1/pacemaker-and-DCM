@@ -6,6 +6,7 @@ App is run here.
 from __future__ import annotations
 
 from config import AccessibilityConfig
+from backend import Backend
 from screens import *
 
 
@@ -13,6 +14,7 @@ class Application:
     def __init__(self) -> None:
         """Initializes Application class with page geometry, current user and pacing mode parameters."""
         self.accessibility_config = AccessibilityConfig()
+        self.backend = Backend()
         self.page_geometry: str = "800x600"
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
