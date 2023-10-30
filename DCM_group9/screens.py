@@ -454,52 +454,65 @@ class SettingsScreen(Screen):
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
-                Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.ATRIAL_PULSE_WIDTH, 
+                Parameters.ATRIAL_SENSITIVITY,
             ],
             "AAI": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH,
-                Parameters.ARP,
+                Parameters.ARP, 
+                Parameters.ATRIAL_SENSITIVITY,
+
             ],
             "VOO": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
-                Parameters.VENTRICULAR_PULSE_WIDTH,
+                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_SENSITIVITY,
             ],
             "VVI": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VRP,
+                Parameters.VRP, 
+                Parameters.VENTRICULAR_SENSITIVITY,
+
             ],
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
-                Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.ATRIAL_PULSE_WIDTH, 
+                Parameters.ATRIAL_SENSITIVITY, 
+
             ],
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH,
-                Parameters.ARP,
+                Parameters.ARP, 
+                Parameters.ATRIAL_SENSITIVITY,
+
             ],
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
-                Parameters.VENTRICULAR_PULSE_WIDTH,
+                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_SENSITIVITY,
+
             ],
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
-                Parameters.VENTRICULAR_PULSE_WIDTH,
+                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.VRP,
             ],
         }
