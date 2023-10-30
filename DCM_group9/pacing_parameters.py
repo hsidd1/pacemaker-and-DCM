@@ -9,7 +9,7 @@ L_RATE_INT = OrderedDict([((30, 50), 5), ((50, 90), 1), ((90, 175), 5)])
 
 U_RATE_INT = OrderedDict([((50, 175), 5)])
 
-AMPLITUDE_INT = OrderedDict([((0, 0), 0), ((0.1, 5.0), 0.1)])
+AMPLITUDE_INT = OrderedDict([((0, 0), 1), ((0.1, 5.0), 0.1)])
 
 PULSE_WIDTH_INT = OrderedDict([((1, 30.0), 1)])
 
@@ -40,7 +40,7 @@ class Parameters(Enum):
     UPPER_RATE_LIMIT = PacingParameters("Upper Rate Limit", U_RATE_INT, "ppm")
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_PULSE_WIDTH = PacingParameters("Atrial Pulse Width", PULSE_WIDTH_INT, "msec")
-    ATRIAL_SENSITIVITY = PacingParameters("Atrial Sensitivty", SENSITIVITY_INT, "V") 
+    ATRIAL_SENSITIVITY = PacingParameters("Atrial Sensitivity", SENSITIVITY_INT, "V") 
     
     ARP = PacingParameters("ARP", ARP_INT, "msec")
     VENTRICULAR_AMPLITUDE = PacingParameters(
