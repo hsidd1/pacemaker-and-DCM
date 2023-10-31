@@ -17,10 +17,9 @@ PULSE_WIDTH_INT = OrderedDict([((1, 30.0), 1)])
 
 ARP_INT = OrderedDict([((150, 500), 10)])
 
-VRP_INT = OrderedDict([((150, 500), 10)]) 
+VRP_INT = OrderedDict([((150, 500), 10)])
 
 SENSITIVITY_INT = OrderedDict([((0, 5.0), 0.1)])
-
 
 
 class PacingParameters:
@@ -43,23 +42,23 @@ class Parameters(Enum):
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_AMPLITUDE_REGULATED = PacingParameters(
         "Atrial Amplitude Regulated", AMPLITUDE_INT_REGULATED, "V"
-    )  
+    )
     VENTRICULAR_AMPLITUDE_REGULATED = PacingParameters(
         "Ventricular Amplitude Regulated", AMPLITUDE_INT_REGULATED, "V"
     )
     ATRIAL_PULSE_WIDTH = PacingParameters("Atrial Pulse Width", PULSE_WIDTH_INT, "msec")
-    ATRIAL_SENSITIVITY = PacingParameters("Atrial Sensitivity", SENSITIVITY_INT, "V") 
-    
+    ATRIAL_SENSITIVITY = PacingParameters("Atrial Sensitivity", SENSITIVITY_INT, "V")
+
     ARP = PacingParameters("ARP", ARP_INT, "msec")
     VENTRICULAR_AMPLITUDE = PacingParameters(
         "Ventricular Amplitude", AMPLITUDE_INT, "V"
     )
     VENTRICULAR_PULSE_WIDTH = PacingParameters(
         "Ventricular Pulse Width", PULSE_WIDTH_INT, "msec"
-    ) 
-    
+    )
+
     VENTRICULAR_SENSITIVITY = PacingParameters(
         "Ventricular Sensitivity", SENSITIVITY_INT, "V"
-    )  
+    )
 
     VRP = PacingParameters("VRP", VRP_INT, "msec")

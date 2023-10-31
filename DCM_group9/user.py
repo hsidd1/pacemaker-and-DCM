@@ -1,6 +1,7 @@
 """User class for storing user information and pacing mode parameters."""
 from __future__ import annotations
 
+
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
         """Initializes User class with username, password and pacing mode parameters.
@@ -19,14 +20,14 @@ class User:
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 1, 
+                    "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 1, 
+                    "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
                     "ARP": 250,
                 },
@@ -34,29 +35,29 @@ class User:
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 1, 
-                    "Ventricular Sensitivity": 2.5, 
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 1, 
-                    "Ventricular Sensitivity": 2.5, 
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320,
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude Regulated": 5,
-                    "Atrial Pulse Width": 1, 
+                    "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude Regulated": 5,
-                    "Atrial Pulse Width": 1, 
+                    "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
                     "ARP": 250,
                 },
@@ -64,16 +65,15 @@ class User:
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude Regulated": 5,
-                    "Ventricular Pulse Width": 1, 
-                    "Ventricular Sensitivity": 2.5, 
-
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude Regulated": 5,
-                    "Ventricular Pulse Width": 1, 
-                    "Ventricular Sensitivity": 2.5, 
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                 },
             }
 

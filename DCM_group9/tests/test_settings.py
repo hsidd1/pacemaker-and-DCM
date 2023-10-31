@@ -2,10 +2,13 @@ import pytest
 
 import sys
 import tkinter as tk
-sys.path.append('..')
+
+sys.path.append("..")
 from DCM_group9.utils.pacing_parameters import PacingParameters
 from DCM_group9.utils.custom_widgets import FunkyWidget
-sys.path.remove('..')
+
+sys.path.remove("..")
+
 
 class TestPacingParameters:
     def test_init(self):
@@ -36,6 +39,7 @@ def test_get_next_increment_interval(funky_widget):
     assert inc == 2.0
     assert intervals == (11, 20)
 
+
 """
 def test_get_increment_interval(funky_widget):
     # Test getting the increment and interval for a given value
@@ -44,6 +48,7 @@ def test_get_increment_interval(funky_widget):
     assert intervals == None
 """
 
+
 def test_get_previous_increment_interval(funky_widget):
     # Test getting the previous increment and interval
     inc, intervals = funky_widget.get_previous_increment_interval((11, 20))
@@ -51,8 +56,7 @@ def test_get_previous_increment_interval(funky_widget):
     assert intervals == (11, 20)
 
 
-   
-
 if __name__ == "__main__":
-    pytest.main(["-vv", "-s", "test_pacing_parameters.py::TestPacingParameters::test_init"])
- 
+    pytest.main(
+        ["-vv", "-s", "test_pacing_parameters.py::TestPacingParameters::test_init"]
+    )
