@@ -44,38 +44,44 @@ jobs:
         ./DCM_group9/scripts/run_tests.sh # pytest
 
   format:
-    name: Black Python Formatter
-    runs-on: ubuntu-latest
-    needs: build
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+    
+        - name: Set up Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: "3.11"
+    
+        - name: Install Black
+          run: pip install black
+          
+        - name: Run Black Formatter
+          run: black .
   
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+        - name: Check for changes
+          id: check_changes
+          run: |
+            if [ -n "$(git diff)" ]; then
+              echo "::set-output name=changed::true"
+            else
+              echo "::set-output name=changed::false"
+            fi
+          continue-on-error: true
   
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.11"
-  
-      - name: Install Black
-        run: pip install black
-  
-      - name: Run Black Formatter
-        run: black .
-  
-      - name: Check for changes
-        id: check_changes
-        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-  
-      - name: Set up Git and Commit Changes
-        run: |
-          git config --local user.name "Polishing homie [BOT]"
-          git add .
-          git commit -m "Polishing homie has auto-formatted da code! 🧹🌟🤖"
-          git push
-        if: steps.check_changes.outputs.changed != ''
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        - name: Set up Git and Commit Changes
+          run: |
+            if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
+              git config --local user.name "Polishing homie [BOT]"
+              git add .
+              git commit -m "Polishing homie has auto-formatted da code! 🧹🌟🤖"
+              git push
+            fi
+          env:
+            GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 
   debug:
