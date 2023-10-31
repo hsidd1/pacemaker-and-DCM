@@ -66,7 +66,6 @@ jobs:
   
     - name: Set up Git and Commit Changes
       run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "Polishing homie"
         git add .
         git commit -m "Auto-Polish mid code with Black 🤖"
