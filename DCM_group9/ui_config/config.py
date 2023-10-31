@@ -1,51 +1,52 @@
 import json
 
-config = "DCM_group9/config.json"
+config = "DCM_group9/ui_config/config.json"
+
 
 class AccessibilityConfig:
     def __init__(self):
         self._font_size = 10
         self._colour_mode = "Trichromacy"
-        
+
         self.settings_map = {
-            "_font_size": {
-                "Font Size" : [10,30]
-            },
+            "_font_size": {"Font Size": [10, 30]},
             "_colour_mode": {
-                "Colour Mode" : ["Trichromacy", "Protanopia", "Deuteranopia", "Tritanopia"]
-            }
+                "Colour Mode": [
+                    "Trichromacy",
+                    "Protanopia",
+                    "Deuteranopia",
+                    "Tritanopia",
+                ]
+            },
         }
 
-        self.default_settings = {
-            "Font Size": 10,
-            "Colour Mode": "Trichromacy"
-        }
+        self.default_settings = {"Font Size": 10, "Colour Mode": "Trichromacy"}
 
         self.colour_map = {
-            "Trichromacy" : ["#ff0000", "#00FF00"],
-            "Protanopia" : ["#ffdb58", "#4169e1"],
-            "Deuteranopia" : ["#ffd700", "#000080"],
-            "Tritanopia" : ["#dc143c", "#87ceeb"]
+            "Trichromacy": ["#ff0000", "#00FF00"],
+            "Protanopia": ["#ffdb58", "#4169e1"],
+            "Deuteranopia": ["#ffd700", "#000080"],
+            "Tritanopia": ["#dc143c", "#87ceeb"],
         }
         self.__get_settings_from_file()
 
     @property
     def font_size(self):
         return self._font_size
-    
+
     @font_size.setter
     def font_size(self, value):
-        if (value != self._font_size):
+        if value != self._font_size:
             self._font_size = value
             self.__write_settings_to_file()
-    
+
     @property
     def colour_mode(self):
         return self._colour_mode
-    
+
     @colour_mode.setter
     def colour_mode(self, value):
-        if (value != self._colour_mode):    
+        if value != self._colour_mode:
             self._colour_mode = value
             self.__write_settings_to_file()
 
@@ -60,8 +61,13 @@ class AccessibilityConfig:
                     with open(config, "w") as f:
                         json.dump(self.default_settings, f, indent=4)
         except FileNotFoundError:
-            with open(config, "w") as f:
-                json.dump(self.default_settings, f, indent=4)        
+            try:
+                with open(config, "x") as f:
+                    json.dump(self.default_settings, f, indent=4)
+            except FileNotFoundError:
+                print(
+                    "!!File not found!! \nIF YOU SEE THIS STDOUT AND ITS NOT FROM A TEST, PLEASE CONTACT THE DEVELOPERS"
+                )
 
     def __write_settings_to_file(self):
         try:
@@ -72,7 +78,7 @@ class AccessibilityConfig:
                     pass
         except FileNotFoundError:
             with open(config, "w") as f:
-                json.dump(self.default_settings, f, indent=4)  
+                json.dump(self.default_settings, f, indent=4)
 
     def get_settings(self):
         attributes = dir(self)
@@ -83,10 +89,6 @@ class AccessibilityConfig:
             except KeyError:
                 pass
         return settings
-    
+
     def __to_dict(self):
-        return {
-            "Font Size": self._font_size,
-            "Colour Mode": self._colour_mode            
-        }
-    
+        return {"Font Size": self._font_size, "Colour Mode": self._colour_mode}

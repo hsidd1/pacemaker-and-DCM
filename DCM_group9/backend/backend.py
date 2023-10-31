@@ -62,23 +62,22 @@ class Backend:
                 self.device_id = None
         return self.device_id
 
-
     def get_egram_dict(self) -> dict:
         """Gets the egram data from the serial port.
         :return: dictionary of egram data"""
         egram_data = {}
 
         if self.is_connected:
-            try:                
+            try:
                 while True:
                     # Read data from serial port
                     data = self.ser.readline().decode().strip()
-                    
+
                     if not data:
                         break
-                    
+
                     # Data for time and voltage TODO: change in a2 to match expected transfer
-                    time, voltage = map(float, data.split(','))
+                    time, voltage = map(float, data.split(","))
                     egram_data[time] = voltage
 
                 self.ser.close()

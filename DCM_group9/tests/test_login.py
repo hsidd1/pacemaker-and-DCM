@@ -3,7 +3,7 @@ import tkinter as tk
 import sys
 
 sys.path.append("..")
-from DCM_group9.database import Database
+from DCM_group9.backend.database import Database
 
 
 def test_login_user_nonexistent():

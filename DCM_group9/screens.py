@@ -5,16 +5,21 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from functools import partial
-from backend import Backend
-from database import Database
+from backend.backend import Backend
+from backend.database import Database
 from user import User
-from pacing_parameters import Parameters
-from custom_widgets import FunkyWidget
-from config import AccessibilityConfig
+from utils.pacing_parameters import Parameters
+from utils.custom_widgets import FunkyWidget
+from ui_config.config import AccessibilityConfig
 
 
 class Screen:
-    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+    def __init__(
+        self,
+        geometry: str,
+        accessibility_config: AccessibilityConfig,
+        bg_colour: str = "#8a8d91",
+    ):
         """Initializes Screen class with geometry and background colour.
         :param geometry: geometry of the screen
         :param bg_colour: background colour of the screen
@@ -29,7 +34,7 @@ class Screen:
             "Label": [],
             "OptionMenu": [],
             "FunkyWidget": [],
-            "Scale" : [],
+            "Scale": [],
         }
         self.page_width = 0
         self.page_height = 0
@@ -76,7 +81,7 @@ class Screen:
         font: str = "Helvetica",
         wraplength: int = 0,
         fg: str = "black",
-        bg: str = "#8a8d91"
+        bg: str = "#8a8d91",
     ) -> tk.Label:
         """Creates a label widget and returns it."""
         if bold:
@@ -167,15 +172,19 @@ class Screen:
         self.screen.destroy()
 
     def update_column_size(self, event):
-        if (self.num_columns):
+        if self.num_columns:
             self.column_size = self.screen.winfo_width() / self.num_columns
         else:
             self.column_size = self.screen.winfo_width()
-        
 
 
 class WelcomeScreen(Screen):
-    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+    def __init__(
+        self,
+        geometry: str,
+        accessibility_config: AccessibilityConfig,
+        bg_colour: str = "#8a8d91",
+    ):
         """
         Initializes WelcomeScreen class with geometry and background colour.
         :param geometry: geometry of the screen
@@ -183,7 +192,7 @@ class WelcomeScreen(Screen):
 
         Only the WelcomeScreen and SettingsScreen should have access to database !!!
         USE THE CURRENTUSER IN HomePage!!!!!!"""
-        super().__init__(geometry, accessibility_config,  bg_colour)
+        super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Welcome Page"
         self.database = Database()
         self.logged_in = False
@@ -205,13 +214,15 @@ class WelcomeScreen(Screen):
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
-        super().create_button("Settings", self.open_settings).place(x=20, y=self.screen.winfo_height()-45)
+        super().create_button("Settings", self.open_settings).place(
+            x=20, y=self.screen.winfo_height() - 45
+        )
         self.screen.bind("<Return>", lambda event: self.login_user())
         self.screen.bind("<Configure>", self.update)
         self.screen.mainloop()
-    
+
     def update(self, event):
-        self.widgets["Button"][2].place(x=20, y=self.screen.winfo_height()-45)
+        self.widgets["Button"][2].place(x=20, y=self.screen.winfo_height() - 45)
 
     def login_user(self) -> User:
         """wrapper for Database.login_user() for button command.
@@ -250,41 +261,68 @@ class WelcomeScreen(Screen):
             username_entry=self.widgets["Entry"][0],
             password_entry=self.widgets["Entry"][1],
         )
-    
+
     def open_settings(self):
         self.view_settings = True
         super().prepare_screen_switch()
 
 
 class AccessibilitySettingsScreen(Screen):
-    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+    def __init__(
+        self,
+        geometry: str,
+        accessibility_config: AccessibilityConfig,
+        bg_colour: str = "#8a8d91",
+    ):
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Accessibility Settings"
         self.config = accessibility_config
         self.settings = accessibility_config.get_settings()
         self.num_rows = 4
         self.closed = False
-        
+
     def run_screen(self):
         super().run_screen()
         super().load_grid(True, True, True)
-        super().create_label(list(self.settings[0].keys())[0], 10).grid(row=0,column=0, padx=5)
-        super().create_options(self.settings[0][list(self.settings[0].keys())[0]], self.config.colour_mode)[0].grid(row=0,column=1)
-        super().create_spacer(100).grid(row=0,column=2)
+        super().create_label(list(self.settings[0].keys())[0], 10).grid(
+            row=0, column=0, padx=5
+        )
+        super().create_options(
+            self.settings[0][list(self.settings[0].keys())[0]], self.config.colour_mode
+        )[0].grid(row=0, column=1)
+        super().create_spacer(100).grid(row=0, column=2)
 
-        red = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][0])
-        green = tk.Label(self.screen, width=6,height=3, bg=self.config.colour_map[self.config.colour_mode][1])
-        red.grid(row=0,column=3)
-        green.grid(row=0,column=4)
+        red = tk.Label(
+            self.screen,
+            width=6,
+            height=3,
+            bg=self.config.colour_map[self.config.colour_mode][0],
+        )
+        green = tk.Label(
+            self.screen,
+            width=6,
+            height=3,
+            bg=self.config.colour_map[self.config.colour_mode][1],
+        )
+        red.grid(row=0, column=3)
+        green.grid(row=0, column=4)
 
-        scale = tk.Scale(self.screen, from_=self.settings[1][list(self.settings[1].keys())[0]][0],to_=self.settings[1][list(self.settings[1].keys())[0]][1], orient="horizontal",label="Font Size")
+        scale = tk.Scale(
+            self.screen,
+            from_=self.settings[1][list(self.settings[1].keys())[0]][0],
+            to_=self.settings[1][list(self.settings[1].keys())[0]][1],
+            orient="horizontal",
+            label="Font Size",
+        )
         scale.grid(row=1, column=0, columnspan=2)
         scale.set(self.config.font_size)
         self.widgets["Scale"].append(scale)
         self.widgets["Label"].append(red)
         self.widgets["Label"].append(green)
 
-        self.create_label('Hello World!',self.config.font_size).grid(row=1, column=2, columnspan=4)
+        self.create_label("Hello World!", self.config.font_size).grid(
+            row=1, column=2, columnspan=4
+        )
 
         super().create_button("Apply", self.apply).grid(row=2, column=0, columnspan=2)
         super().create_button("Ok", self.ok).grid(row=2, column=2, padx=20)
@@ -305,13 +343,20 @@ class AccessibilitySettingsScreen(Screen):
     def close(self):
         self.closed = True
         self.prepare_screen_switch()
-    
+
     def ok(self):
         self.apply()
         self.close()
 
+
 class HomepageScreen(Screen):
-    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, current_user: User, bg_colour: str = "#8a8d91"):
+    def __init__(
+        self,
+        geometry: str,
+        accessibility_config: AccessibilityConfig,
+        current_user: User,
+        bg_colour: str = "#8a8d91",
+    ):
         """Initializes HomepageScreen class with geometry, current user and background colour."""
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Home Page"
@@ -335,7 +380,9 @@ class HomepageScreen(Screen):
 
         self.screen.update()
 
-        super().create_label("Choose pacing mode:", self.config.font_size, wraplength=self.column_size).grid(row=1, column=0, pady=10)
+        super().create_label(
+            "Choose pacing mode:", self.config.font_size, wraplength=self.column_size
+        ).grid(row=1, column=0, pady=10)
         default = "Select a Pacing Mode"
         dropdown = super().create_options(self.pacing_modes, default)
         pacing_mode_dropdown = dropdown[0]
@@ -351,7 +398,7 @@ class HomepageScreen(Screen):
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).grid(
             row=16, column=0, columnspan=20, pady=50
         )
-        
+
         self.screen.bind("<Escape>", lambda event: self.logout())
 
         self.check_connection()
@@ -409,7 +456,9 @@ class HomepageScreen(Screen):
         status_label = tk.Label(
             self.screen,
             text=text,
-            background=self.config.colour_map[self.config.colour_mode][1] if self.backend.is_connected else self.config.colour_map[self.config.colour_mode][0],
+            background=self.config.colour_map[self.config.colour_mode][1]
+            if self.backend.is_connected
+            else self.config.colour_map[self.config.colour_mode][0],
             font=("Helvetica", 10, "bold"),
         )
         status_label.grid(row=12, column=0, pady=10)
@@ -438,7 +487,7 @@ class SettingsScreen(Screen):
     def __init__(
         self,
         geometry: str,
-        accessibility_config: AccessibilityConfig, 
+        accessibility_config: AccessibilityConfig,
         current_user: User,
         pacing_mode: str,
         bg_colour: str = "#8a8d91",
@@ -454,60 +503,56 @@ class SettingsScreen(Screen):
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
-                Parameters.ATRIAL_PULSE_WIDTH, 
+                Parameters.ATRIAL_PULSE_WIDTH,
             ],
             "AAI": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE,
                 Parameters.ATRIAL_PULSE_WIDTH,
-                Parameters.ARP, 
+                Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
-
             ],
             "VOO": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
-                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_PULSE_WIDTH,
             ],
             "VVI": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VRP, 
+                Parameters.VRP,
                 Parameters.VENTRICULAR_SENSITIVITY,
-
             ],
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
-                Parameters.ATRIAL_PULSE_WIDTH, 
+                Parameters.ATRIAL_PULSE_WIDTH,
             ],
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
-                Parameters.ARP, 
+                Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
-
             ],
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
-                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
-
             ],
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
-                Parameters.VENTRICULAR_PULSE_WIDTH, 
+                Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.VRP,
             ],
@@ -527,11 +572,15 @@ class SettingsScreen(Screen):
         self.screen.title(self.title)
         self.load_grid(True, False, True)
         parameters = self.pacing_modes_map.get(self.pacing_mode, None)
-        
+
         self.screen.update()
 
         for i, param in enumerate(parameters):
-            super().create_label(f"{param.value.name} ({param.value.unit})", self.config.font_size, wraplength=self.column_size-5).grid(
+            super().create_label(
+                f"{param.value.name} ({param.value.unit})",
+                self.config.font_size,
+                wraplength=self.column_size - 5,
+            ).grid(
                 row=(i // self.num_columns + i // self.num_columns),
                 column=i % self.num_columns,
                 padx=5,
@@ -569,10 +618,10 @@ class SettingsScreen(Screen):
             self.current_user, self.current_user.username, self.pacing_mode, param_data
         )
         if from_button:
-            applied_msg = super().create_label("Settings applied", 11, True, "calibri", fg="green")
-            applied_msg.grid(
-                row=self.last_row + 2, column=1, pady=2
+            applied_msg = super().create_label(
+                "Settings applied", 11, True, "calibri", fg="green"
             )
+            applied_msg.grid(row=self.last_row + 2, column=1, pady=2)
             destroy_applied_msg = partial(applied_msg.destroy)
             try:
                 self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
@@ -583,7 +632,7 @@ class SettingsScreen(Screen):
         """Do both apply and close, similar features to Windows settings"""
         self.apply(from_button=False)
         self.closed = True
-         # Check if any after events are still running
+        # Check if any after events are still running
         if self.pending_after_id:
             self.screen.after_cancel(self.pending_after_id)
         self.prepare_screen_switch()
@@ -597,7 +646,12 @@ class SettingsScreen(Screen):
 
 
 class EgramScreen(Screen):
-    def __init__(self, geometry: str, accessibility_config: AccessibilityConfig, bg_colour: str = "#8a8d91"):
+    def __init__(
+        self,
+        geometry: str,
+        accessibility_config: AccessibilityConfig,
+        bg_colour: str = "#8a8d91",
+    ):
         """Initializes EgramScreen class with geometry and background colour."""
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Egram"

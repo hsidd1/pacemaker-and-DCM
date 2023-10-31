@@ -5,8 +5,8 @@ App is run here.
 """
 from __future__ import annotations
 
-from config import AccessibilityConfig
-from backend import Backend
+from ui_config.config import AccessibilityConfig
+from backend.backend import Backend
 from screens import *
 
 
@@ -46,9 +46,11 @@ class Application:
             self.current_screen = "AccessibilitySettingsScreen"
         else:
             self.current_screen = None
-    
+
     def handle_accessibility_settings_screen(self):
-        accessibility_settings_screen= AccessibilitySettingsScreen(self.page_geometry, self.accessibility_config)
+        accessibility_settings_screen = AccessibilitySettingsScreen(
+            self.page_geometry, self.accessibility_config
+        )
         accessibility_settings_screen.run_screen()
 
         self.page_geometry = accessibility_settings_screen.geometry
@@ -59,7 +61,9 @@ class Application:
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""
-        homepage_screen = HomepageScreen(self.page_geometry, self.accessibility_config, self.current_user)
+        homepage_screen = HomepageScreen(
+            self.page_geometry, self.accessibility_config, self.current_user
+        )
         homepage_screen.run_screen()
 
         self.page_geometry = homepage_screen.geometry
@@ -78,7 +82,10 @@ class Application:
     def handle_settings_screen(self):
         """Handles the SettingsScreen state of the application."""
         settings_screen = SettingsScreen(
-            self.page_geometry, self.accessibility_config, self.current_user, self.pacing_mode
+            self.page_geometry,
+            self.accessibility_config,
+            self.current_user,
+            self.pacing_mode,
         )
         settings_screen.run_screen()
 
@@ -90,7 +97,10 @@ class Application:
 
     def handle_egram_screen(self):
         """Handles the EgramScreen state of the application."""
-        egram_screen = EgramScreen(self.page_geometry, self.accessibility_config,)
+        egram_screen = EgramScreen(
+            self.page_geometry,
+            self.accessibility_config,
+        )
         egram_screen.run_screen()
 
         self.page_geometry = egram_screen.geometry

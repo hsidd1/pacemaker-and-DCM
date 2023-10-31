@@ -22,7 +22,7 @@ class FunkyWidget(tk.Frame):
         super().__init__(screen, **kwargs)
 
         self.limits = limits
-        self.interval_list = list(self.limits.keys()) 
+        self.interval_list = list(self.limits.keys())
         self.increment_list = list(self.limits.values())
 
         self.intervals = [
@@ -36,7 +36,6 @@ class FunkyWidget(tk.Frame):
         except TypeError:
             x = default
         self.var.set(x)  # Set the default value
-
 
         try:
             self.current_crement, self.current_interval = self.get_increment_interval(
@@ -54,10 +53,14 @@ class FunkyWidget(tk.Frame):
         )
         self.option_menu.pack(side="left")
 
-        self.decrement_button = tk.Button(self, text="-", command=self.__decrement_value)
+        self.decrement_button = tk.Button(
+            self, text="-", command=self.__decrement_value
+        )
         self.decrement_button.pack(side="left")
 
-        self.increment_button = tk.Button(self, text="+", command=self.__increment_value)
+        self.increment_button = tk.Button(
+            self, text="+", command=self.__increment_value
+        )
         self.increment_button.pack(side="left")
 
         self.option_menu.bind("<<ComboboxSelected>>", self.__update_display)
@@ -94,7 +97,11 @@ class FunkyWidget(tk.Frame):
             if current_value >= start and current_value <= end:
                 if inc:
                     interval = arange(start, end + inc, inc)
-                    if (interval[0]-epsilon) < current_value < (interval[-1]+epsilon):
+                    if (
+                        (interval[0] - epsilon)
+                        < current_value
+                        < (interval[-1] + epsilon)
+                    ):
                         return inc, intervals
                 else:
                     return inc, intervals

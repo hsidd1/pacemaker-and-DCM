@@ -5,7 +5,7 @@ from user import User
 import json
 import tkinter as tk
 
-DATABASE = "DCM_group9/database.json"
+DATABASE = "DCM_group9/backend/database.json"
 
 
 class Database:

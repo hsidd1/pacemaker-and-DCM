@@ -4,8 +4,6 @@ import sys
 sys.path.append("..")
 from DCM_group9.app import Application
 
-sys.path.remove("..")
-
 
 def test_app():
     # App should be created without any errors
