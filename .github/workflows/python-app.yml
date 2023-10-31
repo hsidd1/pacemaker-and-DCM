@@ -47,7 +47,8 @@ jobs:
     name: Black Python Formatter
     runs-on: ubuntu-latest
     # needs: build
-  
+    permissions:
+      contents: write
     steps:
     - name: Check out code
       uses: actions/checkout@v2
