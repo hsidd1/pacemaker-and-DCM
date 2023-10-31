@@ -5,12 +5,12 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from functools import partial
-from backend import Backend
-from database import Database
+from backend.backend import Backend
+from backend.database import Database
 from user import User
-from pacing_parameters import Parameters
-from custom_widgets import FunkyWidget
-from config import AccessibilityConfig
+from utils.pacing_parameters import Parameters
+from utils.custom_widgets import FunkyWidget
+from ui_config.config import AccessibilityConfig
 
 
 class Screen:

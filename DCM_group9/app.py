@@ -5,8 +5,8 @@ App is run here.
 """
 from __future__ import annotations
 
-from config import AccessibilityConfig
-from backend import Backend
+from ui_config.config import AccessibilityConfig
+from backend.backend import Backend
 from screens import *
 
 

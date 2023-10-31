@@ -37,7 +37,9 @@ Tests are run using `pytest` automatically with Python 3.11 in an Ubuntu-latest 
 
 To run tests locally: 
 ```sh
-./run_tests.sh
+./DCM_group9/scripts/run_tests.sh
+# Optionally, add flag to generate logs
+./DCM_group9/scripts/run_tests.sh -html
 ```
 
 #### Using the Pacemaker

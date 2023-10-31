@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("..")
 
-from DCM_group9.database import Database
+from DCM_group9.backend.database import Database
 
 
 def test_register_user_empty():

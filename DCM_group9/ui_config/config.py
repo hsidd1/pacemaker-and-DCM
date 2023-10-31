@@ -1,6 +1,6 @@
 import json
 
-config = "DCM_group9/config.json"
+config = "DCM_group9/ui_config/config.json"
 
 class AccessibilityConfig:
     def __init__(self):
@@ -60,8 +60,12 @@ class AccessibilityConfig:
                     with open(config, "w") as f:
                         json.dump(self.default_settings, f, indent=4)
         except FileNotFoundError:
-            with open(config, "w") as f:
-                json.dump(self.default_settings, f, indent=4)        
+            try:
+                with open(config, "x") as f:
+                    json.dump(self.default_settings, f, indent=4)
+            except FileNotFoundError:
+                print("!!File not found!! \nIF YOU SEE THIS STDOUT AND ITS NOT FROM A TEST, PLEASE CONTACT THE DEVELOPERS")
+
 
     def __write_settings_to_file(self):
         try:

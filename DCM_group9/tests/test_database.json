@@ -4,30 +4,63 @@
             "password": "password",
             "pacing_mode_params": {
                 "AOO": {
-                    "l_rate_limit": "3214",
-                    "u_rate_limit": "4241",
-                    "atrial_amplitude": "4214",
-                    "atrial_pulse_width": "214214"
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
-                    "l_rate_limit": "1",
-                    "u_rate_limit": "1",
-                    "atrial_amplitude": "1",
-                    "atrial_pulse_width": "1",
-                    "ARP": "11"
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude": 3.5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
+                    "ARP": 250
                 },
                 "VOO": {
-                    "l_rate_limit": "098",
-                    "u_rate_limit": "876",
-                    "vent_amplitude": "6478",
-                    "vent_pulse_width": "8"
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
-                    "l_rate_limit": "321321321",
-                    "u_rate_limit": "321",
-                    "vent_amplitude": "332",
-                    "vent_pulse_width": "1321321",
-                    "VRP": "321312"
+                    "Lower Rate Limit": 60.0,
+                    "Upper Rate Limit": 120.0,
+                    "Ventricular Amplitude": 3.5,
+                    "Ventricular Pulse Width": 1.0,
+                    "VRP": 320.0,
+                    "Ventricular Sensitivity": 2.5
+                },
+                "AOOR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
+                },
+                "AAIR": {
+                    "Lower Rate Limit": 60.0,
+                    "Upper Rate Limit": 120.0,
+                    "Atrial Amplitude Regulated": 1.2,
+                    "Atrial Pulse Width": 1.0,
+                    "ARP": 250.0,
+                    "Atrial Sensitivity": 2.5
+                },
+                "VOOR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
+                },
+                "VVIR": {
+                    "Lower Rate Limit": 60,
+                    "Upper Rate Limit": 120,
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -38,52 +71,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -94,52 +135,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -150,52 +199,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -206,52 +263,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -262,52 +327,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -318,52 +391,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -374,52 +455,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -430,52 +519,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         },
@@ -486,52 +583,60 @@
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
                     "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5,
                     "VRP": 320
                 },
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5
                 },
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Atrial Amplitude": 3.5,
-                    "Atrial Pulse Width": 0.4,
+                    "Atrial Amplitude Regulated": 5,
+                    "Atrial Pulse Width": 1,
+                    "Atrial Sensitivity": 2.5,
                     "ARP": 250
                 },
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 },
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
-                    "Ventricular Amplitude": 3.5,
-                    "Ventricular Pulse Width": 0.4
+                    "Ventricular Amplitude Regulated": 5,
+                    "Ventricular Pulse Width": 1,
+                    "Ventricular Sensitivity": 2.5
                 }
             }
         }
