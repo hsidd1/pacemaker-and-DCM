@@ -65,7 +65,9 @@ jobs:
   
       - name: Check for changes
         id: check_changes
-        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+        run: |
+          CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "CHANGES=$CHANGES" >> $GITHUB_ENV
   
       - name: Set up Git and Commit Changes
         run: |
@@ -73,9 +75,10 @@ jobs:
           git add .
           git commit -m "Polishing homie has auto-formatted da code! 🧹🌟🤖"
           git push
-        if: steps.check_changes.outputs.changed != ''
+        if: env.CHANGES != ''
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
 
 
   debug:
