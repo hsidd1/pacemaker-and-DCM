@@ -43,9 +43,10 @@ jobs:
   #     run: |
   #       ./DCM_group9/scripts/run_tests.sh # pytest
 
- format_and_commit:
+ format:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
