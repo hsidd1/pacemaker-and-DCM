@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import serial
 from serial.tools import list_ports
-
+import json
+import matplotlib.pyplot as plt
+import traceback
+import struct
 
 class Backend:
     def __init__(self, port: str = None, device_id: str = None):
@@ -87,3 +90,30 @@ class Backend:
                 print("Error: Invalid data received from the serial port.")
 
         return egram_data
+
+    def __flush(self, ser: Backend):
+        self.ser.flush()
+        self.ser.reset_input_buffer()
+        self.ser.reset_output_buffer()
+
+    def transmit_parameters(self, data: json) -> None:
+        """ transmits data to pacemaeker
+        :param data: data to be communicated over uart
+        """
+        if not self.ser.is_connected:
+            raise Exception("Connect the board")
+        st = struct.Struct()
+        packed_data = st.pack(data)
+        self.__flush(self.ser)
+        try:
+            
+            self.ser.write(packed_data)
+        except Exception as e:
+            print(traceback.format_exc())
+            return
+
+    def plot_egram(eg_dict) -> None:
+        """ takes in egram dict using get_egram_dict and plots it"""
+        ax, fig = plt()
+
+        
