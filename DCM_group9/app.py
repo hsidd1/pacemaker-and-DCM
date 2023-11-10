@@ -14,7 +14,7 @@ class Application:
     def __init__(self) -> None:
         """Initializes Application class with page geometry, current user and pacing mode parameters."""
         self.accessibility_config = AccessibilityConfig()
-        self.backend = Backend()
+        self.backend = Backend('COM8')
         self.page_geometry: str = "800x600"
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
@@ -62,7 +62,7 @@ class Application:
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""
         homepage_screen = HomepageScreen(
-            self.page_geometry, self.accessibility_config, self.current_user
+            self.page_geometry, self.accessibility_config, self.current_user, self.backend
         )
         homepage_screen.run_screen()
 

@@ -355,6 +355,7 @@ class HomepageScreen(Screen):
         geometry: str,
         accessibility_config: AccessibilityConfig,
         current_user: User,
+        backend: Backend,
         bg_colour: str = "#8a8d91",
     ):
         """Initializes HomepageScreen class with geometry, current user and background colour."""
@@ -367,7 +368,7 @@ class HomepageScreen(Screen):
         self.logged_out = False
         self.egram_view = False
         self.settings_view = False
-        self.backend = Backend()
+        self.backend = backend
         self.pacing_modes = ["AOO", "AAI", "VOO", "VVI", "AOOR", "VOOR", "AAIR", "VVIR"]
 
     def run_screen(self) -> None:
@@ -393,8 +394,9 @@ class HomepageScreen(Screen):
         super().create_button("Settings", self.get_pacing_mode).grid(
             row=1, column=2, pady=2
         )
-        super().create_button("Logout", self.logout).grid(row=15, column=1, pady=10)
+        super().create_button("Logout", self.logout).grid(row=15, column=2, pady=10)
         super().create_button("View Egram", self.egram).grid(row=15, column=0, pady=10)
+        super().create_button("Send Data", self.send_data).grid(row=15, column=1, pady=10)
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).grid(
             row=16, column=0, columnspan=20, pady=50
         )
@@ -481,6 +483,10 @@ class HomepageScreen(Screen):
             font=("Helvetica", 10, "bold"),
         )
         board_label.grid(row=12, column=1, pady=10)
+    
+    def send_data(self):
+        self.backend.transmit_parameters(self.current_user.parameter_dict)     
+
 
 
 class SettingsScreen(Screen):

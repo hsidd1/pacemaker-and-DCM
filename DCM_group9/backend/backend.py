@@ -20,6 +20,10 @@ class Backend:
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
+
+        ports = list(list_ports.comports())
+        for p in ports:
+            print (p)
         """
         TODO: implement in assignment 2
         with open('device_ids.txt', 'r') as f:
@@ -29,7 +33,7 @@ class Backend:
             if self.device_id not in self.previous_device_ids:
                 f.write(self.device_id + '\n')
         """
-        if port is None:
+        if self.port is None:
             # empty connection
             self.ser = serial.Serial()
         else:
@@ -100,9 +104,9 @@ class Backend:
         """ transmits data to pacemaeker
         :param data: data to be communicated over uart
         """
-        if not self.ser.is_connected:
+        if not self.is_connected:
             raise Exception("Connect the board")
-        st = struct.Struct()
+        st = struct.Struct('i')
         packed_data = st.pack(data)
         self.__flush(self.ser)
         try:
