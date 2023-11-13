@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
- * Model version                  : 2.48
+ * Model version                  : 2.50
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Oct 15 04:22:17 2023
+ * C/C++ source code generated on : Fri Oct 20 12:01:10 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -107,7 +107,7 @@ struct P_Assignment_1_Simulink_T_ {
   real_T Constant4_Value;              /* Expression: 150
                                         * Referenced by: '<S5>/Constant4'
                                         */
-  real_T Constant3_Value;              /* Expression: 1.1
+  real_T Constant3_Value;              /* Expression: 0.5
                                         * Referenced by: '<S5>/Constant3'
                                         */
   real_T Constant_Value;               /* Expression: 60
