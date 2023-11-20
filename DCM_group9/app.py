@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from ui_config.config import AccessibilityConfig
 from backend.backend import Backend
+from threading import Thread
+from multiprocessing import Process
 from screens import *
 
 
@@ -14,7 +16,7 @@ class Application:
     def __init__(self) -> None:
         """Initializes Application class with page geometry, current user and pacing mode parameters."""
         self.accessibility_config = AccessibilityConfig()
-        self.backend = Backend('COM8')
+        self.backend = Backend()
         self.page_geometry: str = "800x600"
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
@@ -108,8 +110,29 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
-
+def hello():
+    while True:
+        print("hello")
+def goodbye():
+    while True:
+        print("goodbye")
 
 if __name__ == "__main__":
+    # print("hello")
     app = Application()
-    app.run_app()
+    # p1 = Process(target=hello)
+    # p1.start()
+    # print(f"p alive: {p.is_alive()}")
+    # app.backend.p2.start()
+    # app.backend.p2.join()
+    # p2.join()
+    # print(app.backend.p2.is_alive())
+    p1 = Process(target=app.backend.open_port)
+    p2 = Process(target=app.run_app)
+    p1.start()
+    p2.start()
+    p2.join()
+    if not p2.is_alive():
+        p1.terminate()
+    p1.join()
+

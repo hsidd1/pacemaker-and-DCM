@@ -9,7 +9,16 @@ import json
 import matplotlib.pyplot as plt
 import traceback
 import struct
+from threading import Thread
+from multiprocessing import Process
+import time
+   
+    
+# print(list_ports.comports())
 
+# t = Thread(target=open_port)
+
+# t.start()
 class Backend:
     def __init__(self, port: str = None, device_id: str = None):
         """Initializes Backend class with serial port.
@@ -21,9 +30,11 @@ class Backend:
         self.device_id = device_id
         self.previous_device_ids = []
 
-        ports = list(list_ports.comports())
-        for p in ports:
-            print (p)
+        self.ser = serial.Serial()
+        #self.p2 = Process(target=self.__open_port())
+        #self.p.start()
+        # self.p.join()
+
         """
         TODO: implement in assignment 2
         with open('device_ids.txt', 'r') as f:
@@ -33,12 +44,29 @@ class Backend:
             if self.device_id not in self.previous_device_ids:
                 f.write(self.device_id + '\n')
         """
-        if self.port is None:
-            # empty connection
-            self.ser = serial.Serial()
-        else:
-            self.ser = serial.Serial(port, 115200, timeout=1)
-            self.ser.flush()
+        # if self.port is None:
+        #     # empty connection
+        #     self.ser = serial.Serial()
+        # else:
+        #     self.ser = serial.Serial(port, 115200, timeout=1)
+        #     self.ser.flush()
+
+    # create a thread that opens your com port 
+# and reads the data from it
+    def open_port(self):
+        while True:
+            print(self.ser.is_open)
+            for port in list_ports.comports():
+                if not self.ser.is_open:
+                    try:
+                        self.ser = serial.Serial(port.device, 115200, timeout=1)
+                        print("connected to port: ", port)
+                    except Exception:
+                        pass
+                    print("Error: Failed to open the serial port.")
+            if not list_ports.comports():
+                self.ser = serial.Serial()
+            time.sleep(1)
 
     @property
     def is_connected(self) -> bool:
@@ -119,5 +147,3 @@ class Backend:
     def plot_egram(eg_dict) -> None:
         """ takes in egram dict using get_egram_dict and plots it"""
         ax, fig = plt()
-
-        
