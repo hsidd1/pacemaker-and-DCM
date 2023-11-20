@@ -105,8 +105,10 @@ class Application:
 
         self.page_geometry = egram_screen.geometry
         if egram_screen.closed:
+            print("hello")
             self.current_screen = "HomepageScreen"
         else:
+            print("hello")
             self.current_screen = None
 
 

@@ -12,6 +12,11 @@ from utils.pacing_parameters import Parameters
 from utils.custom_widgets import FunkyWidget
 from ui_config.config import AccessibilityConfig
 
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+import numpy as np
+
 
 class Screen:
     def __init__(
@@ -660,14 +665,32 @@ class EgramScreen(Screen):
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
+
         super().create_button("Close", self.close).pack(side="top", padx=200, pady=20)
-        super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
+
+        x = np.linspace(0, 10, 1000)
+        y = 4000 * (np.sin(x) ** 63 * np.sin(x + 1.5) * 8)
+
+        # Plot the graph
+        plt.plot(x, y)
+        plt.title("Atrium Signals")
+        plt.xlabel("Time (ms)")
+        plt.ylabel("Voltage (mV)")
+        plt.grid(True)
+
+        # Embed the plot in the Tkinter window
+        canvas = FigureCanvasTkAgg(plt.gcf(), master=self.screen)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.pack(side="top", fill="none")
+        """ 
+         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
-
+        """
         self.screen.bind("<Escape>", lambda event: self.close())
         self.screen.mainloop()
 
     def close(self):
+        plt.close()
         self.closed = True
         self.prepare_screen_switch()
