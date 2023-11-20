@@ -108,6 +108,12 @@ class Backend:
             raise Exception("Connect the board")
         st = struct.Struct('i')
         packed_data = st.pack(data)
+        print(sys.getsizeof(packed_data))
+        f = open("output.json", "w")
+        f.write(data)
+        f.close()
+
+
         self.__flush(self.ser)
         try:
             
