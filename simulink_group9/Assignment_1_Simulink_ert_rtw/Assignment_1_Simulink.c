@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment_1_Simulink'.
  *
- * Model version                  : 2.48
+ * Model version                  : 2.50
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Sun Oct 15 04:22:17 2023
+ * C/C++ source code generated on : Fri Oct 20 12:01:10 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -143,9 +143,9 @@ static Pace_Sense_Chamber convert_to_enum_Pace_Sense_Cham(int32_T input)
 {
   Pace_Sense_Chamber output;
 
-  /* Initialize output value to default value for Pace_Sense_Chamber (Atrium_Sense) */
-  output = Atrium_Sense;
-  if ((input >= 1) && (input <= 3)) {
+  /* Initialize output value to default value for Pace_Sense_Chamber (None_Sense) */
+  output = None_Sense;
+  if ((input >= 0) && (input <= 3)) {
     /* Set output value to input value if it is a member of Pace_Sense_Chamber */
     output = (Pace_Sense_Chamber)input;
   }
@@ -566,7 +566,6 @@ void Assignment_1_Simulink_initialize(void)
 
   /* block I/O */
   {
-    Assignment_1_Simulink_B.PACE_SENSE_CHAMBER = Atrium_Sense;
     Assignment_1_Simulink_B.PACE_CHAMBER = Atrium;
   }
 
