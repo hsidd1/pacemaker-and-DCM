@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import traceback
 import struct
 from threading import Thread
-from multiprocessing import Process
+from multiprocessing import shared_memory
 import time
    
     
@@ -26,6 +26,7 @@ class Backend:
         :param device_id: device id of board
         :param previous_device_ids: previous device ids interrogated
         """
+
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
@@ -54,13 +55,16 @@ class Backend:
     # create a thread that opens your com port 
 # and reads the data from it
     def open_port(self):
+        shm = shared_memory.SharedMemory(name="dee", create=False, size=1024)
         while True:
-            print(self.ser.is_open)
+            #print(self.ser.is_open)
             for port in list_ports.comports():
                 if not self.ser.is_open:
                     try:
                         self.ser = serial.Serial(port.device, 115200, timeout=1)
                         print("connected to port: ", port)
+                        self.shm.buf[0] = self.ser.is_open
+                        print(self.shm.buf[0])
                     except Exception:
                         pass
                     print("Error: Failed to open the serial port.")
@@ -142,6 +146,7 @@ class Backend:
         packed_data = st.pack(serial_data)
         self.__flush(self.ser)
         try:
+            
             self.ser.write(packed_data)
         except Exception as e:
             print(traceback.format_exc())

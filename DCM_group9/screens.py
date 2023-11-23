@@ -11,6 +11,8 @@ from user import User
 from utils.pacing_parameters import Parameters
 from utils.custom_widgets import FunkyWidget
 from ui_config.config import AccessibilityConfig
+from multiprocessing import shared_memory
+import serial
 
 
 class Screen:
@@ -28,6 +30,7 @@ class Screen:
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
+        self.buf = shared_memory.SharedMemory(name="dee", create=False, size=1024)
         self.widgets = {
             "Button": [],
             "Entry": [],
@@ -451,9 +454,11 @@ class HomepageScreen(Screen):
 
     def check_connection(self) -> None:
         """Checks connection status from backend and displays it on the screen."""
-        if self.backend.is_connected:
+        if (self.buf.buf[0]):
+            print("x")
             text = "Connection status: Connected"
         else:
+            print(self.buf.buf[0])
             text = "Connection status: Disconnected"
         status_label = tk.Label(
             self.screen,
@@ -466,20 +471,17 @@ class HomepageScreen(Screen):
         status_label.grid(row=12, column=0, pady=10)
 
         # Board Connected ID (known or unknown)
-        if self.backend.board_connected:
-            if self.backend.device_id in self.backend.previous_device_ids:
-                text = f"ID: {self.backend.board_connected} (Known Device)"
-                color = "green"
-            else:
-                text = f"ID: {self.backend.board_connected} (Unknown Device)"
-                color = "red"
+        if self.backend.ser.is_open:
+            text = "ID: Pacemaker Board"
         else:
             text = "ID: None (Known Status Unavailable)"
             color = "grey"
         board_label = tk.Label(
             self.screen,
             text=text,
-            background=color,
+            background=self.config.colour_map[self.config.colour_mode][1]
+            if self.backend.is_connected
+            else self.config.colour_map[self.config.colour_mode][0],
             font=("Helvetica", 10, "bold"),
         )
         board_label.grid(row=12, column=1, pady=10)

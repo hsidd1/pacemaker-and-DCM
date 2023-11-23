@@ -8,7 +8,7 @@ from __future__ import annotations
 from ui_config.config import AccessibilityConfig
 from backend.backend import Backend
 from threading import Thread
-from multiprocessing import Process
+from multiprocessing import Process, shared_memory, Semaphore
 from screens import *
 
 
@@ -51,7 +51,7 @@ class Application:
 
     def handle_accessibility_settings_screen(self):
         accessibility_settings_screen = AccessibilitySettingsScreen(
-            self.page_geometry, self.accessibility_config
+            self.page_geometry, self.accessibility_config,
         )
         accessibility_settings_screen.run_screen()
 
@@ -110,29 +110,20 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
-def hello():
-    while True:
-        print("hello")
-def goodbye():
-    while True:
-        print("goodbye")
 
 if __name__ == "__main__":
-    # print("hello")
+    shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
-    # p1 = Process(target=hello)
-    # p1.start()
-    # print(f"p alive: {p.is_alive()}")
-    # app.backend.p2.start()
-    # app.backend.p2.join()
-    # p2.join()
-    # print(app.backend.p2.is_alive())
     p1 = Process(target=app.backend.open_port)
-    p2 = Process(target=app.run_app)
+    #p2 = Process(target=app.run_app)
+    #p1 = Process(target=app.backend.open_port)
     p1.start()
-    p2.start()
-    p2.join()
-    if not p2.is_alive():
-        p1.terminate()
-    p1.join()
 
+    app.run_app()
+
+    if not app.current_screen:
+        p1.terminate()
+        shm.close()
+        shm.unlink()
+
+    p1.join()

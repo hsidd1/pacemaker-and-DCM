@@ -1,6 +1,8 @@
 """User class for storing user information and pacing mode parameters."""
 from __future__ import annotations
 
+from multiprocessing import shared_memory
+
 
 class User:
     def __init__(self, username: str, password: str, data: dict = None):
