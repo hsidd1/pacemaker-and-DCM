@@ -680,7 +680,7 @@ class EgramScreen(Screen):
         # Plot the Ventricle Signals
         ax2.plot(x, y)
         ax2.set_title("Ventricle Signals")
-        
+
         # Set common axis labels
         fig.supxlabel("Time (ms)")
         fig.supylabel("Voltage (mV)")
@@ -689,11 +689,11 @@ class EgramScreen(Screen):
         canvas = FigureCanvasTkAgg(fig, master=self.screen)
         canvas.draw()
         canvas.get_tk_widget().pack(side="top", fill="none", pady=30)
-        '''
+        """
         super().create_logo("DCM_group9/imgs/heartLogo.png", (150, 150)).pack(
             side="bottom", pady=50
         )
-        '''
+        """
         super().create_button("Close", self.close).pack(side="top", padx=200, pady=20)
         self.screen.bind("<Escape>", lambda event: self.close())
         self.screen.mainloop()
