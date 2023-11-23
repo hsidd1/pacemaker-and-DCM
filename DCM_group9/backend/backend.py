@@ -128,17 +128,20 @@ class Backend:
         self.ser.reset_input_buffer()
         self.ser.reset_output_buffer()
 
-    def transmit_parameters(self, data: json) -> None:
+    def transmit_parameters(self, data: dict) -> None:
         """ transmits data to pacemaeker
         :param data: data to be communicated over uart
         """
+        serial_data = []
         if not self.is_connected:
             raise Exception("Connect the board")
         st = struct.Struct('i')
-        packed_data = st.pack(data)
+        for key in data:
+            for param in key:
+                serial_data.append(param*10)
+        packed_data = st.pack(serial_data)
         self.__flush(self.ser)
         try:
-            
             self.ser.write(packed_data)
         except Exception as e:
             print(traceback.format_exc())
