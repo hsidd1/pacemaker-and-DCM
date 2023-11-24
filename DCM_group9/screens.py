@@ -11,6 +11,8 @@ from user import User
 from utils.pacing_parameters import Parameters
 from utils.custom_widgets import FunkyWidget
 from ui_config.config import AccessibilityConfig
+from multiprocessing import shared_memory
+import serial
 
 
 class Screen:
@@ -28,6 +30,7 @@ class Screen:
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
+        #self.buf = shared_memory.SharedMemory(name="dee", create=False, size=1024)
         self.widgets = {
             "Button": [],
             "Entry": [],
@@ -451,6 +454,12 @@ class HomepageScreen(Screen):
 
     def check_connection(self) -> None:
         """Checks connection status from backend and displays it on the screen."""
+        try:
+            self.widgets["Label"].pop(2).destroy()
+            self.widgets["Label"].pop(3).destroy()
+        except IndexError:
+            pass
+        
         if self.backend.is_connected:
             text = "Connection status: Connected"
         else:
@@ -465,24 +474,27 @@ class HomepageScreen(Screen):
         )
         status_label.grid(row=12, column=0, pady=10)
 
+        self.widgets["Label"].append(status_label)
+
         # Board Connected ID (known or unknown)
-        if self.backend.board_connected:
-            if self.backend.device_id in self.backend.previous_device_ids:
-                text = f"ID: {self.backend.board_connected} (Known Device)"
-                color = "green"
-            else:
-                text = f"ID: {self.backend.board_connected} (Unknown Device)"
-                color = "red"
+        if self.backend.ser.is_open:
+            text = "ID: Pacemaker Board"
         else:
             text = "ID: None (Known Status Unavailable)"
             color = "grey"
         board_label = tk.Label(
             self.screen,
             text=text,
-            background=color,
+            background=self.config.colour_map[self.config.colour_mode][1]
+            if self.backend.is_connected
+            else self.config.colour_map[self.config.colour_mode][0],
             font=("Helvetica", 10, "bold"),
         )
         board_label.grid(row=12, column=1, pady=10)
+
+        self.widgets["Label"].append(board_label)
+
+        self.screen.after(1000, self.check_connection)
     
     def send_data(self):
         self.backend.transmit_parameters(self.current_user.parameter_dict)     
@@ -530,14 +542,17 @@ class SettingsScreen(Screen):
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VRP,
                 Parameters.VENTRICULAR_SENSITIVITY,
+                Parameters.VRP,
             ],
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -546,6 +561,9 @@ class SettingsScreen(Screen):
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -553,6 +571,9 @@ class SettingsScreen(Screen):
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -561,6 +582,9 @@ class SettingsScreen(Screen):
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.VRP,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
         }
 
@@ -619,6 +643,12 @@ class SettingsScreen(Screen):
 
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
             param_data[param] = funky.get()
+        
+        for param in self.current_user.parameter_dict[self.pacing_mode]:
+            if param in param_data.keys():
+                continue
+            param_data.update({param: self.current_user.parameter_dict[self.pacing_mode][param]}) 
+
 
         self.database.update_parameters(
             self.current_user, self.current_user.username, self.pacing_mode, param_data

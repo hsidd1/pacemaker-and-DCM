@@ -7,6 +7,8 @@ from __future__ import annotations
 
 from ui_config.config import AccessibilityConfig
 from backend.backend import Backend
+from threading import Thread
+from multiprocessing import Process, shared_memory, Semaphore
 from screens import *
 
 
@@ -14,11 +16,12 @@ class Application:
     def __init__(self) -> None:
         """Initializes Application class with page geometry, current user and pacing mode parameters."""
         self.accessibility_config = AccessibilityConfig()
-        self.backend = Backend('COM8')
+        self.backend = Backend()
         self.page_geometry: str = "800x600"
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
         self.current_screen: str = "WelcomeScreen"
+        self.current_screen_ref = ["WelcomeScreen"]
         self.screens: dict = {
             "WelcomeScreen": self.handle_welcome_screen,
             "AccessibilitySettingsScreen": self.handle_accessibility_settings_screen,
@@ -46,10 +49,11 @@ class Application:
             self.current_screen = "AccessibilitySettingsScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_accessibility_settings_screen(self):
         accessibility_settings_screen = AccessibilitySettingsScreen(
-            self.page_geometry, self.accessibility_config
+            self.page_geometry, self.accessibility_config,
         )
         accessibility_settings_screen.run_screen()
 
@@ -58,6 +62,7 @@ class Application:
             self.current_screen = "WelcomeScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""
@@ -78,6 +83,7 @@ class Application:
             self.pacing_mode = homepage_screen.pacing_mode
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_settings_screen(self):
         """Handles the SettingsScreen state of the application."""
@@ -94,6 +100,7 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_egram_screen(self):
         """Handles the EgramScreen state of the application."""
@@ -108,8 +115,15 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
-
+        self.current_screen_ref[0] = self.current_screen
 
 if __name__ == "__main__":
+    #shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
+    p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
+    #p2 = Process(target=app.run_app)
+    #p1 = Process(target=app.backend.open_port)
+    p1.start()
+
     app.run_app()
+
