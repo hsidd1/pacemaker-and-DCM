@@ -138,6 +138,7 @@ class Backend:
         serial_data = []
         if not self.is_connected:
             raise Exception("Connect the board")
+
         st = struct.Struct('41i')
         for pacing_mode in data:
             for param in data[pacing_mode]:
