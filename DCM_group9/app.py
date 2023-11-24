@@ -21,6 +21,7 @@ class Application:
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
         self.current_screen: str = "WelcomeScreen"
+        self.current_screen_ref = ["WelcomeScreen"]
         self.screens: dict = {
             "WelcomeScreen": self.handle_welcome_screen,
             "AccessibilitySettingsScreen": self.handle_accessibility_settings_screen,
@@ -48,6 +49,7 @@ class Application:
             self.current_screen = "AccessibilitySettingsScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_accessibility_settings_screen(self):
         accessibility_settings_screen = AccessibilitySettingsScreen(
@@ -60,6 +62,7 @@ class Application:
             self.current_screen = "WelcomeScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""
@@ -80,6 +83,7 @@ class Application:
             self.pacing_mode = homepage_screen.pacing_mode
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_settings_screen(self):
         """Handles the SettingsScreen state of the application."""
@@ -96,6 +100,7 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_egram_screen(self):
         """Handles the EgramScreen state of the application."""
@@ -110,20 +115,15 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
 if __name__ == "__main__":
-    shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
+    #shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
-    p1 = Process(target=app.backend.open_port)
+    p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
     #p2 = Process(target=app.run_app)
     #p1 = Process(target=app.backend.open_port)
     p1.start()
 
     app.run_app()
 
-    if not app.current_screen:
-        p1.terminate()
-        shm.close()
-        shm.unlink()
-
-    p1.join()

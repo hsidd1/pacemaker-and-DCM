@@ -54,21 +54,20 @@ class Backend:
 
     # create a thread that opens your com port 
 # and reads the data from it
-    def open_port(self):
-        shm = shared_memory.SharedMemory(name="dee", create=False, size=1024)
-        while True:
+    def open_port(self, current_screen):
+        while current_screen[0]:
             #print(self.ser.is_open)
             for port in list_ports.comports():
                 if not self.ser.is_open:
                     try:
                         self.ser = serial.Serial(port.device, 115200, timeout=1)
                         print("connected to port: ", port)
-                        self.shm.buf[0] = self.ser.is_open
-                        print(self.shm.buf[0])
+                        break
                     except Exception:
                         pass
                     print("Error: Failed to open the serial port.")
-            if not list_ports.comports():
+            if not list_ports.comports() and self.ser.is_open:
+                print("hello")
                 self.ser = serial.Serial()
             time.sleep(1)
 
@@ -139,15 +138,19 @@ class Backend:
         serial_data = []
         if not self.is_connected:
             raise Exception("Connect the board")
-        st = struct.Struct('i')
-        for key in data:
-            for param in key:
-                serial_data.append(param*10)
-        packed_data = st.pack(serial_data)
+        st = struct.Struct('41i')
+        for pacing_mode in data:
+            for param in data[pacing_mode]:
+                serial_data.append((int)(data[pacing_mode][param]*10))
+    
+        print(serial_data)
+
+        packed_data = st.pack(*serial_data)
         self.__flush(self.ser)
         try:
-            
             self.ser.write(packed_data)
+
+            print("hello")
         except Exception as e:
             print(traceback.format_exc())
             return

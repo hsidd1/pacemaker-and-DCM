@@ -30,7 +30,7 @@ class Screen:
         self.bg_colour = bg_colour
         self.geometry = geometry
         self.screen: tk.Tk = None
-        self.buf = shared_memory.SharedMemory(name="dee", create=False, size=1024)
+        #self.buf = shared_memory.SharedMemory(name="dee", create=False, size=1024)
         self.widgets = {
             "Button": [],
             "Entry": [],
@@ -454,11 +454,15 @@ class HomepageScreen(Screen):
 
     def check_connection(self) -> None:
         """Checks connection status from backend and displays it on the screen."""
-        if (self.buf.buf[0]):
-            print("x")
+        try:
+            self.widgets["Label"].pop(2).destroy()
+            self.widgets["Label"].pop(3).destroy()
+        except IndexError:
+            pass
+        
+        if self.backend.is_connected:
             text = "Connection status: Connected"
         else:
-            print(self.buf.buf[0])
             text = "Connection status: Disconnected"
         status_label = tk.Label(
             self.screen,
@@ -469,6 +473,8 @@ class HomepageScreen(Screen):
             font=("Helvetica", 10, "bold"),
         )
         status_label.grid(row=12, column=0, pady=10)
+
+        self.widgets["Label"].append(status_label)
 
         # Board Connected ID (known or unknown)
         if self.backend.ser.is_open:
@@ -485,6 +491,10 @@ class HomepageScreen(Screen):
             font=("Helvetica", 10, "bold"),
         )
         board_label.grid(row=12, column=1, pady=10)
+
+        self.widgets["Label"].append(board_label)
+
+        self.screen.after(1000, self.check_connection)
     
     def send_data(self):
         self.backend.transmit_parameters(self.current_user.parameter_dict)     
