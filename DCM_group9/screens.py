@@ -542,14 +542,17 @@ class SettingsScreen(Screen):
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VRP,
                 Parameters.VENTRICULAR_SENSITIVITY,
+                Parameters.VRP,
             ],
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -558,6 +561,9 @@ class SettingsScreen(Screen):
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -565,6 +571,9 @@ class SettingsScreen(Screen):
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
@@ -573,6 +582,9 @@ class SettingsScreen(Screen):
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.VRP,
+                Parameters.REACTION_TIME,
+                Parameters.RESPONSE_FACTOR,
+                Parameters.RECOVERY_TIME,
             ],
         }
 
@@ -631,6 +643,12 @@ class SettingsScreen(Screen):
 
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
             param_data[param] = funky.get()
+        
+        for param in self.current_user.parameter_dict[self.pacing_mode]:
+            if param in param_data.keys():
+                continue
+            param_data.update({param: self.current_user.parameter_dict[self.pacing_mode][param]}) 
+
 
         self.database.update_parameters(
             self.current_user, self.current_user.username, self.pacing_mode, param_data

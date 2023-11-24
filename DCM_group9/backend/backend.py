@@ -9,16 +9,12 @@ import json
 import matplotlib.pyplot as plt
 import traceback
 import struct
-from threading import Thread
-from multiprocessing import shared_memory
 import time
+from utils.pacing_modes import PaceMode
    
-    
-# print(list_ports.comports())
+START_TRANSMISSION_BYTE = 0x11111100
+CONFIRMATION_TRANSMISSION_BYTE = 0x11111111
 
-# t = Thread(target=open_port)
-
-# t.start()
 class Backend:
     def __init__(self, port: str = None, device_id: str = None):
         """Initializes Backend class with serial port.
@@ -139,15 +135,17 @@ class Backend:
         if not self.is_connected:
             raise Exception("Connect the board")
 
-        st = struct.Struct('41i')
+        serial_data.append(START_TRANSMISSION_BYTE)
+
+        st = struct.Struct('113i')
         for pacing_mode in data:
+            serial_data.append(int(PaceMode.decode(pacing_mode)))
             for param in data[pacing_mode]:
                 serial_data.append((int)(data[pacing_mode][param]*10))
-    
-        print(serial_data)
 
         packed_data = st.pack(*serial_data)
         self.__flush(self.ser)
+        print(serial_data)
         try:
             self.ser.write(packed_data)
 
