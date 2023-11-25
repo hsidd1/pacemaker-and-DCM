@@ -4,10 +4,10 @@
             "password": "password",
             "pacing_mode_params": {
                 "AOO": {
-                    "Lower Rate Limit": 120.0,
-                    "Upper Rate Limit": 60.0,
-                    "Atrial Amplitude": 4.4,
-                    "Atrial Pulse Width": 27.0,
+                    "Lower Rate Limit": 135.0,
+                    "Upper Rate Limit": 75.0,
+                    "Atrial Amplitude": 4.3,
+                    "Atrial Pulse Width": 25.0,
                     "Atrial Sensitivity": 2.5,
                     "Ventricular Amplitude": 0,
                     "Ventricular Pulse Width": 0,

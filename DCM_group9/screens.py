@@ -497,7 +497,10 @@ class HomepageScreen(Screen):
         self.screen.after(1000, self.check_connection)
     
     def send_data(self):
-        self.backend.transmit_parameters(self.current_user.parameter_dict)     
+        pacing_mode = self.widgets["OptionMenu"][0][1].get()
+        if pacing_mode == "Select a Pacing Mode":
+            return
+        self.backend.transmit_parameters(pacing_mode, self.current_user.parameter_dict[pacing_mode])     
 
 
 
