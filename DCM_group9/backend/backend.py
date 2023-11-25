@@ -127,25 +127,28 @@ class Backend:
         self.ser.reset_input_buffer()
         self.ser.reset_output_buffer()
 
-    def transmit_parameters(self, data: dict) -> None:
+    def transmit_parameters(self, pacing_mode: str, params: dict) -> None:
         """ transmits data to pacemaeker
         :param data: data to be communicated over uart
         """
         serial_data = []
-        if not self.is_connected:
-            raise Exception("Connect the board")
-
         serial_data.append(START_TRANSMISSION_BYTE)
 
-        st = struct.Struct('113i')
-        for pacing_mode in data:
-            serial_data.append(int(PaceMode.decode(pacing_mode)))
-            for param in data[pacing_mode]:
-                serial_data.append((int)(data[pacing_mode][param]*10))
+        st = struct.Struct('15i')
+        serial_data.append(int(PaceMode.decode(pacing_mode)))
+        for param in params:
+            serial_data.append((int)(params[param]*10))
+            print(param)
 
         packed_data = st.pack(*serial_data)
-        self.__flush(self.ser)
         print(serial_data)
+        print(packed_data)
+
+        if not self.is_connected:
+            raise Exception("Connect the board")
+        
+        self.__flush(self.ser)
+
         try:
             self.ser.write(packed_data)
 
