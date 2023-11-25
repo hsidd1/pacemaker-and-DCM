@@ -382,6 +382,7 @@ class HomepageScreen(Screen):
             row=0, column=0, columnspan=20, pady=10
         )
 
+        print(self.backend.egram_data)
         self.screen.update()
 
         super().create_label(
@@ -551,6 +552,7 @@ class SettingsScreen(Screen):
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.REACTION_TIME,
@@ -560,8 +562,10 @@ class SettingsScreen(Screen):
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.ATRIAL_SENSITIVITY,
                 Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
                 Parameters.REACTION_TIME,
@@ -571,9 +575,9 @@ class SettingsScreen(Screen):
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.REACTION_TIME,
                 Parameters.RESPONSE_FACTOR,
                 Parameters.RECOVERY_TIME,
@@ -581,6 +585,7 @@ class SettingsScreen(Screen):
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
@@ -644,17 +649,17 @@ class SettingsScreen(Screen):
         param_map = self.pacing_modes_map[self.pacing_mode]
         param_data = {param.value.name: "" for param in param_map}
 
+        user_params = self.current_user.parameter_dict[self.pacing_mode]
+
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
             param_data[param] = funky.get()
         
-        for param in self.current_user.parameter_dict[self.pacing_mode]:
-            if param in param_data.keys():
-                continue
-            param_data.update({param: self.current_user.parameter_dict[self.pacing_mode][param]}) 
-
+        print(param_data)
+        
+        user_params.update(param_data)
 
         self.database.update_parameters(
-            self.current_user, self.current_user.username, self.pacing_mode, param_data
+            self.current_user, self.current_user.username, self.pacing_mode, user_params
         )
         if from_button:
             applied_msg = super().create_label(

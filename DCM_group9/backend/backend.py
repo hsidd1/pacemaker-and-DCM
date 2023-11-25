@@ -11,6 +11,9 @@ import traceback
 import struct
 import time
 from utils.pacing_modes import PaceMode
+from threading import Thread
+
+from random import Random
    
 START_TRANSMISSION_BYTE = 0x11111100
 CONFIRMATION_TRANSMISSION_BYTE = 0x11111111
@@ -26,6 +29,8 @@ class Backend:
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
+        self.egram_data = [0]*10000
+        self.transmit_params = False
 
         self.ser = serial.Serial()
         #self.p2 = Process(target=self.__open_port())
@@ -56,12 +61,12 @@ class Backend:
             for port in list_ports.comports():
                 if not self.ser.is_open:
                     try:
-                        self.ser = serial.Serial(port.device, 115200, timeout=1)
+                        self.ser = serial.Serial("COM7", 115200, timeout=1)
                         print("connected to port: ", port)
                         break
                     except Exception:
+                        print("Error: Failed to open the serial port.")
                         pass
-                    print("Error: Failed to open the serial port.")
             if not list_ports.comports() and self.ser.is_open:
                 print("hello")
                 self.ser = serial.Serial()
@@ -96,31 +101,30 @@ class Backend:
                 self.device_id = None
         return self.device_id
 
-    def get_egram_dict(self) -> dict:
+    def get_egram_data(self, current_screen):
         """Gets the egram data from the serial port.
         :return: dictionary of egram data"""
-        egram_data = {}
+        i = 0
+        while current_screen[0]:
+            if self.is_connected:
+                try:
+                    while not self.transmit_params:
+                        # Read data from serial port
+                        data = self.ser.read(8)
 
-        if self.is_connected:
-            try:
-                while True:
-                    # Read data from serial port
-                    data = self.ser.readline().decode().strip()
+                        if not data:
+                            break
 
-                    if not data:
-                        break
+                        # Data for time and voltage TODO: change in a2 to match expected transfer
+                        self.egram_data[i] = struct.unpack('<2i', data)
+                        i = i + 1
 
-                    # Data for time and voltage TODO: change in a2 to match expected transfer
-                    time, voltage = map(float, data.split(","))
-                    egram_data[time] = voltage
-
-                self.ser.close()
-            except serial.SerialException:
-                print("Error: Failed to open the serial port.")
-            except ValueError:
-                print("Error: Invalid data received from the serial port.")
-
-        return egram_data
+                        if i == 10000:
+                            i = 0
+                except serial.SerialException:
+                    print("Error: Failed to open the serial port.")
+                except ValueError:
+                    print("Error: Invalid data received from the serial port.")
 
     def __flush(self, ser: Backend):
         self.ser.flush()
@@ -131,31 +135,50 @@ class Backend:
         """ transmits data to pacemaeker
         :param data: data to be communicated over uart
         """
-        serial_data = []
-        serial_data.append(START_TRANSMISSION_BYTE)
+        self.transmit_params = True
+        serial_data_start = []
+        serial_data_confirmed = []
+        serial_data_start.append(START_TRANSMISSION_BYTE)
+        serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
         st = struct.Struct('15i')
-        serial_data.append(int(PaceMode.decode(pacing_mode)))
+        serial_data_start.append(int(PaceMode.decode(pacing_mode)))
+        serial_data_confirmed.append(int(PaceMode.decode(pacing_mode)))
         for param in params:
-            serial_data.append((int)(params[param]*10))
-            print(param)
+            serial_data_start.append((int)(params[param]*10))
+            serial_data_confirmed.append((int)(params[param]*10))
+            #print(param)
 
-        packed_data = st.pack(*serial_data)
-        print(serial_data)
-        print(packed_data)
+        packed_data_start = st.pack(*serial_data_start)
+        packed_data_confirmed = st.pack(*serial_data_confirmed)
+        #print(serial_data)
+        #print(packed_data)
 
         if not self.is_connected:
             raise Exception("Connect the board")
         
         self.__flush(self.ser)
+        verification = False
 
         try:
-            self.ser.write(packed_data)
+            while not verification:
+                self.ser.write(packed_data_start)
+                data = self.ser.read(15*4)
+                verification = True
+                for index, byte in enumerate(packed_data_start):
+                    if byte == data[index]:
+                        continue
+                    else:
+                        verification = False
 
-            print("hello")
+            self.ser.write(packed_data_confirmed)
+                    
+
         except Exception as e:
             print(traceback.format_exc())
             return
+        
+        self.transmit_params = False
 
     def plot_egram(eg_dict) -> None:
         """ takes in egram dict using get_egram_dict and plots it"""

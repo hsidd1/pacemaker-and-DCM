@@ -4,10 +4,11 @@
             "password": "password",
             "pacing_mode_params": {
                 "AOO": {
-                    "Lower Rate Limit": 135.0,
-                    "Upper Rate Limit": 75.0,
-                    "Atrial Amplitude": 4.3,
-                    "Atrial Pulse Width": 25.0,
+                    "Lower Rate Limit": 63.0,
+                    "Upper Rate Limit": 50.0,
+                    "Maximum Sensor Rate": 0,
+                    "Atrial Amplitude": 0.0,
+                    "Atrial Pulse Width": 30.0,
                     "Atrial Sensitivity": 2.5,
                     "Ventricular Amplitude": 0,
                     "Ventricular Pulse Width": 0,
@@ -21,6 +22,7 @@
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -36,6 +38,7 @@
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -51,6 +54,7 @@
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -66,6 +70,7 @@
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -81,6 +86,7 @@
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -96,6 +102,7 @@
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -109,19 +116,20 @@
                     "Recovery Time": 5
                 },
                 "VVIR": {
-                    "Lower Rate Limit": 60,
-                    "Upper Rate Limit": 120,
+                    "Lower Rate Limit": 60.0,
+                    "Upper Rate Limit": 120.0,
+                    "Maximum Sensor Rate": 120.0,
                     "Atrial Amplitude Regulated": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
-                    "Ventricular Amplitude Regulated": 5,
-                    "Ventricular Pulse Width": 1,
+                    "Ventricular Amplitude Regulated": 5.0,
+                    "Ventricular Pulse Width": 1.0,
                     "Ventricular Sensitivity": 2.5,
                     "ARP": 250,
-                    "VRP": 0,
-                    "Reaction Time": 30,
-                    "Response Factor": 8,
-                    "Recovery Time": 5
+                    "VRP": 0.0,
+                    "Reaction Time": 50.0,
+                    "Response Factor": 6.0,
+                    "Recovery Time": 2.0
                 }
             }
         }

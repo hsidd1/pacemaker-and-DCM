@@ -117,13 +117,34 @@ class Application:
             self.current_screen = None
         self.current_screen_ref[0] = self.current_screen
 
+
+
+serialobj = serial.Serial("COM8", 115200)
+
+import struct
+import time
+from random import Random
+
+def pacemaker_ecg_emulator(current_screen):
+    st = struct.Struct('2i')
+    while current_screen[0]:
+        random_av = Random.randint(Random(), 0, 10)
+        random_vv = Random.randint(Random(), 0, 10)
+        packed_data = st.pack(*[random_av, random_vv])
+        serialobj.write(packed_data)
+        #print(packed_data)
+        time.sleep(0.002)
+
 if __name__ == "__main__":
     #shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
     p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
+    p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
+    p3 = Thread(target=pacemaker_ecg_emulator, args=(app.current_screen_ref,))
     #p2 = Process(target=app.run_app)
     #p1 = Process(target=app.backend.open_port)
     p1.start()
+    p2.start()
+    p3.start()
 
     app.run_app()
-

@@ -43,6 +43,7 @@ class Parameters(Enum):
 
     LOWER_RATE_LIMIT = PacingParameters("Lower Rate Limit", L_RATE_INT, "ppm")
     UPPER_RATE_LIMIT = PacingParameters("Upper Rate Limit", U_RATE_INT, "ppm")
+    MAXIMUM_SENSOR_LIMIT = PacingParameters("Maximum Sensor Rate", U_RATE_INT, "ppm")
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_AMPLITUDE_REGULATED = PacingParameters(
         "Atrial Amplitude Regulated", AMPLITUDE_INT_REGULATED, "V"
