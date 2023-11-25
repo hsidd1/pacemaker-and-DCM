@@ -29,7 +29,7 @@ class Backend:
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
-        self.egram_data = [0]*10000
+        self.egram_data = [(0,0)]*10000
         self.transmit_params = False
 
         self.ser = serial.Serial()
@@ -61,7 +61,7 @@ class Backend:
             for port in list_ports.comports():
                 if not self.ser.is_open:
                     try:
-                        self.ser = serial.Serial("COM7", 115200, timeout=1)
+                        self.ser = serial.Serial(port.device, 115200, timeout=1)
                         print("connected to port: ", port)
                         break
                     except Exception:
@@ -116,7 +116,8 @@ class Backend:
                             break
 
                         # Data for time and voltage TODO: change in a2 to match expected transfer
-                        self.egram_data[i] = struct.unpack('<2i', data)
+                        v_vector = struct.unpack('<2i', data)
+                        self.egram_data[i] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
                         i = i + 1
 
                         if i == 10000:
@@ -141,7 +142,7 @@ class Backend:
         serial_data_start.append(START_TRANSMISSION_BYTE)
         serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
-        st = struct.Struct('15i')
+        st = struct.Struct('16i')
         serial_data_start.append(int(PaceMode.decode(pacing_mode)))
         serial_data_confirmed.append(int(PaceMode.decode(pacing_mode)))
         for param in params:
@@ -165,6 +166,8 @@ class Backend:
                 self.ser.write(packed_data_start)
                 data = self.ser.read(15*4)
                 verification = True
+                if not data:
+                    return
                 for index, byte in enumerate(packed_data_start):
                     if byte == data[index]:
                         continue

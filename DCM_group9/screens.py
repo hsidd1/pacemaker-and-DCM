@@ -699,12 +699,14 @@ class EgramScreen(Screen):
         self,
         geometry: str,
         accessibility_config: AccessibilityConfig,
+        backend: Backend,
         bg_colour: str = "#8a8d91",
     ):
         """Initializes EgramScreen class with geometry and background colour."""
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Egram"
         self.closed = False
+        self.backend = backend
 
     def run_screen(self):
         super().run_screen()
@@ -714,17 +716,18 @@ class EgramScreen(Screen):
         fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
 
         # Placeholder x and y data (This is to be replaced with the data received from the board)
-        x = np.linspace(0, 10, 1000)
-        y = 4000 * (np.sin(x) ** 63 * np.sin(x + 1.5) * 8)
+        x = np.arange(0, 10000)
+        y_a = [vector[0] for vector in self.backend.egram_data]
+        y_v = [vector[1] for vector in self.backend.egram_data]
 
         # Plot the Atrium Signals
-        ax1.plot(x, y)
+        ax1.plot(x, y_a)
         ax1.set_title("Atrium Signals")
 
         # Plot the Ventricle Signals
-        ax2.plot(x, y)
+        ax2.plot(x, y_v)
         ax2.set_title("Ventricle Signals")
-
+ 
         # Set common axis labels
         fig.supxlabel("Time (ms)")
         fig.supylabel("Voltage (mV)")
