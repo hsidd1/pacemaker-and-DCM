@@ -8,7 +8,6 @@ from __future__ import annotations
 from ui_config.config import AccessibilityConfig
 from backend.backend import Backend
 from threading import Thread
-from multiprocessing import Process, shared_memory, Semaphore
 from screens import *
 
 
@@ -107,6 +106,7 @@ class Application:
         egram_screen = EgramScreen(
             self.page_geometry,
             self.accessibility_config,
+            self.backend
         )
         egram_screen.run_screen()
 
@@ -117,13 +117,16 @@ class Application:
             self.current_screen = None
         self.current_screen_ref[0] = self.current_screen
 
+
+
 if __name__ == "__main__":
     #shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
     p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
+    p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
     #p2 = Process(target=app.run_app)
     #p1 = Process(target=app.backend.open_port)
     p1.start()
+    p2.start()
 
     app.run_app()
-

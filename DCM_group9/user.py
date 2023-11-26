@@ -19,6 +19,7 @@ class User:
                 "AOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -34,6 +35,7 @@ class User:
                 "AAI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 3.5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -49,6 +51,7 @@ class User:
                 "VOO": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -64,6 +67,7 @@ class User:
                 "VVI": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 0,
                     "Atrial Amplitude": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -79,6 +83,7 @@ class User:
                 "AOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -94,6 +99,7 @@ class User:
                 "AAIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 5,
                     "Atrial Pulse Width": 1,
                     "Atrial Sensitivity": 2.5,
@@ -109,6 +115,7 @@ class User:
                 "VOOR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,
@@ -124,6 +131,7 @@ class User:
                 "VVIR": {
                     "Lower Rate Limit": 60,
                     "Upper Rate Limit": 120,
+                    "Maximum Sensor Rate": 120,
                     "Atrial Amplitude Regulated": 0,
                     "Atrial Pulse Width": 0,
                     "Atrial Sensitivity": 0,

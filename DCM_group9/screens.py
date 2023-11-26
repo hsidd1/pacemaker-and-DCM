@@ -387,6 +387,7 @@ class HomepageScreen(Screen):
             row=0, column=0, columnspan=20, pady=10
         )
 
+        print(self.backend.egram_data)
         self.screen.update()
 
         super().create_label(
@@ -556,6 +557,7 @@ class SettingsScreen(Screen):
             "AOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
                 Parameters.REACTION_TIME,
@@ -565,8 +567,10 @@ class SettingsScreen(Screen):
             "AAIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.ATRIAL_AMPLITUDE_REGULATED,
                 Parameters.ATRIAL_PULSE_WIDTH,
+                Parameters.ATRIAL_SENSITIVITY,
                 Parameters.ARP,
                 Parameters.ATRIAL_SENSITIVITY,
                 Parameters.REACTION_TIME,
@@ -576,9 +580,9 @@ class SettingsScreen(Screen):
             "VOOR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
-                Parameters.VENTRICULAR_SENSITIVITY,
                 Parameters.REACTION_TIME,
                 Parameters.RESPONSE_FACTOR,
                 Parameters.RECOVERY_TIME,
@@ -586,6 +590,7 @@ class SettingsScreen(Screen):
             "VVIR": [
                 Parameters.LOWER_RATE_LIMIT,
                 Parameters.UPPER_RATE_LIMIT,
+                Parameters.MAXIMUM_SENSOR_LIMIT,
                 Parameters.VENTRICULAR_AMPLITUDE_REGULATED,
                 Parameters.VENTRICULAR_PULSE_WIDTH,
                 Parameters.VENTRICULAR_SENSITIVITY,
@@ -649,17 +654,17 @@ class SettingsScreen(Screen):
         param_map = self.pacing_modes_map[self.pacing_mode]
         param_data = {param.value.name: "" for param in param_map}
 
+        user_params = self.current_user.parameter_dict[self.pacing_mode]
+
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
             param_data[param] = funky.get()
         
-        for param in self.current_user.parameter_dict[self.pacing_mode]:
-            if param in param_data.keys():
-                continue
-            param_data.update({param: self.current_user.parameter_dict[self.pacing_mode][param]}) 
-
+        print(param_data)
+        
+        user_params.update(param_data)
 
         self.database.update_parameters(
-            self.current_user, self.current_user.username, self.pacing_mode, param_data
+            self.current_user, self.current_user.username, self.pacing_mode, user_params
         )
         if from_button:
             applied_msg = super().create_label(
@@ -694,12 +699,14 @@ class EgramScreen(Screen):
         self,
         geometry: str,
         accessibility_config: AccessibilityConfig,
+        backend: Backend,
         bg_colour: str = "#8a8d91",
     ):
         """Initializes EgramScreen class with geometry and background colour."""
         super().__init__(geometry, accessibility_config, bg_colour)
         self.title = "DCM Application - Egram"
         self.closed = False
+        self.backend = backend
 
     def run_screen(self):
         super().run_screen()
@@ -709,16 +716,19 @@ class EgramScreen(Screen):
         fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
 
         # Placeholder x and y data (This is to be replaced with the data received from the board)
-        x = np.linspace(0, 10, 1000)
-        y = 4000 * (np.sin(x) ** 63 * np.sin(x + 1.5) * 8)
+        
+        x = np.arange(0, 10000)
+        y_a = [vector[0] for vector in self.backend.egram_data]
+        y_v = [vector[1] for vector in self.backend.egram_data]
 
         # Plot the Atrium Signals
-        ax1.plot(x, y)
+        ax1.plot(x, y_a)
         ax1.set_title("Atrium Signals")
 
         # Plot the Ventricle Signals
-        ax2.plot(x, y)
+        ax2.plot(x, y_v)
         ax2.set_title("Ventricle Signals")
+ 
 
         # Set common axis labels
         fig.supxlabel("Time (ms)")
