@@ -53,27 +53,55 @@ class Backend:
     # create a thread that attempts open all available com ports, if 
     # port is valid a connection is established 
     def open_port(self, current_screen):
+        serial_data = []
+        serial_data.append(START_TRANSMISSION_BYTE)
+        serial_data.append(int(PaceMode.encode("AOO")))
+
+        for num in range(14):
+            serial_data.append(num)
+        packed_serial_data = struct.pack('16i', *serial_data)
+
         while current_screen[0]:
             for port in list_ports.comports():
                 if not self.ser.is_open and port.device not in self.banned_ports:
                     self.transmit_params = True
+                    print("Attemping to connect to: ", port.device)
                     try:
-                        self.ser = serial.Serial(port.device, 115200, timeout=1)
-                        data = self.ser.read(8)
-                        if not data:
+                        self.ser = serial.Serial(port.device, 115200, timeout=1, write_timeout=1)
+                        data = bytearray()
+                        self.ser.write(packed_serial_data)
+                        for _ in range(8):
+                            chunk = self.ser.read(8)
+                            if not chunk:
+                                self.ser.close()
+                                break
+                            data.extend(chunk)
+                        if len(data) != len(packed_serial_data):
                             self.banned_ports.append(port.device)
-                            self.ser = serial.Serial()
-                            print(self.banned_ports)
+                            self.ser.close()
+                            continue
+                        fail = False
+                        for index, byte in enumerate(packed_serial_data):
+                            if byte != data[index]:
+                                self.ser.close()
+                                fail = True
+                                self.banned_ports.append(port.device)
+                                break
+                            else:
+                                continue
+                        if fail:
                             continue
                         print("connected to port: ", port)
                         self.transmit_params = False
                         break
-                    except Exception:
-                        print("Error: Failed to open the serial port.")
+                    except Exception as e:
+                        print(e)
+                        self.banned_ports.append(port.device)
+                        self.ser.close()
                         pass
             if not list_ports.comports() and self.ser.is_open:
                 self.ser = serial.Serial()
-            time.sleep(1)
+            time.sleep(0.5)
 
     @property
     def is_connected(self) -> bool:
@@ -130,7 +158,7 @@ class Backend:
                 except ValueError:
                     print("Error: Invalid data received from the serial port.")
 
-    def __flush(self, ser: Backend):
+    def __flush(self):
         self.ser.flush()
         self.ser.reset_input_buffer()
         self.ser.reset_output_buffer()
@@ -163,7 +191,7 @@ class Backend:
         if not self.is_connected:
             raise Exception("Connect the board")
         
-        self.__flush(self.ser)
+        self.__flush()
         verification = False
 
         try:
