@@ -164,7 +164,7 @@ class Backend:
         try:
             while not verification:
                 self.ser.write(packed_data_start)
-                data = self.ser.read(15*4)
+                data = self.ser.read(16*4)
                 verification = True
                 if not data:
                     return
