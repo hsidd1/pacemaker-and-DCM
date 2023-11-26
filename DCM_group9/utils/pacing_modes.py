@@ -27,7 +27,7 @@ class PaceMode(Enum):
     def __int__(self):
         return self.value
     
-    def decode(pacing_mode: str):
+    def encode(pacing_mode: str):
         match pacing_mode:
             case "AOO":
                 return PaceMode.AOO

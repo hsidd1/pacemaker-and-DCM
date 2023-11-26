@@ -30,12 +30,9 @@ class Backend:
         self.device_id = device_id
         self.previous_device_ids = []
         self.egram_data = [(0,0)]*10000
-        self.transmit_params = False
-
+        self.transmit_params = True
+        self.banned_ports = []
         self.ser = serial.Serial()
-        #self.p2 = Process(target=self.__open_port())
-        #self.p.start()
-        # self.p.join()
 
         """
         TODO: implement in assignment 2
@@ -53,22 +50,28 @@ class Backend:
         #     self.ser = serial.Serial(port, 115200, timeout=1)
         #     self.ser.flush()
 
-    # create a thread that opens your com port 
-# and reads the data from it
+    # create a thread that attempts open all available com ports, if 
+    # port is valid a connection is established 
     def open_port(self, current_screen):
         while current_screen[0]:
-            #print(self.ser.is_open)
             for port in list_ports.comports():
-                if not self.ser.is_open:
+                if not self.ser.is_open and port.device not in self.banned_ports:
+                    self.transmit_params = True
                     try:
                         self.ser = serial.Serial(port.device, 115200, timeout=1)
+                        data = self.ser.read(8)
+                        if not data:
+                            self.banned_ports.append(port.device)
+                            self.ser = serial.Serial()
+                            print(self.banned_ports)
+                            continue
                         print("connected to port: ", port)
+                        self.transmit_params = False
                         break
                     except Exception:
                         print("Error: Failed to open the serial port.")
                         pass
             if not list_ports.comports() and self.ser.is_open:
-                print("hello")
                 self.ser = serial.Serial()
             time.sleep(1)
 
@@ -139,12 +142,14 @@ class Backend:
         self.transmit_params = True
         serial_data_start = []
         serial_data_confirmed = []
+        data = bytearray()
         serial_data_start.append(START_TRANSMISSION_BYTE)
         serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
         st = struct.Struct('16i')
-        serial_data_start.append(int(PaceMode.decode(pacing_mode)))
-        serial_data_confirmed.append(int(PaceMode.decode(pacing_mode)))
+        serial_data_start.append(int(PaceMode.encode(pacing_mode)))
+        serial_data_confirmed.append(int(PaceMode.encode(pacing_mode)))
+
         for param in params:
             serial_data_start.append((int)(params[param]*10))
             serial_data_confirmed.append((int)(params[param]*10))
@@ -164,10 +169,10 @@ class Backend:
         try:
             while not verification:
                 self.ser.write(packed_data_start)
-                data = self.ser.read(16*4)
+                for _ in range(8):
+                    chunk = self.ser.read(8)
+                    data.extend(chunk)
                 verification = True
-                if not data:
-                    return
                 for index, byte in enumerate(packed_data_start):
                     if byte == data[index]:
                         continue
@@ -182,6 +187,11 @@ class Backend:
             return
         
         self.transmit_params = False
+
+    def chunk_data(self, data, chunk_size):
+        """Yield successive n-sized chunks from data."""
+        for i in range(0, len(data), chunk_size):
+            yield data[i:i + chunk_size]
 
     def plot_egram(eg_dict) -> None:
         """ takes in egram dict using get_egram_dict and plots it"""

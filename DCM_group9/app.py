@@ -117,16 +117,38 @@ class Application:
             self.current_screen = None
         self.current_screen_ref[0] = self.current_screen
 
+# from serial import Serial
+# import random
+# import struct
+
+# ser = Serial("COM8", 115200)
+
+# def chunk_data(data, chunk_size):
+#     """Yield successive n-sized chunks from data."""
+#     for i in range(0, len(data), chunk_size):
+#         yield data[i:i + chunk_size]
+
+# def pacemaker_ecg_emulator():
+#     # int1 = random.randrange(0,100)
+#     # int2 = random.randrange(0,100)
+#     # buf = [int1, int2]
+#     # packed_data = struct.pack('2i', *buf)
+#     # ser.write(packed_data)
+
+#     while True:
+#         data = ser.read(64)
+#         for chunk in chunk_data(data, 8):
+#             ser.write(chunk)
+        
 
 
 if __name__ == "__main__":
-    #shm = shared_memory.SharedMemory(name="dee", create=True, size=1024)
     app = Application()
     p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
     p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
-    #p2 = Process(target=app.run_app)
-    #p1 = Process(target=app.backend.open_port)
+    # p3 = Thread(target=pacemaker_ecg_emulator)
     p1.start()
     p2.start()
+    # p3.start()
 
     app.run_app()
