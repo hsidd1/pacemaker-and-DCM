@@ -716,6 +716,7 @@ class EgramScreen(Screen):
         fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
 
         # Placeholder x and y data (This is to be replaced with the data received from the board)
+        
         x = np.arange(0, 10000)
         y_a = [vector[0] for vector in self.backend.egram_data]
         y_v = [vector[1] for vector in self.backend.egram_data]
@@ -728,6 +729,7 @@ class EgramScreen(Screen):
         ax2.plot(x, y_v)
         ax2.set_title("Ventricle Signals")
  
+
         # Set common axis labels
         fig.supxlabel("Time (ms)")
         fig.supylabel("Voltage (mV)")
