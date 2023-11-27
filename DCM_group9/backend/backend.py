@@ -55,20 +55,27 @@ class Backend:
         serial_data = []
         serial_data.append(START_TRANSMISSION_BYTE)
         serial_data.append(int(PaceMode.encode("AOO")))
+        all_ports = []
 
         for num in range(14):
             serial_data.append(num)
         packed_serial_data = struct.pack('16i', *serial_data)
 
         while current_screen[0]:
-            for port in list_ports.comports():
-                if not self.ser.is_open and port.device not in self.banned_ports:
+            ports = list_ports.comports()
+            ports_difference = [port for port in ports if port not in self.banned_ports]
+            ports_names = [port.device for port in ports_difference]
+            for port in ports_difference:
+                if port not in all_ports:
+                    all_ports.append(port)
+                if not self.ser.is_open:
                     self.transmit_params = True
                     print("Attemping to connect to: ", port.device)
                     try:
                         self.ser = serial.Serial(port.device, 115200, timeout=1, write_timeout=1)
                         data = bytearray()
                         self.ser.write(packed_serial_data)
+                        time.sleep(0.1)
                         for _ in range(8):
                             chunk = self.ser.read(8)
                             if not chunk:
@@ -76,31 +83,34 @@ class Backend:
                                 break
                             data.extend(chunk)
                         if len(data) != len(packed_serial_data):
-                            self.banned_ports.append(port.device)
+                            self.banned_ports.append(port)
                             self.ser.close()
+                            print("goodbye")
                             continue
-                        fail = False
-                        for index, byte in enumerate(packed_serial_data):
-                            if byte != data[index]:
-                                self.ser.close()
-                                fail = True
-                                self.banned_ports.append(port.device)
-                                break
-                            else:
-                                continue
-                        if fail:
+                        serial_data = struct.unpack('<16i', data)
+                        succed = False
+                        for index, byte in enumerate(serial_data):
+                            if serial_data[index] == START_TRANSMISSION_BYTE:
+                                succed = True
+                        if not succed:
+                            self.banned_ports.append(port)
+                            self.ser.close()
+                            print("oh no!")
                             continue
                         print("connected to port: ", port)
                         self.transmit_params = False
                         break
                     except Exception as e:
                         print(e)
-                        self.banned_ports.append(port.device)
+                        self.banned_ports.append(port)
                         self.ser.close()
                         pass
-            if not list_ports.comports() and self.ser.is_open:
-                self.ser = serial.Serial()
-            time.sleep(0.5)
+            if self.ser.port not in ports_names and self.ser.is_open:
+                print("hello")
+                self.transmit_params = True
+                self.ser.close()
+
+            time.sleep(0.1)
 
     @property
     def is_connected(self) -> bool:
@@ -151,9 +161,12 @@ class Backend:
                         if i == 10000:
                             i = 0
                 except serial.SerialException:
-                    print("Error: Failed to open the serial port.")
+                    #print("Error: Failed to open the serial port.")
+                    pass
                 except ValueError:
                     print("Error: Invalid data received from the serial port.")
+            else:
+                time.sleep(1)
 
     def __flush(self):
         self.ser.flush()
@@ -171,13 +184,13 @@ class Backend:
         serial_data_start.append(START_TRANSMISSION_BYTE)
         serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
-        st = struct.Struct('16i')
+        st = struct.Struct('<16i')
         serial_data_start.append(int(PaceMode.encode(pacing_mode)))
-        serial_data_confirmed.append(int(PaceMode.encode(pacing_mode)))
+        serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
         for param in params:
             serial_data_start.append((int)(params[param]*10))
-            serial_data_confirmed.append((int)(params[param]*10))
+            serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
             #print(param)
 
         packed_data_start = st.pack(*serial_data_start)
@@ -188,23 +201,28 @@ class Backend:
         if not self.is_connected:
             raise Exception("Connect the board")
         
-        self.__flush()
+        self.ser.flush()
         verification = False
 
         try:
             while not verification:
+                data = bytearray()
                 self.ser.write(packed_data_start)
+                time.sleep(0.1)
                 for _ in range(8):
                     chunk = self.ser.read(8)
                     data.extend(chunk)
+                print(data, "\n")
                 verification = True
                 for index, byte in enumerate(packed_data_start):
                     if byte == data[index]:
                         continue
                     else:
                         verification = False
-
+                        break
             self.ser.write(packed_data_confirmed)
+            print("!!!")
+
                     
 
         except Exception as e:
