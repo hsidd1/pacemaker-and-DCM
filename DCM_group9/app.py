@@ -144,11 +144,11 @@ class Application:
 
 if __name__ == "__main__":
     app = Application()
-    p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
-    p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
+    #p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
+    #p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
     #p3 = Thread(target=pacemaker_ecg_emulator)
-    p1.start()
-    p2.start()
+    #p1.start()
+    #p2.start()
     #p3.start()
 
     app.run_app()

@@ -19,7 +19,7 @@ START_TRANSMISSION_BYTE = 0x11111100
 CONFIRMATION_TRANSMISSION_BYTE = 0x11111111
 
 class Backend:
-    def __init__(self, port: str = None, device_id: str = None):
+    def __init__(self, port: str = "COM4", device_id: str = None):
         """Initializes Backend class with serial port.
         :param port: serial port
         :param device_id: device id of board
@@ -32,7 +32,8 @@ class Backend:
         self.egram_data = [(0,0)]*10000
         self.transmit_params = True
         self.banned_ports = []
-        self.ser = serial.Serial()
+        #self.ser = serial.Serial()
+        self.ser = serial.Serial(port, 115200, timeout=1, write_timeout=1)
 
         """
         with open('device_ids.txt', 'r') as f:
