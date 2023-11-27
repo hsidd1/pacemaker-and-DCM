@@ -524,7 +524,6 @@ class SettingsScreen(Screen):
         self.title = "DCM Application - Pacing Mode Settings"
         self.current_user = current_user
         self.pacing_mode = pacing_mode
-        # TODO: update R type modes in assignment 2
         self.pacing_modes_map = {
             "AOO": [
                 Parameters.LOWER_RATE_LIMIT,

@@ -1,6 +1,6 @@
 """Contains the backend class for the DCM app.
 
-For assignment 1, this class is used to set up future functionalities."""
+Utilizes serial communication for transmission and receiving of data from the pacemaker."""
 from __future__ import annotations
 
 import serial
@@ -35,7 +35,6 @@ class Backend:
         self.ser = serial.Serial()
 
         """
-        TODO: implement in assignment 2
         with open('device_ids.txt', 'r') as f:
             for line in f:
                 self.previous_device_ids.append(line.strip())
@@ -114,8 +113,6 @@ class Backend:
     def board_connected(self) -> str:
         """Checks what board is connected.
         :return: str of board connected
-        TODO: check if board connected id is same as previous ids
-        by seeing if it is in self.previous_device_ids
         """
         VID = 1234
         PID = 5678
