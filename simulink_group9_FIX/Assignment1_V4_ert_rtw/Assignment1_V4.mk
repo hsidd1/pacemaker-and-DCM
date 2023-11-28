@@ -2,7 +2,7 @@
 ## Makefile generated for component 'Assignment1_V4'. 
 ## 
 ## Makefile     : Assignment1_V4.mk
-## Generated on : Mon Nov 27 03:13:56 2023
+## Generated on : Mon Nov 27 14:30:53 2023
 ## Final product: $(RELATIVE_PATH_TO_ANCHOR)/Assignment1_V4.elf
 ## Product type : executable
 ## 
@@ -224,7 +224,7 @@ DEFINES = $(DEFINES_) $(DEFINES_BUILD_ARGS) $(DEFINES_CUSTOM) $(DEFINES_OPTS) $(
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_SCI.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_digitalIO.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/mw_sdk_interface.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_PWM.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_AnalogInput.c $(START_DIR)/Assignment1_V4_ert_rtw/Assignment1_V4.c $(START_DIR)/Assignment1_V4_ert_rtw/Assignment1_V4_data.c $(START_DIR)/Assignment1_V4_ert_rtw/rtGetInf.c $(START_DIR)/Assignment1_V4_ert_rtw/rtGetNaN.c $(START_DIR)/Assignment1_V4_ert_rtw/rt_nonfinite.c C:/Freescale/KSDK_1.2.0/platform/devices/startup.c C:/Freescale/KSDK_1.2.0/platform/devices/MK64F12/startup/system_MK64F12.c C:/Freescale/KSDK_1.2.0/platform/devices/MK64F12/startup/gcc/startup_MK64F12.S C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/board.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/hardware_init.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/pin_mux.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_misc_utilities.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_edma_irq.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_uart_irq.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/irq_stub.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/sbrk.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/cmsis_rtos_init.c C:/ProgramData/MATLAB/SupportPackages/R2022b/3P.instrset/cmsis.instrset/CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_thread.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_semaphore.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_timer.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_signal.c
+SRCS = C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_SCI.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_digitalIO.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/mw_sdk_interface.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/i2c_api.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_I2C.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_PWM.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_AnalogInput.c $(START_DIR)/Assignment1_V4_ert_rtw/Assignment1_V4.c $(START_DIR)/Assignment1_V4_ert_rtw/Assignment1_V4_data.c $(START_DIR)/Assignment1_V4_ert_rtw/rtGetInf.c $(START_DIR)/Assignment1_V4_ert_rtw/rtGetNaN.c $(START_DIR)/Assignment1_V4_ert_rtw/rt_nonfinite.c C:/Freescale/KSDK_1.2.0/platform/devices/startup.c C:/Freescale/KSDK_1.2.0/platform/devices/MK64F12/startup/system_MK64F12.c C:/Freescale/KSDK_1.2.0/platform/devices/MK64F12/startup/gcc/startup_MK64F12.S C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/board.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/hardware_init.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/pin_mux.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_misc_utilities.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_edma_irq.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/fsl_uart_irq.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/irq_stub.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/sbrk.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/cmsis_rtos_init.c C:/ProgramData/MATLAB/SupportPackages/R2022b/3P.instrset/cmsis.instrset/CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_thread.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_semaphore.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_timer.c C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/armcortexmbase/cmsis_rtos_rtx/src/mw_signal.c
 
 MAIN_SRC = $(START_DIR)/Assignment1_V4_ert_rtw/ert_main.c
 
@@ -234,7 +234,7 @@ ALL_SRCS = $(SRCS) $(MAIN_SRC)
 ## OBJECTS
 ###########################################################################
 
-OBJS = MW_SCI.o MW_digitalIO.o mw_sdk_interface.o MW_PWM.o MW_AnalogInput.o Assignment1_V4.o Assignment1_V4_data.o rtGetInf.o rtGetNaN.o rt_nonfinite.o startup.o system_MK64F12.o startup_MK64F12.o board.o hardware_init.o pin_mux.o fsl_misc_utilities.o fsl_edma_irq.o fsl_uart_irq.o irq_stub.o sbrk.o cmsis_rtos_init.o RTX_Conf_CM.o mw_thread.o mw_semaphore.o mw_timer.o mw_signal.o
+OBJS = MW_SCI.o MW_digitalIO.o mw_sdk_interface.o i2c_api.o MW_I2C.o MW_PWM.o MW_AnalogInput.o Assignment1_V4.o Assignment1_V4_data.o rtGetInf.o rtGetNaN.o rt_nonfinite.o startup.o system_MK64F12.o startup_MK64F12.o board.o hardware_init.o pin_mux.o fsl_misc_utilities.o fsl_edma_irq.o fsl_uart_irq.o irq_stub.o sbrk.o cmsis_rtos_init.o RTX_Conf_CM.o mw_thread.o mw_semaphore.o mw_timer.o mw_signal.o
 
 MAIN_OBJ = ert_main.o
 
@@ -589,6 +589,14 @@ MW_digitalIO.o : C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/sup
 
 
 mw_sdk_interface.o : C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/mw_sdk_interface.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+i2c_api.o : C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/i2c_api.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+MW_I2C.o : C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/src/MW_I2C.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 

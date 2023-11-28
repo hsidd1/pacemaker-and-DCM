@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V4'.
  *
- * Model version                  : 1.6
+ * Model version                  : 1.27
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Nov 27 03:25:34 2023
+ * C/C++ source code generated on : Mon Nov 27 17:18:40 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,23 +21,28 @@
 
 /* Block parameters (default storage) */
 P_Assignment1_V4_T Assignment1_V4_P = {
-  /* Expression: SampleTime
-   * Referenced by: '<S3>/Analog Input'
+  /* Expression: -1
+   * Referenced by: '<S3>/FXOS8700 6-Axes Sensor'
    */
   -1.0,
 
   /* Expression: SampleTime
-   * Referenced by: '<S3>/Analog Input1'
+   * Referenced by: '<S5>/Analog Input'
    */
   -1.0,
 
   /* Expression: SampleTime
-   * Referenced by: '<S3>/Digital Read'
+   * Referenced by: '<S5>/Analog Input1'
+   */
+  -1.0,
+
+  /* Expression: SampleTime
+   * Referenced by: '<S5>/Digital Read'
    */
   0.001,
 
   /* Expression: SampleTime
-   * Referenced by: '<S3>/Digital Read1'
+   * Referenced by: '<S5>/Digital Read1'
    */
   0.001,
 
@@ -52,119 +57,149 @@ P_Assignment1_V4_T Assignment1_V4_P = {
   500.0,
 
   /* Expression: 100
-   * Referenced by: '<S3>/Gain'
+   * Referenced by: '<S5>/Gain'
    */
   100.0,
 
   /* Expression: 3.3
-   * Referenced by: '<S3>/Gain2'
+   * Referenced by: '<S5>/Gain2'
    */
   3.3,
 
   /* Expression: 100
-   * Referenced by: '<S3>/Gain1'
+   * Referenced by: '<S5>/Gain1'
    */
   100.0,
 
   /* Expression: 3.3
-   * Referenced by: '<S3>/Gain3'
+   * Referenced by: '<S5>/Gain3'
    */
   3.3,
 
   /* Expression: 111
-   * Referenced by: '<S7>/Constant10'
+   * Referenced by: '<S8>/Constant10'
    */
   111.0,
 
   /* Expression: 60
-   * Referenced by: '<S7>/Constant'
+   * Referenced by: '<S8>/Constant'
    */
   60.0,
 
   /* Expression: 120
-   * Referenced by: '<S7>/Constant5'
+   * Referenced by: '<S8>/Constant5'
    */
   120.0,
 
   /* Expression: 2
-   * Referenced by: '<S7>/Constant9'
+   * Referenced by: '<S8>/Constant9'
    */
   2.0,
 
   /* Expression: 4
-   * Referenced by: '<S7>/Constant1'
+   * Referenced by: '<S8>/Constant1'
    */
   4.0,
 
   /* Expression: 0.5
-   * Referenced by: '<S7>/Constant3'
+   * Referenced by: '<S8>/Constant3'
    */
   0.5,
 
   /* Expression: 3.5
-   * Referenced by: '<S7>/Constant2'
+   * Referenced by: '<S8>/Constant2'
    */
   3.5,
 
   /* Expression: 150
-   * Referenced by: '<S7>/Constant4'
+   * Referenced by: '<S8>/Constant4'
    */
   150.0,
 
   /* Expression: 10
-   * Referenced by: '<S7>/Constant6'
+   * Referenced by: '<S8>/Constant6'
    */
   10.0,
 
   /* Expression: 8
-   * Referenced by: '<S7>/Constant7'
+   * Referenced by: '<S8>/Constant7'
    */
   8.0,
 
   /* Expression: 2
-   * Referenced by: '<S7>/Constant8'
+   * Referenced by: '<S8>/Constant8'
    */
   2.0,
 
+  /* Expression: [0.01,0.05,0.2]
+   * Referenced by: '<S10>/Constant'
+   */
+  { 0.01, 0.05, 0.2 },
+
+  /* Expression: [1.25,2]
+   * Referenced by: '<Root>/Constant1'
+   */
+  { 1.25, 2.0 },
+
   /* Expression: 20
-   * Referenced by: '<S9>/Gain2'
+   * Referenced by: '<S18>/Gain2'
    */
   20.0,
 
-  /* Expression: 1000/60
-   * Referenced by: '<S9>/Multiply2'
+  /* Expression: 150
+   * Referenced by: '<Root>/Constant'
    */
-  16.666666666666668,
+  150.0,
 
-  /* Expression: 1000/60
-   * Referenced by: '<S9>/Multiply'
+  /* Expression: 30
+   * Referenced by: '<S13>/Gain'
    */
-  16.666666666666668,
+  30.0,
 
-  /* Expression: 1000/60
-   * Referenced by: '<S9>/Multiply1'
+  /* Expression: 60000
+   * Referenced by: '<S18>/Multiply2'
    */
-  16.666666666666668,
+  60000.0,
+
+  /* Expression: 60000
+   * Referenced by: '<S18>/Gain4'
+   */
+  60000.0,
+
+  /* Expression: 60000
+   * Referenced by: '<S18>/Gain5'
+   */
+  60000.0,
+
+  /* Expression: 60000
+   * Referenced by: '<S18>/Multiply'
+   */
+  60000.0,
+
+  /* Expression: 60000
+   * Referenced by: '<S18>/Multiply1'
+   */
+  60000.0,
 
   /* Expression: 20
-   * Referenced by: '<S9>/Gain1'
+   * Referenced by: '<S18>/Gain1'
    */
   20.0,
 
   /* Expression: 20
-   * Referenced by: '<S9>/Gain'
+   * Referenced by: '<S18>/Gain'
    */
   20.0,
 
   /* Computed Parameter: Gain3_Gain_h
-   * Referenced by: '<S9>/Gain3'
+   * Referenced by: '<S18>/Gain3'
    */
   2684354560U,
 
   /* Start of '<Root>/HARDWARE_TX_INTERFACE' */
   {
     /* Computed Parameter: Switch_Threshold
-     * Referenced by: '<S4>/Switch'
+     * Referenced by: '<S6>/Switch'
      */
     2U
   }

@@ -1,6 +1,8 @@
 MW_SCI.o
 MW_digitalIO.o
 mw_sdk_interface.o
+i2c_api.o
+MW_I2C.o
 MW_PWM.o
 MW_AnalogInput.o
 ert_main.o

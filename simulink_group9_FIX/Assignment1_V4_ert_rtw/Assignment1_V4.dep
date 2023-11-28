@@ -6,10 +6,12 @@ Assignment1_V4.o: \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
  C:/Users/a\ laptop/Desktop/pacemaker-and-DCM/simulink_group9_FIX/Assignment1_V4_ert_rtw/rtwtypes.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_I2C.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_AnalogIn.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/Assignment1_V4_types.h \
  C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/rtGetNaN.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/rt_nonfinite.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/rtGetInf.h \
  C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/Assignment1_V4_private.h
@@ -26,6 +28,8 @@ C:/Users/a\ laptop/Desktop/pacemaker-and-DCM/simulink_group9_FIX/Assignment1_V4_
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h:
 
+C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_I2C.h:
+
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_PWM.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_AnalogIn.h:
@@ -33,6 +37,8 @@ C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/free
 C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/Assignment1_V4_types.h:
 
 C:/ProgramData/MATLAB/SupportPackages/R2022b/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/rtGetNaN.h:
 
 C:/Users/ALAPTO~1/Desktop/PACEMA~1/SIMULI~2/Assignment1_V4_ert_rtw/rt_nonfinite.h:
 

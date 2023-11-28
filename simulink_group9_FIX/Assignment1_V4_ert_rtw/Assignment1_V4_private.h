@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V4'.
  *
- * Model version                  : 1.6
+ * Model version                  : 1.27
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Nov 27 03:25:34 2023
+ * C/C++ source code generated on : Mon Nov 27 17:18:40 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -73,6 +73,7 @@ preprocessor word size checks.
 /* Skipping ulong_long/long_long check: insufficient preprocessor integer range. */
 extern real_T rt_remd_snf(real_T u0, real_T u1);
 extern real_T rt_roundd_snf(real_T u);
+extern real_T rt_powd_snf(real_T u0, real_T u1);
 extern void Assi_HARDWARE_TX_INTERFACE_Init(DW_HARDWARE_TX_INTERFACE_Assi_T
   *localDW);
 extern void Assignmen_HARDWARE_TX_INTERFACE(uint8_T rtu_TX_CTRL_MODE, const
