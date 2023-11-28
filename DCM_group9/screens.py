@@ -16,6 +16,7 @@ import serial
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.animation import FuncAnimation
 
 import numpy as np
 
@@ -387,7 +388,7 @@ class HomepageScreen(Screen):
             row=0, column=0, columnspan=20, pady=10
         )
 
-        print(self.backend.egram_data)
+        #print(self.backend.egram_data)
         self.screen.update()
 
         super().create_label(
@@ -411,6 +412,7 @@ class HomepageScreen(Screen):
         )
 
         self.screen.bind("<Escape>", lambda event: self.logout())
+        self.screen.after(1000, self.check_connection)
 
         self.check_connection()
         self.screen.mainloop()
@@ -499,8 +501,6 @@ class HomepageScreen(Screen):
         board_label.grid(row=12, column=1, pady=10)
 
         self.widgets["Label"].append(board_label)
-
-        self.screen.after(1000, self.check_connection)
     
     def send_data(self):
         pacing_mode = self.widgets["OptionMenu"][0][1].get()
@@ -657,15 +657,23 @@ class SettingsScreen(Screen):
 
         for funky, param in zip(self.widgets["FunkyWidget"], param_data):
             param_data[param] = funky.get()
-        
-        print(param_data)
-        
-        user_params.update(param_data)
 
-        self.database.update_parameters(
-            self.current_user, self.current_user.username, self.pacing_mode, user_params
-        )
-        if from_button:
+        invalid = False
+        try:
+            if param_data["Lower Rate Limit"] > param_data["Upper Rate Limit"]:
+                invalid = True
+            if param_data["Lower Rate Limit"] > param_data["Maximum Sensor Rate"]:
+                invalid = True
+        except KeyError:
+            pass
+
+        if not invalid:
+            self.database.update_parameters(
+                self.current_user, self.current_user.username, self.pacing_mode, user_params
+            )
+            print("mice")
+        
+        if from_button and not invalid:
             applied_msg = super().create_label(
                 "Settings applied", 11, True, "calibri", fg="green"
             )
@@ -675,10 +683,24 @@ class SettingsScreen(Screen):
                 self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
             except tk.TclError:
                 pass
+        else:
+            applied_msg = super().create_label(
+                "Invalid settings", 11, True, "calibri", fg="red"
+            )
+            applied_msg.grid(row=self.last_row + 2, column=1, pady=2)
+            destroy_applied_msg = partial(applied_msg.destroy)
+            try:
+                self.pending_after_id = self.screen.after(2000, destroy_applied_msg)
+            except tk.TclError:
+                pass
+        return invalid
+
 
     def ok(self):
         """Do both apply and close, similar features to Windows settings"""
-        self.apply(from_button=False)
+        flag = self.apply(from_button=True)
+        if flag:
+            return
         self.closed = True
         # Check if any after events are still running
         if self.pending_after_id:
@@ -707,31 +729,52 @@ class EgramScreen(Screen):
         self.closed = False
         self.backend = backend
 
+        self.pause = None
+
+        self.egram_paused = False
+
     def run_screen(self):
         super().run_screen()
         self.screen.title(self.title)
-
+        self.pause = tk.StringVar(value="||")
         # Create the figure
-        fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
+        fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True, figsize=(6,4))
 
         # Placeholder x and y data (This is to be replaced with the data received from the board)
         
-        x = np.arange(0, 10000)
-        y_a = [vector[0] for vector in self.backend.egram_data]
-        y_v = [vector[1] for vector in self.backend.egram_data]
+        x = np.arange(0, 6000)
+        y_a = np.array([vector[0] for vector in self.backend.egram_data])
+        y_v = np.array([vector[1] for vector in self.backend.egram_data])
 
         # Plot the Atrium Signals
-        ax1.plot(x, y_a)
+        line_a, = ax1.plot(x, y_a)
         ax1.set_title("Atrium Signals")
 
         # Plot the Ventricle Signals
-        ax2.plot(x, y_v)
+        line_v, = ax2.plot(x, y_v)
         ax2.set_title("Ventricle Signals")
  
 
         # Set common axis labels
         fig.supxlabel("Time (ms)")
         fig.supylabel("Voltage (mV)")
+
+        def update_plot():
+            # Update the y-data with the latest data from the board
+            y_a = np.array([vector[0] for vector in self.backend.egram_data])
+            y_v = np.array([vector[1] for vector in self.backend.egram_data])
+
+            line_a.set_ydata(y_a)
+            line_v.set_ydata(y_v)
+
+            return line_a, line_v
+        
+        def update_animation(frame):
+            if not self.egram_paused:
+                return update_plot()
+
+        # Animation
+        ani = FuncAnimation(fig, update_animation, interval=800, blit=False, cache_frame_data=False)
 
         # Embed the plot in the Tkinter window
         canvas = FigureCanvasTkAgg(fig, master=self.screen)
@@ -743,10 +786,18 @@ class EgramScreen(Screen):
         )
         """
         super().create_button("Close", self.close).pack(side="top", padx=200, pady=20)
+        pause_button = tk.Button(self.screen, textvariable=self.pause, command=self.toggle_pause, bg="#eda758", width=3, height=1)
+        pause_button.pack(side="top", padx=10, pady=10)
+        # self.create_button("||", command=self.toggle_pause).pack(side="top", padx=10, pady=10)
         self.screen.bind("<Escape>", lambda event: self.close())
         self.screen.mainloop()
+
+    def toggle_pause(self):
+        self.egram_paused = not self.egram_paused
+        self.pause.set("\u25B6" if self.egram_paused else "||")
 
     def close(self):
         plt.close()
         self.closed = True
         self.prepare_screen_switch()
+

@@ -120,8 +120,8 @@ class Application:
 # from serial import Serial
 # import random
 # import struct
-
-# ser = Serial("COM13", 115200)
+# import time
+# ser = Serial("COM7", 115200)
 
 # def chunk_data(data, chunk_size):
 #     """Yield successive n-sized chunks from data."""
@@ -129,19 +129,24 @@ class Application:
 #         yield data[i:i + chunk_size]
 
 # def pacemaker_ecg_emulator():
-#     # int1 = random.randrange(0,100)
-#     # int2 = random.randrange(0,100)
-#     # buf = [int1, int2]
-#     # packed_data = struct.pack('2i', *buf)
+#     int1 = random.randrange(0,100)
+#     int2 = random.randrange(0,100)
+#     buf = [int1, int2]
+#     packed_data = struct.pack('2i', *buf)
 #     # ser.write(packed_data)
-
+#     data = ser.read(64)
+#     for chunk in chunk_data(data, 8):
+#         ser.write(data)
+#     time.sleep(0.1)
 #     while True:
-#         data = ser.read(64)
-#         print(f"{data}\n")
-#         for chunk in chunk_data(data, 8):
-#             ser.write(chunk)
-#         ser.flush()
-        
+#         int1 = random.randrange(0,1000)
+#         if not int1:
+#             buf = [1,1]
+#         else:
+#             buf = [0,0]
+
+#         packed_data = struct.pack('2i',*buf)
+#         ser.write(packed_data)
 
 
 if __name__ == "__main__":

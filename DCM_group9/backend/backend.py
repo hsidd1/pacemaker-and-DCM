@@ -29,7 +29,7 @@ class Backend:
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
-        self.egram_data = [(0,0)]*10000
+        self.egram_data = [(0,0)]*6000
         self.transmit_params = True
         self.banned_ports = []
         self.ser = serial.Serial()
@@ -54,11 +54,11 @@ class Backend:
     def open_port(self, current_screen):
         serial_data = []
         serial_data.append(START_TRANSMISSION_BYTE)
-        serial_data.append(int(PaceMode.encode("AOO")))
+        serial_data.append(START_TRANSMISSION_BYTE)
         all_ports = []
 
         for num in range(14):
-            serial_data.append(num)
+            serial_data.append(START_TRANSMISSION_BYTE)
         packed_serial_data = struct.pack('16i', *serial_data)
 
         while current_screen[0]:
@@ -75,6 +75,7 @@ class Backend:
                         self.ser = serial.Serial(port.device, 115200, timeout=1, write_timeout=1)
                         data = bytearray()
                         self.ser.write(packed_serial_data)
+                        self.__flush()
                         time.sleep(0.1)
                         for _ in range(8):
                             chunk = self.ser.read(8)
@@ -110,7 +111,7 @@ class Backend:
                 self.transmit_params = True
                 self.ser.close()
 
-            time.sleep(0.1)
+            time.sleep(0.01)
 
     @property
     def is_connected(self) -> bool:
@@ -142,7 +143,7 @@ class Backend:
     def get_egram_data(self, current_screen):
         """Gets the egram data from the serial port.
         :return: dictionary of egram data"""
-        i = 0
+        i = -1
         while current_screen[0]:
             if self.is_connected:
                 try:
@@ -155,11 +156,13 @@ class Backend:
 
                         # Data for time and voltage TODO: change in a2 to match expected transfer
                         v_vector = struct.unpack('<2i', data)
-                        self.egram_data[i] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
-                        i = i + 1
-
-                        if i == 10000:
-                            i = 0
+                        if i != 5999:
+                            i = i + 1
+                            self.egram_data[i] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
+                        else:
+                            for k in range(len(self.egram_data)-1):
+                                self.egram_data[k] = self.egram_data[k + 1]
+                            self.egram_data[-1] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
                 except serial.SerialException:
                     #print("Error: Failed to open the serial port.")
                     pass
@@ -201,18 +204,18 @@ class Backend:
         if not self.is_connected:
             raise Exception("Connect the board")
         
-        self.ser.flush()
+        self.__flush()
         verification = False
 
         try:
             while not verification:
                 data = bytearray()
                 self.ser.write(packed_data_start)
+                self.__flush()
                 time.sleep(0.1)
                 for _ in range(8):
                     chunk = self.ser.read(8)
                     data.extend(chunk)
-                print(data, "\n")
                 verification = True
                 for index, byte in enumerate(packed_data_start):
                     if byte == data[index]:
