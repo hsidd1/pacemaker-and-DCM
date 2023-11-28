@@ -121,7 +121,7 @@ class Application:
 # import random
 # import struct
 
-# ser = Serial("COM8", 115200)
+# ser = Serial("COM13", 115200)
 
 # def chunk_data(data, chunk_size):
 #     """Yield successive n-sized chunks from data."""
@@ -137,8 +137,10 @@ class Application:
 
 #     while True:
 #         data = ser.read(64)
+#         print(f"{data}\n")
 #         for chunk in chunk_data(data, 8):
 #             ser.write(chunk)
+#         ser.flush()
         
 
 
@@ -146,9 +148,9 @@ if __name__ == "__main__":
     app = Application()
     p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
     p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
-    #p3 = Thread(target=pacemaker_ecg_emulator)
+    # p3 = Thread(target=pacemaker_ecg_emulator)
     p1.start()
     p2.start()
-    #p3.start()
+    # p3.start()
 
     app.run_app()
