@@ -1,4 +1,3 @@
-MW_SCI.o
 MW_digitalIO.o
 mw_sdk_interface.o
 i2c_api.o
@@ -8,9 +7,12 @@ MW_AnalogInput.o
 ert_main.o
 Assignment1_V4.o
 Assignment1_V4_data.o
+Assignment1_V4_tgtconn.o
 rtGetInf.o
 rtGetNaN.o
 rt_nonfinite.o
+updown.o
+ext_work.o
 startup.o
 system_MK64F12.o
 startup_MK64F12.o
@@ -28,3 +30,8 @@ mw_thread.o
 mw_semaphore.o
 mw_timer.o
 mw_signal.o
+k64f_rtiostream_interface.o
+k64f_rtiostream_commservice.o
+k64f_ext_svr.o
+k64f_rtiostream_utils.o
+tgtSvc_UARTInfo.o

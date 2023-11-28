@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V4'.
  *
- * Model version                  : 1.27
+ * Model version                  : 1.62
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Mon Nov 27 17:18:40 2023
+ * C/C++ source code generated on : Tue Nov 28 04:00:55 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -66,7 +66,7 @@ typedef enum {
 
 #endif
 
-/* Custom Type definition for MATLABSystem: '<S6>/Serial Transmit' */
+/* Custom Type definition for MATLABSystem: '<S5>/PWM Output1' */
 #include "MW_SVD.h"
 #ifndef struct_tag_0QIIqIWUIOhUbf1p9QN9pB
 #define struct_tag_0QIIqIWUIOhUbf1p9QN9pB
@@ -85,29 +85,6 @@ typedef struct tag_0QIIqIWUIOhUbf1p9QN9pB b_freedomk64f_Hardware_Assign_T;
 
 #endif                             /* typedef_b_freedomk64f_Hardware_Assign_T */
 
-#ifndef struct_tag_GV9UedAE1zOVNNbkXknChB
-#define struct_tag_GV9UedAE1zOVNNbkXknChB
-
-struct tag_GV9UedAE1zOVNNbkXknChB
-{
-  boolean_T matlabCodegenIsDeleted;
-  int32_T isInitialized;
-  boolean_T isSetupComplete;
-  b_freedomk64f_Hardware_Assign_T Hw;
-  MW_Handle_Type MW_SCIHANDLE;
-};
-
-#endif                                 /* struct_tag_GV9UedAE1zOVNNbkXknChB */
-
-#ifndef typedef_freedomk64f_SCIWrite_Assignme_T
-#define typedef_freedomk64f_SCIWrite_Assignme_T
-
-typedef struct tag_GV9UedAE1zOVNNbkXknChB freedomk64f_SCIWrite_Assignme_T;
-
-#endif                             /* typedef_freedomk64f_SCIWrite_Assignme_T */
-
-/* Custom Type definition for MATLABSystem: '<S3>/FXOS8700 6-Axes Sensor' */
-#include "MW_I2C.h"
 #ifndef struct_tag_EkIWEs70Gs0LyfeXELZ2TC
 #define struct_tag_EkIWEs70Gs0LyfeXELZ2TC
 
@@ -129,6 +106,25 @@ typedef struct tag_EkIWEs70Gs0LyfeXELZ2TC freedomk64f_DigitalWrite_Assi_T;
 
 #endif                             /* typedef_freedomk64f_DigitalWrite_Assi_T */
 
+/* Custom Type definition for MATLABSystem: '<S3>/FXOS8700 6-Axes Sensor' */
+#include "MW_I2C.h"
+#ifndef struct_tag_0QIIqIWUIOhUbf1p9QN9pB
+#define struct_tag_0QIIqIWUIOhUbf1p9QN9pB
+
+struct tag_0QIIqIWUIOhUbf1p9QN9pB
+{
+  int32_T __dummy;
+};
+
+#endif                                 /* struct_tag_0QIIqIWUIOhUbf1p9QN9pB */
+
+#ifndef typedef_c_freedomk64f_Hardware_Assign_T
+#define typedef_c_freedomk64f_Hardware_Assign_T
+
+typedef struct tag_0QIIqIWUIOhUbf1p9QN9pB c_freedomk64f_Hardware_Assign_T;
+
+#endif                             /* typedef_c_freedomk64f_Hardware_Assign_T */
+
 #ifndef struct_tag_O0UAiliRyLLAe38ibfdAhE
 #define struct_tag_O0UAiliRyLLAe38ibfdAhE
 
@@ -136,7 +132,7 @@ struct tag_O0UAiliRyLLAe38ibfdAhE
 {
   boolean_T matlabCodegenIsDeleted;
   int32_T isInitialized;
-  b_freedomk64f_Hardware_Assign_T Hw;
+  c_freedomk64f_Hardware_Assign_T Hw;
   uint32_T BusSpeed;
   MW_Handle_Type MW_I2C_HANDLE;
 };
@@ -235,31 +231,6 @@ struct tag_q6HQSF2nXq6EjCNj0vbuLD
 typedef struct tag_q6HQSF2nXq6EjCNj0vbuLD freedomk64f_DigitalRead_Assig_T;
 
 #endif                             /* typedef_freedomk64f_DigitalRead_Assig_T */
-
-#ifndef struct_tag_214cR1nKZWaoqoq0FTtOUH
-#define struct_tag_214cR1nKZWaoqoq0FTtOUH
-
-struct tag_214cR1nKZWaoqoq0FTtOUH
-{
-  boolean_T matlabCodegenIsDeleted;
-  int32_T isInitialized;
-  boolean_T isSetupComplete;
-  b_freedomk64f_Hardware_Assign_T Hw;
-  MW_Handle_Type MW_SCIHANDLE;
-  real_T SampleTime;
-};
-
-#endif                                 /* struct_tag_214cR1nKZWaoqoq0FTtOUH */
-
-#ifndef typedef_freedomk64f_SCIRead_Assignmen_T
-#define typedef_freedomk64f_SCIRead_Assignmen_T
-
-typedef struct tag_214cR1nKZWaoqoq0FTtOUH freedomk64f_SCIRead_Assignmen_T;
-
-#endif                             /* typedef_freedomk64f_SCIRead_Assignmen_T */
-
-/* Parameters for system: '<Root>/HARDWARE_TX_INTERFACE' */
-typedef struct P_HARDWARE_TX_INTERFACE_Assig_T_ P_HARDWARE_TX_INTERFACE_Assig_T;
 
 /* Parameters (default storage) */
 typedef struct P_Assignment1_V4_T_ P_Assignment1_V4_T;
