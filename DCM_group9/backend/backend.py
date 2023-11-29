@@ -157,14 +157,14 @@ class Backend:
                             break
 
                         # Data for time and voltage TODO: change in a2 to match expected transfer
-                        v_vector = struct.unpack('<2i', data)
+                        v_vector = struct.unpack('<2h', data)
                         if i != 5999:
                             i = i + 1
-                            self.egram_data[i] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
+                            self.egram_data[i] = (float(v_vector[0]/1000), float(v_vector[1]/1000))
                         else:
                             for k in range(len(self.egram_data)-1):
                                 self.egram_data[k] = self.egram_data[k + 1]
-                            self.egram_data[-1] = (float(v_vector[0]/10000), float(v_vector[1]/10000))
+                            self.egram_data[-1] = (float(v_vector[0]/1000), float(v_vector[1]/1000))
                 except serial.SerialException:
                     #print("Error: Failed to open the serial port.")
                     pass
