@@ -78,8 +78,8 @@ class Backend:
                         self.ser.write(packed_serial_data)
                         self.__flush()
                         time.sleep(0.1)
-                        for _ in range(2):
-                            chunk = self.ser.read(8)
+                        for _ in range(4):
+                            chunk = self.ser.read(4)
                             if not chunk:
                                 self.ser.close()
                                 break
@@ -149,9 +149,10 @@ class Backend:
             if self.is_connected:
                 try:
                     time.sleep(1)
+                    continue
                     while not self.transmit_params:
                         # Read data from serial port
-                        data = self.ser.read(8)
+                        data = self.ser.read(4)
 
                         if not data:
                             break
@@ -184,22 +185,21 @@ class Backend:
         """
         self.transmit_params = True
         serial_data_start = []
-        serial_data_confirmed = []
+        serial_data_confirmed = [CONFIRMATION_TRANSMISSION_BYTE] * 16
         data = bytearray()
         serial_data_start.append(START_TRANSMISSION_BYTE)
-        serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
         st = struct.Struct('<16B')
         serial_data_start.append(int(PaceMode.encode(pacing_mode)))
-        serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
+
+        count = 0
 
         for param in params:
-            is_int = float(params[param]).is_integer()
-            if is_int:
-                serial_data_start.append(np.uint8(params[param]))
-            else:
+            if count == 3 or count == 6:
                 serial_data_start.append(np.uint8(params[param]*10))
-            serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
+            else:
+                serial_data_start.append(np.uint8(params[param]))
+            count += 1
             #print(param)
 
         packed_data_start = st.pack(*serial_data_start)
@@ -218,8 +218,8 @@ class Backend:
                 self.ser.write(packed_data_start)
                 self.__flush()
                 time.sleep(0.1)
-                for _ in range(2):
-                    chunk = self.ser.read(8)
+                for _ in range(4):
+                    chunk = self.ser.read(4)
                     data.extend(chunk)
                 verification = True
                 for index, byte in enumerate(packed_data_start):
@@ -229,7 +229,7 @@ class Backend:
                         verification = False
                         break
             self.ser.write(packed_data_confirmed)
-            print("!!!")
+            print("data sent successfully")
 
                     
 

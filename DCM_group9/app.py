@@ -144,7 +144,7 @@ class Application:
 #     time.sleep(1)
 #     data = ser.read(16)
 #     time.sleep(0.1)
-#     for chunk in chunk_data(data, 8):
+#     for chunk in chunk_data(data, 4):
 #         ser.write(chunk)
 #     # while True:
 #     #     int1 = random.randrange(0,1000)
