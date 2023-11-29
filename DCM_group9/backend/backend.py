@@ -11,12 +11,12 @@ import traceback
 import struct
 import time
 from utils.pacing_modes import PaceMode
-from threading import Thread
+import numpy as np
 
 from random import Random
    
-START_TRANSMISSION_BYTE = 0x11111100
-CONFIRMATION_TRANSMISSION_BYTE = 0x11111111
+START_TRANSMISSION_BYTE = np.uint8(254)
+CONFIRMATION_TRANSMISSION_BYTE = np.uint8(255)
 
 class Backend:
     def __init__(self, port: str = None, device_id: str = None):
@@ -59,7 +59,8 @@ class Backend:
 
         for num in range(14):
             serial_data.append(START_TRANSMISSION_BYTE)
-        packed_serial_data = struct.pack('16i', *serial_data)
+        packed_serial_data = struct.pack('<16B', *serial_data)
+        print(packed_serial_data)
 
         while current_screen[0]:
             ports = list_ports.comports()
@@ -77,7 +78,7 @@ class Backend:
                         self.ser.write(packed_serial_data)
                         self.__flush()
                         time.sleep(0.1)
-                        for _ in range(8):
+                        for _ in range(2):
                             chunk = self.ser.read(8)
                             if not chunk:
                                 self.ser.close()
@@ -88,7 +89,7 @@ class Backend:
                             self.ser.close()
                             print("goodbye")
                             continue
-                        serial_data = struct.unpack('<16i', data)
+                        serial_data = struct.unpack('<16B', data)
                         succed = False
                         for index, byte in enumerate(serial_data):
                             if serial_data[index] == START_TRANSMISSION_BYTE:
@@ -147,6 +148,7 @@ class Backend:
         while current_screen[0]:
             if self.is_connected:
                 try:
+                    time.sleep(1)
                     while not self.transmit_params:
                         # Read data from serial port
                         data = self.ser.read(8)
@@ -187,12 +189,16 @@ class Backend:
         serial_data_start.append(START_TRANSMISSION_BYTE)
         serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
-        st = struct.Struct('<16i')
+        st = struct.Struct('<16B')
         serial_data_start.append(int(PaceMode.encode(pacing_mode)))
         serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
 
         for param in params:
-            serial_data_start.append((int)(params[param]*10))
+            is_int = float(params[param]).is_integer()
+            if is_int:
+                serial_data_start.append(np.uint8(params[param]))
+            else:
+                serial_data_start.append(np.uint8(params[param]*10))
             serial_data_confirmed.append(CONFIRMATION_TRANSMISSION_BYTE)
             #print(param)
 
@@ -203,8 +209,7 @@ class Backend:
 
         if not self.is_connected:
             raise Exception("Connect the board")
-        
-        self.__flush()
+
         verification = False
 
         try:
@@ -213,7 +218,7 @@ class Backend:
                 self.ser.write(packed_data_start)
                 self.__flush()
                 time.sleep(0.1)
-                for _ in range(8):
+                for _ in range(2):
                     chunk = self.ser.read(8)
                     data.extend(chunk)
                 verification = True
