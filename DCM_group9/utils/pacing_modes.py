@@ -1,25 +1,25 @@
 from enum import Enum
-
+import numpy as np
 class PaceMode(Enum):
-    OFF = 0
-    DDD = 3330
-    VDD = 2330
+    OFF = np.uint8(0)
+    DDD = np.uint8(252)
+    VDD = np.uint8(188)
     DDI = 3310
     DOO = 3000
-    AOO = 1000
-    AAI = 1110
-    VOO = 2000
-    VVI = 2210
+    AOO = np.uint8(64)
+    AAI = np.uint8(84)
+    VOO = np.uint8(128)
+    VVI = np.uint8(164)
     AAT = 1120
     VVT = 2220
     DDDR = 3331
     VDDR = 2331
     DDIR = 3311
     DOOR = 3001
-    AOOR = 1001
-    AAIR = 1111
-    VOOR = 2001
-    VVIR = 2211
+    AOOR = np.uint8(65)
+    AAIR = np.uint8(85)
+    VOOR = np.uint8(129)
+    VVIR = np.uint8(165)
 
     def __str__(self):
         return self.name
@@ -30,18 +30,19 @@ class PaceMode(Enum):
     def encode(pacing_mode: str):
         match pacing_mode:
             case "AOO":
-                return PaceMode.AOO
+                return PaceMode.AOO.value
             case "AAI":
-                return PaceMode.AAI
+                return PaceMode.AAI.value
             case "VOO":
-                return PaceMode.VOO
+                return PaceMode.VOO.value
             case "VVI":
-                return PaceMode.VVI
+                return PaceMode.VVI.value
             case "AOOR":
-                return PaceMode.AOOR
+                return PaceMode.AOOR.value
             case "AAIR":
-                return PaceMode.AAIR
+                return PaceMode.AAIR.value
             case "VOOR":
-                return PaceMode.VOOR
+                return PaceMode.VOOR.value
             case "VVIR":
-                return PaceMode.VVIR
+                return PaceMode.VVIR.value
+

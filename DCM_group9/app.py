@@ -132,21 +132,29 @@ class Application:
 #     int1 = random.randrange(0,100)
 #     int2 = random.randrange(0,100)
 #     buf = [int1, int2]
-#     packed_data = struct.pack('2i', *buf)
+#     packed_data = struct.pack('2B', *buf)
 #     # ser.write(packed_data)
-#     data = ser.read(64)
+#     data = ser.read(16)
 #     for chunk in chunk_data(data, 8):
-#         ser.write(data)
+#         print(chunk)
+#         ser.write(chunk)
 #     time.sleep(0.1)
-#     while True:
-#         int1 = random.randrange(0,1000)
-#         if not int1:
-#             buf = [1,1]
-#         else:
-#             buf = [0,0]
 
-#         packed_data = struct.pack('2i',*buf)
-#         ser.write(packed_data)
+#     ser.write(packed_data)
+#     time.sleep(1)
+#     data = ser.read(16)
+#     time.sleep(0.1)
+#     for chunk in chunk_data(data, 8):
+#         ser.write(chunk)
+#     # while True:
+#     #     int1 = random.randrange(0,1000)
+#     #     if not int1:
+#     #         buf = [1,1]
+#     #     else:
+#     #         buf = [0,0]
+
+#     #     packed_data = struct.pack('2i',*buf)
+#     #     ser.write(packed_data)
 
 
 if __name__ == "__main__":
