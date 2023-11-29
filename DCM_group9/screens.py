@@ -667,11 +667,12 @@ class SettingsScreen(Screen):
         except KeyError:
             pass
 
+        user_params.update(param_data)
+
         if not invalid:
             self.database.update_parameters(
                 self.current_user, self.current_user.username, self.pacing_mode, user_params
             )
-            print("mice")
         
         if from_button and not invalid:
             applied_msg = super().create_label(
