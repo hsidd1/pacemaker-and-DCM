@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import serial
 from serial.tools import list_ports
-import json
 import matplotlib.pyplot as plt
 import traceback
 import struct

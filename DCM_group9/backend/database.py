@@ -2,13 +2,23 @@
 from __future__ import annotations
 
 from user import User
+#from utils.encryption import Encryption
 import json
 import tkinter as tk
+from cryptography.fernet import Fernet
+
 
 DATABASE = "DCM_group9/backend/database.json"
+MAX_USER_LIMIT = 10
+MIN_USERNAME_LENGTH = 3
+MIN_PASSWORD_LENGTH = 8
+MAX_USERNAME_LENGTH = 20
+MAX_PASSWORD_LENGTH = 64
+
 
 
 class Database:
+    
     def __init__(self, database: str = DATABASE, users_map: dict | None = None):
         """Initializes Database class with database file path.
         :param database: path to database file
@@ -16,6 +26,8 @@ class Database:
         """
         self.database = database
         self.users_map = self.__load_users_from_json()
+        key = Fernet.generate_key()
+        self.fernet = Fernet(key)
 
     def __load_users_from_json(self) -> dict:
         """Loads users from json file and returns a dictionary of users and
@@ -73,6 +85,9 @@ class Database:
                 users.append(user.to_dict())
             else:
                 users[0].update(user.to_dict())
+        
+        for key in users[0]:
+            users[0][key]["password"] = self.fernet.encrypt(users[0][key]["password"].encode())
         with open(self.database, "w") as f:
             # Write the entire list of users to the file
             json.dump(users, f, indent=4)
@@ -101,7 +116,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if self.get_user_count >= 10:
+        if self.get_user_count >= MAX_USER_LIMIT:
             # Too many users
             message = tk.Label(
                 welcome_page,
@@ -137,7 +152,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if password_info and len(username_info) < 3:
+        if password_info and len(username_info) < MIN_USERNAME_LENGTH:
             # Username must be at least 3 characters
             message = tk.Label(
                 welcome_page,
@@ -149,7 +164,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if username_info and len(password_info) < 8:
+        if username_info and len(password_info) < MIN_PASSWORD_LENGTH:
             # Password must be at least 8 characters
             message = tk.Label(
                 welcome_page,
@@ -161,7 +176,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if password_info and len(username_info) > 20:
+        if password_info and len(username_info) > MAX_USERNAME_LENGTH:
             # Username must be at most 20 characters
             message = tk.Label(
                 welcome_page,
@@ -173,7 +188,7 @@ class Database:
             message.pack()
             welcome_page.after(2000, lambda: message.destroy())
             return False
-        if username_info and len(password_info) > 64:
+        if username_info and len(password_info) > MAX_PASSWORD_LENGTH:
             # Password must be at most 64 characters
             message = tk.Label(
                 welcome_page,
@@ -256,7 +271,8 @@ class Database:
         :return: True if login successful, False otherwise"""
         username_info = username_entry.get().lower()
         password_info = password_entry.get()
-
+        password_info = self.fernet.decrypt(password_info).decode()
+        print(f"username: {username_info}, password: {password_info}")
         # Check if username and password are valid
         if not username_info or not password_info:
             # Empty string
