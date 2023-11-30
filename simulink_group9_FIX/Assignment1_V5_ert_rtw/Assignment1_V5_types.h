@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V5'.
  *
- * Model version                  : 1.36
+ * Model version                  : 1.56
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed Nov 29 02:38:39 2023
+ * C/C++ source code generated on : Wed Nov 29 14:33:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -44,6 +44,16 @@ typedef enum {
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
+#define DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
+
+typedef enum {
+  Disabled = 0,                        /* Default value */
+  Enabled
+} Pace_Rate_Mode;
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_Pace_Sense_Chamber_
 #define DEFINED_TYPEDEF_FOR_Pace_Sense_Chamber_
 
@@ -53,16 +63,6 @@ typedef enum {
   Ventricle_Sense,
   Dual_Sense
 } Pace_Sense_Chamber;
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
-#define DEFINED_TYPEDEF_FOR_Pace_Rate_Mode_
-
-typedef enum {
-  Disabled = 0,                        /* Default value */
-  Enabled
-} Pace_Rate_Mode;
 
 #endif
 

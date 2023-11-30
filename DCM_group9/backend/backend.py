@@ -29,7 +29,7 @@ class Backend:
         self.port = port
         self.device_id = device_id
         self.previous_device_ids = []
-        self.egram_data = [(0,0)]*6000
+        self.egram_data = [(0,0)]*600
         self.transmit_params = True
         self.banned_ports = []
         self.ser = serial.Serial()
@@ -73,9 +73,11 @@ class Backend:
                     self.transmit_params = True
                     print("Attemping to connect to: ", port.device)
                     try:
+                        time.sleep(0.1)
                         self.ser = serial.Serial(port.device, 115200, timeout=1, write_timeout=1)
                         data = bytearray()
                         self.ser.write(packed_serial_data)
+                       # time.sleep(0.3)
                         self.__flush()
                         time.sleep(0.1)
                         for _ in range(4):
@@ -148,8 +150,8 @@ class Backend:
         while current_screen[0]:
             if self.is_connected:
                 try:
-                    time.sleep(1)
-                    continue
+                 #   time.sleep(1)
+                 #   continue
                     while not self.transmit_params:
                         # Read data from serial port
                         data = self.ser.read(4)
@@ -159,7 +161,7 @@ class Backend:
 
                         # Data for time and voltage TODO: change in a2 to match expected transfer
                         v_vector = struct.unpack('<2h', data)
-                        if i != 5999:
+                        if i != 599:
                             i = i + 1
                             self.egram_data[i] = (float(v_vector[0]/1000), float(v_vector[1]/1000))
                         else:
@@ -195,7 +197,7 @@ class Backend:
         count = 0
 
         for param in params:
-            if count == 3 or count == 6:
+            if count == 3 or count == 6 or count == 5 or count == 8:
                 serial_data_start.append(np.uint8(params[param]*10))
             else:
                 serial_data_start.append(np.uint8(params[param]))

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V5'.
  *
- * Model version                  : 1.36
+ * Model version                  : 1.56
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed Nov 29 02:38:39 2023
+ * C/C++ source code generated on : Wed Nov 29 14:33:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,12 +21,8 @@
 #define RTW_HEADER_Assignment1_V5_h_
 #ifndef Assignment1_V5_COMMON_INCLUDES_
 #define Assignment1_V5_COMMON_INCLUDES_
-#include "ToAsyncQueueTgtAppSvc/ToAsyncQueueTgtAppSvcCIntrf.h"
+#include <stdio.h>
 #include "rtwtypes.h"
-#include "rtw_extmode.h"
-#include "sysran_types.h"
-#include "dt_info.h"
-#include "ext_work.h"
 #include "MW_digitalIO.h"
 #include "MW_I2C.h"
 #include "MW_PWM.h"
@@ -34,22 +30,9 @@
 #endif                                 /* Assignment1_V5_COMMON_INCLUDES_ */
 
 #include "Assignment1_V5_types.h"
-#include "rtGetNaN.h"
-#include "rt_nonfinite.h"
-#include "rtGetInf.h"
 #include <stddef.h>
-#include <float.h>
-#include <string.h>
 
 /* Macros for accessing real-time model data structure */
-#ifndef rtmGetFinalTime
-#define rtmGetFinalTime(rtm)           ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetRTWExtModeInfo
-#define rtmGetRTWExtModeInfo(rtm)      ((rtm)->extModeInfo)
-#endif
-
 #ifndef rtmGetErrorStatus
 #define rtmGetErrorStatus(rtm)         ((rtm)->errorStatus)
 #endif
@@ -58,64 +41,22 @@
 #define rtmSetErrorStatus(rtm, val)    ((rtm)->errorStatus = (val))
 #endif
 
-#ifndef rtmGetStopRequested
-#define rtmGetStopRequested(rtm)       ((rtm)->Timing.stopRequestedFlag)
-#endif
-
-#ifndef rtmSetStopRequested
-#define rtmSetStopRequested(rtm, val)  ((rtm)->Timing.stopRequestedFlag = (val))
-#endif
-
-#ifndef rtmGetStopRequestedPtr
-#define rtmGetStopRequestedPtr(rtm)    (&((rtm)->Timing.stopRequestedFlag))
-#endif
-
-#ifndef rtmGetT
-#define rtmGetT(rtm)                   ((rtm)->Timing.taskTime0)
-#endif
-
-#ifndef rtmGetTFinal
-#define rtmGetTFinal(rtm)              ((rtm)->Timing.tFinal)
-#endif
-
-#ifndef rtmGetTPtr
-#define rtmGetTPtr(rtm)                (&(rtm)->Timing.taskTime0)
-#endif
-
 /* Block signals (default storage) */
 typedef struct {
   real_T VectorConcatenate1_m[15];     /* '<Root>/Vector Concatenate1' */
-  real_T Constant[3];                  /* '<S6>/Constant' */
-  real_T FXOS87006AxesSensor[3];       /* '<S2>/FXOS8700 6-Axes Sensor' */
-  real_T Gain2[2];                     /* '<S18>/Gain2' */
   real_T VectorConcatenate2[2];        /* '<S18>/Vector Concatenate2' */
-  real_T VectorConcatenate1[2];        /* '<S18>/Vector Concatenate1' */
-  real_T dv[2];
-  real_T Constant2;                    /* '<Root>/Constant2' */
-  real_T Gain;                         /* '<S15>/Gain' */
-  real_T Multiply2;                    /* '<S18>/Multiply2' */
-  real_T Gain11;                       /* '<S18>/Gain11' */
-  real_T Gain13;                       /* '<S18>/Gain13' */
-  real_T Gain4;                        /* '<S18>/Gain4' */
-  real_T Gain5;                        /* '<S18>/Gain5' */
-  real_T Multiply;                     /* '<S18>/Multiply' */
-  real_T Multiply1;                    /* '<S18>/Multiply1' */
   real_T sense_timeout_threshold;      /* '<S6>/RATE_CTRL_SYSTEM' */
-  real_T tgt;                          /* '<S6>/RATE_CTRL_SYSTEM' */
-  real_T Motion_State;                 /* '<S14>/MATLAB Function' */
-  real_T smoothed_output;              /* '<S13>/MATLAB Function2' */
-  real_T PACING_REF_PWM;               /* '<Root>/PACE_SYSTEM' */
   real_T red;                          /* '<Root>/PACE_SYSTEM' */
   real_T blue;                         /* '<Root>/PACE_SYSTEM' */
   real_T green;                        /* '<Root>/PACE_SYSTEM' */
-  real_T AnalogInput1;                 /* '<S4>/Analog Input1' */
-  real_T AnalogInput;                  /* '<S4>/Analog Input' */
-  Pace_Sense_Response PACE_SENSE_RESPONSE;/* '<S18>/MATLAB Function' */
-  Pace_Sense_Chamber PACE_SENSE_CHAMBER;/* '<S18>/MATLAB Function' */
-  Pace_Rate_Mode PACE_RATE_MODE;       /* '<S18>/MATLAB Function' */
-  Pace_Chamber PACE_CHAMBER;           /* '<S18>/MATLAB Function' */
-  int16_T DataTypeConversion1;         /* '<S4>/Data Type Conversion1' */
-  int16_T DataTypeConversion;          /* '<S4>/Data Type Conversion' */
+  real_T rtb_FXOS87006AxesSensor_idx_2;
+  uint8_T IntegertoBitConverter[8];    /* '<S18>/Integer to Bit Converter' */
+  real32_T Gain2[2];                   /* '<S18>/Gain2' */
+  real32_T VectorConcatenate1[2];      /* '<S18>/Vector Concatenate1' */
+  real32_T PACING_REF_PWM;             /* '<Root>/PACE_SYSTEM' */
+  Pace_Sense_Response Cast9;           /* '<S18>/Cast9' */
+  Pace_Sense_Chamber Cast8;            /* '<S18>/Cast8' */
+  Pace_Chamber Cast7;                  /* '<S18>/Cast7' */
   boolean_T VectorConcatenate[2];      /* '<Root>/Vector Concatenate' */
   boolean_T ATR_PACE_CTRL;             /* '<Root>/PACE_SYSTEM' */
   boolean_T VENT_PACE_CTRL;            /* '<Root>/PACE_SYSTEM' */
@@ -147,62 +88,23 @@ typedef struct {
   freedomk64f_PWMOutput_Assignm_T obj_j;/* '<S4>/PWM Output1' */
   freedomk64f_PWMOutput_Assignm_T obj_nl;/* '<S4>/PWM Output' */
   freedomk64f_PWMOutput_Assignm_T obj_evb;/* '<S3>/PWM Output' */
-  real_T resp_fac_decay[3];            /* '<S6>/RATE_CTRL_SYSTEM' */
-  real_T resp_fac_grow[3];             /* '<S6>/RATE_CTRL_SYSTEM' */
-  real_T dif;                          /* '<S6>/RATE_CTRL_SYSTEM' */
   real_T rolling_avg;                  /* '<S13>/MATLAB Function2' */
   real_T init_counter;                 /* '<S13>/MATLAB Function2' */
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_RATE_;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_MATLA;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_MAT_b;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_Analo;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_DataT;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_Dat_j;   /* synthesized block */
-
-  struct {
-    void *AQHandles;
-  } TAQSigLogging_InsertedFor_Ana_g;   /* synthesized block */
-
-  int32_T sfEvent_m;                   /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_c9_Assignment1_V5;       /* '<S6>/RATE_CTRL_SYSTEM' */
-  uint32_T is_Pace_Rate_Unfixed;       /* '<S6>/RATE_CTRL_SYSTEM' */
-  uint32_T is_c3_Assignment1_V5;       /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_finally_c3_Assignment1_V5;/* '<Root>/PACE_SYSTEM' */
-  uint32_T is_PACE;                    /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_finally_PACE;            /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_SENSE;                   /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_finally_SENSE;           /* '<Root>/PACE_SYSTEM' */
+  int32_T sfEvent;                     /* '<Root>/PACE_SYSTEM' */
   uint32_T temporalCounter_i1;         /* '<Root>/PACE_SYSTEM' */
-  uint32_T is_c7_Assignment1_V5;       /* '<Root>/Chart' */
-  uint32_T is_finally_c7_Assignment1_V5;/* '<Root>/Chart' */
   uint8_T is_active_c9_Assignment1_V5; /* '<S6>/RATE_CTRL_SYSTEM' */
-  uint8_T temporalCounter_i1_n;        /* '<S6>/RATE_CTRL_SYSTEM' */
+  uint8_T is_c3_Assignment1_V5;        /* '<Root>/PACE_SYSTEM' */
+  uint8_T is_PACE;                     /* '<Root>/PACE_SYSTEM' */
+  uint8_T is_SENSE;                    /* '<Root>/PACE_SYSTEM' */
   uint8_T is_active_c3_Assignment1_V5; /* '<Root>/PACE_SYSTEM' */
   uint8_T tp_Sense_Detect;             /* '<Root>/PACE_SYSTEM' */
   uint8_T tp_Sense_Detected;           /* '<Root>/PACE_SYSTEM' */
   uint8_T tp_Sense_Fail;               /* '<Root>/PACE_SYSTEM' */
+  uint8_T is_c7_Assignment1_V5;        /* '<Root>/Chart' */
   uint8_T Output_Candidate[15];        /* '<Root>/Chart' */
   uint8_T Op_Mode;                     /* '<Root>/Chart' */
   uint8_T is_active_c7_Assignment1_V5; /* '<Root>/Chart' */
-  uint8_T temporalCounter_i1_f;        /* '<Root>/Chart' */
-  boolean_T doneDoubleBufferReInit;    /* '<Root>/PACE_SYSTEM' */
+  uint8_T temporalCounter_i1_n;        /* '<Root>/Chart' */
 } DW_Assignment1_V5_T;
 
 /* Parameters (default storage) */
@@ -225,16 +127,16 @@ struct P_Assignment1_V5_T_ {
   real_T Constant2_Value;              /* Expression: 500
                                         * Referenced by: '<Root>/Constant2'
                                         */
-  real_T Constant10_Value;             /* Expression: 100.1
+  real_T Constant10_Value;             /* Expression: 16.8
                                         * Referenced by: '<S7>/Constant10'
                                         */
-  real_T Constant_Value;               /* Expression: 60
+  real_T Constant_Value;               /* Expression: 6
                                         * Referenced by: '<S7>/Constant'
                                         */
-  real_T Constant5_Value;              /* Expression: 120
+  real_T Constant5_Value;              /* Expression: 12
                                         * Referenced by: '<S7>/Constant5'
                                         */
-  real_T Constant9_Value;              /* Expression: 140
+  real_T Constant9_Value;              /* Expression: 14
                                         * Referenced by: '<S7>/Constant9'
                                         */
   real_T Constant1_Value;              /* Expression: 4
@@ -243,41 +145,23 @@ struct P_Assignment1_V5_T_ {
   real_T Constant3_Value;              /* Expression: 0.5
                                         * Referenced by: '<S7>/Constant3'
                                         */
-  real_T Constant2_Value_l;            /* Expression: 3.5
+  real_T Constant2_Value_l;            /* Expression: 0.035
                                         * Referenced by: '<S7>/Constant2'
                                         */
-  real_T Constant4_Value;              /* Expression: 150
+  real_T Constant4_Value;              /* Expression: 15
                                         * Referenced by: '<S7>/Constant4'
                                         */
-  real_T Constant6_Value;              /* Expression: 0.1
+  real_T Constant6_Value;              /* Expression: 0.01
                                         * Referenced by: '<S7>/Constant6'
                                         */
-  real_T Constant7_Value;              /* Expression: 1
+  real_T Constant7_Value;              /* Expression: 0.1
                                         * Referenced by: '<S7>/Constant7'
                                         */
-  real_T Constant8_Value;              /* Expression: 0.1
+  real_T Constant8_Value;              /* Expression: 0.01
                                         * Referenced by: '<S7>/Constant8'
                                         */
   real_T Gain_Gain;                    /* Expression: 10
                                         * Referenced by: '<Root>/Gain'
-                                        */
-  real_T Gain16_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain16'
-                                        */
-  real_T Gain15_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain15'
-                                        */
-  real_T Gain9_Gain;                   /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain9'
-                                        */
-  real_T Gain10_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain10'
-                                        */
-  real_T Gain7_Gain;                   /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain7'
-                                        */
-  real_T Gain8_Gain;                   /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain8'
                                         */
   real_T Constant_Value_n[3];          /* Expression: [0.01,0.05,0.2]
                                         * Referenced by: '<S6>/Constant'
@@ -285,119 +169,65 @@ struct P_Assignment1_V5_T_ {
   real_T Constant2_Value_i[2];         /* Expression: [1.25,2]
                                         * Referenced by: '<S6>/Constant2'
                                         */
-  real_T Gain2_Gain;                   /* Expression: 20
-                                        * Referenced by: '<S18>/Gain2'
-                                        */
   real_T Constant1_Value_n;            /* Expression: 150
                                         * Referenced by: '<S6>/Constant1'
                                         */
   real_T Gain_Gain_k;                  /* Expression: 30
                                         * Referenced by: '<S15>/Gain'
                                         */
-  real_T Gain17_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain17'
-                                        */
   real_T Multiply2_Gain;               /* Expression: 60000
                                         * Referenced by: '<S18>/Multiply2'
-                                        */
-  real_T Gain11_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain11'
-                                        */
-  real_T Gain13_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain13'
-                                        */
-  real_T Gain12_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain12'
                                         */
   real_T Gain4_Gain;                   /* Expression: 60000
                                         * Referenced by: '<S18>/Gain4'
                                         */
-  real_T Gain14_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain14'
-                                        */
   real_T Gain5_Gain;                   /* Expression: 60000
                                         * Referenced by: '<S18>/Gain5'
-                                        */
-  real_T Gain19_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain19'
                                         */
   real_T Multiply_Gain;                /* Expression: 60000
                                         * Referenced by: '<S18>/Multiply'
                                         */
-  real_T Gain18_Gain;                  /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain18'
-                                        */
   real_T Multiply1_Gain;               /* Expression: 60000
                                         * Referenced by: '<S18>/Multiply1'
                                         */
-  real_T Gain6_Gain;                   /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain6'
-                                        */
-  real_T Gain1_Gain;                   /* Expression: 20
-                                        * Referenced by: '<S18>/Gain1'
-                                        */
-  real_T Gain3_Gain;                   /* Expression: 1/10
-                                        * Referenced by: '<S18>/Gain3'
-                                        */
-  real_T Gain_Gain_k2;                 /* Expression: 20
-                                        * Referenced by: '<S18>/Gain'
-                                        */
-  real_T Constant1_Value_b;            /* Expression: 0.5
-                                        * Referenced by: '<S4>/Constant1'
-                                        */
-  real_T Gain1_Gain_b;                 /* Expression: 100
-                                        * Referenced by: '<S4>/Gain1'
-                                        */
-  real_T Gain3_Gain_c;                 /* Expression: 3.3
-                                        * Referenced by: '<S4>/Gain3'
-                                        */
-  real_T Gain_Gain_e;                  /* Expression: 100
-                                        * Referenced by: '<S4>/Gain'
-                                        */
-  real_T Gain2_Gain_e;                 /* Expression: 3.3
-                                        * Referenced by: '<S4>/Gain2'
-                                        */
   real_T Constant_Value_k;             /* Expression: 1
                                         * Referenced by: '<S4>/Constant'
+                                        */
+  real32_T Gain16_Gain;                /* Computed Parameter: Gain16_Gain
+                                        * Referenced by: '<S18>/Gain16'
+                                        */
+  real32_T Gain15_Gain;                /* Computed Parameter: Gain15_Gain
+                                        * Referenced by: '<S18>/Gain15'
+                                        */
+  real32_T Gain2_Gain;                 /* Computed Parameter: Gain2_Gain
+                                        * Referenced by: '<S18>/Gain2'
+                                        */
+  real32_T Gain7_Gain;                 /* Computed Parameter: Gain7_Gain
+                                        * Referenced by: '<S18>/Gain7'
+                                        */
+  real32_T Gain8_Gain;                 /* Computed Parameter: Gain8_Gain
+                                        * Referenced by: '<S18>/Gain8'
+                                        */
+  real32_T Gain11_Gain;                /* Computed Parameter: Gain11_Gain
+                                        * Referenced by: '<S18>/Gain11'
+                                        */
+  real32_T Gain6_Gain;                 /* Computed Parameter: Gain6_Gain
+                                        * Referenced by: '<S18>/Gain6'
+                                        */
+  real32_T Gain1_Gain;                 /* Computed Parameter: Gain1_Gain
+                                        * Referenced by: '<S18>/Gain1'
+                                        */
+  real32_T Gain3_Gain;                 /* Computed Parameter: Gain3_Gain
+                                        * Referenced by: '<S18>/Gain3'
+                                        */
+  real32_T Gain_Gain_k2;               /* Computed Parameter: Gain_Gain_k2
+                                        * Referenced by: '<S18>/Gain'
                                         */
 };
 
 /* Real-time Model Data Structure */
 struct tag_RTM_Assignment1_V5_T {
-  const char_T *errorStatus;
-  RTWExtModeInfo *extModeInfo;
-
-  /*
-   * Sizes:
-   * The following substructure contains sizes information
-   * for many of the model attributes such as inputs, outputs,
-   * dwork, sample times, etc.
-   */
-  struct {
-    uint32_T checksums[4];
-  } Sizes;
-
-  /*
-   * SpecialInfo:
-   * The following substructure contains special information
-   * related to other components that are dependent on RTW.
-   */
-  struct {
-    const void *mappingInfo;
-  } SpecialInfo;
-
-  /*
-   * Timing:
-   * The following substructure contains information regarding
-   * the timing information for the model.
-   */
-  struct {
-    time_T taskTime0;
-    uint32_T clockTick0;
-    time_T stepSize0;
-    time_T tFinal;
-    boolean_T stopRequestedFlag;
-  } Timing;
+  const char_T * volatile errorStatus;
 };
 
 /* Block parameters (default storage) */
@@ -424,9 +254,19 @@ extern volatile boolean_T runModel;
  *
  * Block '<S4>/Cast To Boolean2' : Unused code path elimination
  * Block '<S4>/Cast To Double' : Unused code path elimination
+ * Block '<S4>/Constant1' : Unused code path elimination
+ * Block '<S4>/Data Type Conversion' : Unused code path elimination
+ * Block '<S4>/Data Type Conversion1' : Unused code path elimination
+ * Block '<S4>/Gain' : Unused code path elimination
+ * Block '<S4>/Gain1' : Unused code path elimination
+ * Block '<S4>/Gain2' : Unused code path elimination
+ * Block '<S4>/Gain3' : Unused code path elimination
+ * Block '<S4>/Subtract' : Unused code path elimination
+ * Block '<S4>/Subtract1' : Unused code path elimination
  * Block '<S18>/Cast To Double' : Eliminate redundant data type conversion
  * Block '<S18>/Cast To Double1' : Eliminate redundant data type conversion
  * Block '<S18>/Cast To Double2' : Eliminate redundant data type conversion
+ * Block '<S18>/Cast6' : Eliminate redundant data type conversion
  */
 
 /*-
@@ -462,7 +302,6 @@ extern volatile boolean_T runModel;
  * '<S16>'  : 'Assignment1_V5/RATE_SYSTEM/ACCEL_DATA_PREPROCESSOR/ACCEL_SMOOTHER/MATLAB Function2'
  * '<S17>'  : 'Assignment1_V5/RATE_SYSTEM/ACCEL_DATA_PREPROCESSOR/CALC_MOTION_STATE/MATLAB Function'
  * '<S18>'  : 'Assignment1_V5/Subsystem1/PARAMETER_PREPROCESSOR'
- * '<S19>'  : 'Assignment1_V5/Subsystem1/PARAMETER_PREPROCESSOR/MATLAB Function'
  */
 #endif                                 /* RTW_HEADER_Assignment1_V5_h_ */
 

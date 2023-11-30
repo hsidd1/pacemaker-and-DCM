@@ -743,7 +743,7 @@ class EgramScreen(Screen):
 
         # Placeholder x and y data (This is to be replaced with the data received from the board)
         
-        x = np.arange(0, 6000)
+        x = np.arange(0, 600)
         y_a = np.array([vector[0] for vector in self.backend.egram_data])
         y_v = np.array([vector[1] for vector in self.backend.egram_data])
 

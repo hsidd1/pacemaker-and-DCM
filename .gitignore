@@ -16,11 +16,16 @@
 helpsearch*/
 
 # Simulink code generation folders
-slprj/
-sccprj/
+simulink_group9_FIX/slprj/
+simulink_group9_FIX/sccprj/
+simulink_group9_FIX/sccprj/
 
 # Matlab code generation folders
-codegen/
+codegen/Assignment1_V4_ert_rtw
+
+*.bin
+*.elf
+*.hex
 
 # Simulink autosave extension
 *.autosave

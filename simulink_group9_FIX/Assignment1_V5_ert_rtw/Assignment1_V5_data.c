@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'Assignment1_V5'.
  *
- * Model version                  : 1.36
+ * Model version                  : 1.56
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed Nov 29 02:38:39 2023
+ * C/C++ source code generated on : Wed Nov 29 14:33:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -51,25 +51,25 @@ P_Assignment1_V5_T Assignment1_V5_P = {
    */
   500.0,
 
-  /* Expression: 100.1
+  /* Expression: 16.8
    * Referenced by: '<S7>/Constant10'
    */
-  100.1,
+  16.8,
 
-  /* Expression: 60
+  /* Expression: 6
    * Referenced by: '<S7>/Constant'
    */
-  60.0,
+  6.0,
 
-  /* Expression: 120
+  /* Expression: 12
    * Referenced by: '<S7>/Constant5'
    */
-  120.0,
+  12.0,
 
-  /* Expression: 140
+  /* Expression: 14
    * Referenced by: '<S7>/Constant9'
    */
-  140.0,
+  14.0,
 
   /* Expression: 4
    * Referenced by: '<S7>/Constant1'
@@ -81,65 +81,35 @@ P_Assignment1_V5_T Assignment1_V5_P = {
    */
   0.5,
 
-  /* Expression: 3.5
+  /* Expression: 0.035
    * Referenced by: '<S7>/Constant2'
    */
-  3.5,
+  0.035,
 
-  /* Expression: 150
+  /* Expression: 15
    * Referenced by: '<S7>/Constant4'
    */
-  150.0,
+  15.0,
 
-  /* Expression: 0.1
+  /* Expression: 0.01
    * Referenced by: '<S7>/Constant6'
    */
-  0.1,
-
-  /* Expression: 1
-   * Referenced by: '<S7>/Constant7'
-   */
-  1.0,
+  0.01,
 
   /* Expression: 0.1
-   * Referenced by: '<S7>/Constant8'
+   * Referenced by: '<S7>/Constant7'
    */
   0.1,
+
+  /* Expression: 0.01
+   * Referenced by: '<S7>/Constant8'
+   */
+  0.01,
 
   /* Expression: 10
    * Referenced by: '<Root>/Gain'
    */
   10.0,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain16'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain15'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain9'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain10'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain7'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain8'
-   */
-  0.1,
 
   /* Expression: [0.01,0.05,0.2]
    * Referenced by: '<S6>/Constant'
@@ -151,11 +121,6 @@ P_Assignment1_V5_T Assignment1_V5_P = {
    */
   { 1.25, 2.0 },
 
-  /* Expression: 20
-   * Referenced by: '<S18>/Gain2'
-   */
-  20.0,
-
   /* Expression: 150
    * Referenced by: '<S6>/Constant1'
    */
@@ -166,115 +131,85 @@ P_Assignment1_V5_T Assignment1_V5_P = {
    */
   30.0,
 
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain17'
-   */
-  0.1,
-
   /* Expression: 60000
    * Referenced by: '<S18>/Multiply2'
    */
   60000.0,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain11'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain13'
-   */
-  0.1,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain12'
-   */
-  0.1,
 
   /* Expression: 60000
    * Referenced by: '<S18>/Gain4'
    */
   60000.0,
 
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain14'
-   */
-  0.1,
-
   /* Expression: 60000
    * Referenced by: '<S18>/Gain5'
    */
   60000.0,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain19'
-   */
-  0.1,
 
   /* Expression: 60000
    * Referenced by: '<S18>/Multiply'
    */
   60000.0,
 
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain18'
-   */
-  0.1,
-
   /* Expression: 60000
    * Referenced by: '<S18>/Multiply1'
    */
   60000.0,
 
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain6'
-   */
-  0.1,
-
-  /* Expression: 20
-   * Referenced by: '<S18>/Gain1'
-   */
-  20.0,
-
-  /* Expression: 1/10
-   * Referenced by: '<S18>/Gain3'
-   */
-  0.1,
-
-  /* Expression: 20
-   * Referenced by: '<S18>/Gain'
-   */
-  20.0,
-
-  /* Expression: 0.5
-   * Referenced by: '<S4>/Constant1'
-   */
-  0.5,
-
-  /* Expression: 100
-   * Referenced by: '<S4>/Gain1'
-   */
-  100.0,
-
-  /* Expression: 3.3
-   * Referenced by: '<S4>/Gain3'
-   */
-  3.3,
-
-  /* Expression: 100
-   * Referenced by: '<S4>/Gain'
-   */
-  100.0,
-
-  /* Expression: 3.3
-   * Referenced by: '<S4>/Gain2'
-   */
-  3.3,
-
   /* Expression: 1
    * Referenced by: '<S4>/Constant'
    */
-  1.0
+  1.0,
+
+  /* Computed Parameter: Gain16_Gain
+   * Referenced by: '<S18>/Gain16'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain15_Gain
+   * Referenced by: '<S18>/Gain15'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain2_Gain
+   * Referenced by: '<S18>/Gain2'
+   */
+  20.0F,
+
+  /* Computed Parameter: Gain7_Gain
+   * Referenced by: '<S18>/Gain7'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain8_Gain
+   * Referenced by: '<S18>/Gain8'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain11_Gain
+   * Referenced by: '<S18>/Gain11'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain6_Gain
+   * Referenced by: '<S18>/Gain6'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain1_Gain
+   * Referenced by: '<S18>/Gain1'
+   */
+  20.0F,
+
+  /* Computed Parameter: Gain3_Gain
+   * Referenced by: '<S18>/Gain3'
+   */
+  0.1F,
+
+  /* Computed Parameter: Gain_Gain_k2
+   * Referenced by: '<S18>/Gain'
+   */
+  20.0F
 };
 
 /*
