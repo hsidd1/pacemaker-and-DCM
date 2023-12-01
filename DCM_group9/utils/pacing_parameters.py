@@ -21,6 +21,10 @@ VRP_INT = OrderedDict([((150, 500), 10)])
 
 SENSITIVITY_INT = OrderedDict([((0, 5.0), 0.1)])
 
+REACTION_TIME_INT = OrderedDict([((10,50), 10)])
+RESPONSE_FACTOR_INT = OrderedDict([((1,16), 1)])
+RECOVERY_TIME_INT = OrderedDict([((2,16),1)])
+
 
 class PacingParameters:
     def __init__(self, name: str, valid_interval_map: dict, unit: str = ""):
@@ -39,6 +43,7 @@ class Parameters(Enum):
 
     LOWER_RATE_LIMIT = PacingParameters("Lower Rate Limit", L_RATE_INT, "ppm")
     UPPER_RATE_LIMIT = PacingParameters("Upper Rate Limit", U_RATE_INT, "ppm")
+    MAXIMUM_SENSOR_LIMIT = PacingParameters("Maximum Sensor Rate", U_RATE_INT, "ppm")
     ATRIAL_AMPLITUDE = PacingParameters("Atrial Amplitude", AMPLITUDE_INT, "V")
     ATRIAL_AMPLITUDE_REGULATED = PacingParameters(
         "Atrial Amplitude Regulated", AMPLITUDE_INT_REGULATED, "V"
@@ -62,3 +67,6 @@ class Parameters(Enum):
     )
 
     VRP = PacingParameters("VRP", VRP_INT, "msec")
+    REACTION_TIME = PacingParameters("Reaction Time", REACTION_TIME_INT,"sec")
+    RESPONSE_FACTOR = PacingParameters("Response Factor", RESPONSE_FACTOR_INT, "1")
+    RECOVERY_TIME = PacingParameters("Recovery Time", RECOVERY_TIME_INT, "min")

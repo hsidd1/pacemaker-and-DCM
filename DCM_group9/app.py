@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from ui_config.config import AccessibilityConfig
 from backend.backend import Backend
+from threading import Thread
 from screens import *
 
 
@@ -19,6 +20,7 @@ class Application:
         self.current_user: User | None = None
         self.pacing_mode: str | None = None
         self.current_screen: str = "WelcomeScreen"
+        self.current_screen_ref = ["WelcomeScreen"]
         self.screens: dict = {
             "WelcomeScreen": self.handle_welcome_screen,
             "AccessibilitySettingsScreen": self.handle_accessibility_settings_screen,
@@ -46,10 +48,11 @@ class Application:
             self.current_screen = "AccessibilitySettingsScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_accessibility_settings_screen(self):
         accessibility_settings_screen = AccessibilitySettingsScreen(
-            self.page_geometry, self.accessibility_config
+            self.page_geometry, self.accessibility_config,
         )
         accessibility_settings_screen.run_screen()
 
@@ -58,11 +61,12 @@ class Application:
             self.current_screen = "WelcomeScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_homepage_screen(self):
         """Handles the HomepageScreen state of the application."""
         homepage_screen = HomepageScreen(
-            self.page_geometry, self.accessibility_config, self.current_user
+            self.page_geometry, self.accessibility_config, self.current_user, self.backend
         )
         homepage_screen.run_screen()
 
@@ -78,6 +82,7 @@ class Application:
             self.pacing_mode = homepage_screen.pacing_mode
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_settings_screen(self):
         """Handles the SettingsScreen state of the application."""
@@ -94,12 +99,14 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
 
     def handle_egram_screen(self):
         """Handles the EgramScreen state of the application."""
         egram_screen = EgramScreen(
             self.page_geometry,
             self.accessibility_config,
+            self.backend
         )
         egram_screen.run_screen()
 
@@ -108,8 +115,55 @@ class Application:
             self.current_screen = "HomepageScreen"
         else:
             self.current_screen = None
+        self.current_screen_ref[0] = self.current_screen
+
+# from serial import Serial
+# import random
+# import struct
+# import time
+# ser = Serial("COM7", 115200)
+
+# def chunk_data(data, chunk_size):
+#     """Yield successive n-sized chunks from data."""
+#     for i in range(0, len(data), chunk_size):
+#         yield data[i:i + chunk_size]
+
+# def pacemaker_ecg_emulator():
+#     int1 = random.randrange(0,100)
+#     int2 = random.randrange(0,100)
+#     buf = [int1, int2]
+#     packed_data = struct.pack('2B', *buf)
+#     # ser.write(packed_data)
+#     data = ser.read(16)
+#     for chunk in chunk_data(data, 8):
+#         print(chunk)
+#         ser.write(chunk)
+#     time.sleep(0.1)
+
+#     ser.write(packed_data)
+#     time.sleep(1)
+#     data = ser.read(16)
+#     time.sleep(0.1)
+#     for chunk in chunk_data(data, 4):
+#         ser.write(chunk)
+#     # while True:
+#     #     int1 = random.randrange(0,1000)
+#     #     if not int1:
+#     #         buf = [1,1]
+#     #     else:
+#     #         buf = [0,0]
+
+#     #     packed_data = struct.pack('2i',*buf)
+#     #     ser.write(packed_data)
 
 
 if __name__ == "__main__":
     app = Application()
+    p1 = Thread(target=app.backend.open_port, args=(app.current_screen_ref,))
+    p2 = Thread(target=app.backend.get_egram_data, args=(app.current_screen_ref,))
+    # p3 = Thread(target=pacemaker_ecg_emulator)
+    p1.start()
+    p2.start()
+    # p3.start()
+
     app.run_app()
