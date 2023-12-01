@@ -7,13 +7,15 @@
  *
  * Code generated for Simulink model 'Assignment1_V6'.
  *
- * Model version                  : 1.78
+ * Model version                  : 1.200
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Wed Nov 29 23:19:50 2023
+ * C/C++ source code generated on : Fri Dec  1 05:47:50 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
- * Code generation objective: Execution efficiency
+ * Code generation objectives:
+ *    1. Execution efficiency
+ *    2. RAM efficiency
  * Validation result: Not run
  */
 
