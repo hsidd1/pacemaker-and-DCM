@@ -61,7 +61,9 @@ Additionally, [HeartView](https://github.com/theguymeyer/heartview) is also requ
 
 The [Simulink model](https://github.com/hsidd1/pacemaker-and-DCM/blob/main/simulink_group9/Assignment_1_Simulink.slx) will need to be opened and the heart and pacemaker will need to be connected to your computer via USB.
 
-Within the Simulink model, the desired pacing mode can be chosen along with other parameters, and the result of the heart signal can be viewed in HeartView once the heart characteristics have been specified.
+Within the Simulink model, the desired pacing mode can be chosen along with other parameters in the default settings, and the result of the heart signal can be viewed in HeartView once the heart characteristics have been specified.
+
+To use the DCM application for pacemaker control and egram data, select "Build, Deploy & Start" in Simulink to load the model to the FRDM-K64F board. The board can then be connected to the device that is running the DCM application, and the pacing mode and parameters can be chosen within the application. If desired, the heart signal data can also be viewed within the DCM application instead of using HeartView to do so.
 <!---
 #### Contributors
 add your credits here
